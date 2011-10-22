@@ -44,6 +44,8 @@ Divvy.Create.init = function()
 		left: 100,
 		width: 190, height: 24,
 		editable: true,
+		passwordMask: true,
+      autocapitalization: Titanium.UI.TEXT_AUTOCAPITALIZATION_NONE,
 		clearButtonMode: Titanium.UI.INPUT_BUTTONMODE_ONFOCUS,
 	});
 	
