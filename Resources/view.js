@@ -30,7 +30,7 @@ Divvy.View.init = function()
 				mediaTypes: [Ti.Media.MEDIA_TYPE_PHOTO]
 			});
 		}
-		else
+		else if (e.index == 1)
 		{
 			Ti.Media.openPhotoGallery({
 				success: Divvy.View.savePhoto,
