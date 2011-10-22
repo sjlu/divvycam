@@ -11,12 +11,14 @@ Divvy.open = function(window)
 Ti.include(
 	'buckets.js',
 	'view.js',
-	'create.js'
+	'create.js',
+	'join.js'
 );
 
 Divvy.Buckets.init();
 Divvy.View.init();
 Divvy.Create.init();
+Divvy.Join.init();
 
 Divvy.Buckets.open();
 Divvy.tab.window = Divvy.Buckets.win;
