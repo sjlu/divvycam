@@ -53,7 +53,13 @@ Divvy.Buckets.refresh = function()
 	
 	for (var i = 0; i < buckets.length; i++)
 	{
-		this.tableview.appendRow(this.generateRow(buckets[i].name, buckets[i].id, 'http://lh4.ggpht.com/-d9CkOpNkGrE/TOS0XPbrf9I/AAAAAAAAADo/NQshQqW5Kkc/Thumbnail-100x100.png'));
+		this.tableview.appendRow(
+			this.generateRow(
+				buckets[i].name, 
+				buckets[i].id, 
+				'http://lh4.ggpht.com/-d9CkOpNkGrE/TOS0XPbrf9I/AAAAAAAAADo/NQshQqW5Kkc/Thumbnail-100x100.png'
+			)
+		);
 	}
 };
 
@@ -80,12 +86,21 @@ Divvy.Buckets.generateRow = function(name, id, image)
 		bucketId: id
 	});
 	
-	row.add(Ti.UI.createImageView({
+	var imageView = Ti.UI.createImageView({
 		width: '50', height: '50',
 		top: 0, left: 0,
-		image: image,
 		hires: true
-	}));
+	});
+	
+	row.add(imageView);
+	
+	Network.cache.run(
+		image,
+		168, //1 week
+		Divvy.Buckets.onImageCacheSuccess,
+		Divvy.Buckets.onImageCacheError,
+		imageView
+	);
 	
 	row.add(Ti.UI.createLabel({
 		text: name,
@@ -96,4 +111,14 @@ Divvy.Buckets.generateRow = function(name, id, image)
 	}));
 	
 	return row;
+};
+
+Divvy.Buckets.onImageCacheSuccess = function(data, date, status, user, xhr)
+{
+	user.image = data;
+};
+
+Divvy.Buckets.onImageCacheError = function(status, httpStatus)
+{
+	//do nothing
 };
