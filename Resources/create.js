@@ -146,7 +146,7 @@ Divvy.Create.onSubmit = function()
 
 Divvy.Create.onError = function(status, httpStatus)
 {
-	alert("We couldn't create your bucket, please try again.");
+	alert("We couldn't create your bucket, please try again. ("+status+")");
 	this.hideLoading();
 };
 

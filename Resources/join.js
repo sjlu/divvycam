@@ -178,7 +178,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 
 Divvy.Join.onError = function(status, httpStatus)
 {
-	alert("We couldn't create your bucket, please try again.");
+	alert("We couldn't create your bucket, please try again. ("+status+")");
 	this.hideLoading();
 };
 
