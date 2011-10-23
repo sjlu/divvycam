@@ -59,6 +59,8 @@ Divvy.Buckets.refresh = function()
 
 Divvy.Buckets.addBucket = function(name, id)
 {
+	//TODO: make sure the bucket doesn't exist first
+	
 	var currBuckets = Ti.App.Properties.getList('buckets');
 	if (currBuckets == null)
 		currBuckets = [];
