@@ -211,9 +211,9 @@ Network.cache = (function () {
          return;
       }
       // write data to cache
-      priv.write (xhr.fileName, xhr.responseText);
+      priv.write (xhr.fileName, xhr.responseData);
       // return the fresh data to the callback function
-      xhr.successFunc (xhr.responseText, new Date(), Network.CACHE_FRESH, xhr.userData, xhr);
+      xhr.successFunc (xhr.responseData, new Date(), Network.CACHE_FRESH, xhr.userData, xhr);
    };
    
    /*
@@ -316,7 +316,7 @@ Network.cache = (function () {
          return null;
       } else {
          try {
-            return data.read().text;
+            return data.read();
          } catch (e) {
             //Ru.info(5, "cache.read: could not read data");
             //Ru.dump(e);
