@@ -4,8 +4,8 @@ Divvy.Create.init = function()
 {
 	this.win = Ti.UI.createWindow({
 		title: 'New Bucket',
-		barColor: '#333',
-		barImage: 'images/BarBackground[Texture].png',
+		barColor: Divvy.winBarColor,
+		barImage: Divvy.winBarImage,
 		translucent: false
 	});	
 	

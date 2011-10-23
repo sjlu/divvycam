@@ -3,8 +3,8 @@ Divvy.View = {};
 Divvy.View.init = function()
 {
 	this.win = Ti.UI.createWindow({
-		barColor: '#333',
-		barImage: 'images/BarBackground[Texture].png',
+		barColor: Divvy.winBarColor,
+		barImage: Divvy.winBarImage,
 		translucent: false
 	});
 	
@@ -51,15 +51,26 @@ Divvy.View.init = function()
 		showVerticalScrollIndicator: true,
 		backgroundColor: 'white'
 	});
+	this.scrollView.addEventListener('touchstart',function(e)
+	{
+		e.source.opacity = 0.9;
+	});
+	this.scrollView.addEventListener('touchend',function(e)
+	{
+		e.source.opacity = 1.0;
+		Divvy.Preview.open(e.source.imageNumber,Divvy.View.numOfImages,e.source.imageFile);
+	});
 	
-
 	this.win.add(this.scrollView);
+	
 };
 
 Divvy.View.open = function(name, id)
 {
 	this.win.title = name;
 	this.win.id = id;
+	
+	this.numOfImages = 0;
 	
 	for (var i = 0; i < 24; i++)
 	{
@@ -76,6 +87,7 @@ Divvy.View.savePhoto = function(e){
 
 Divvy.View.generateImageThumbnail = function(num,image)
 {
+	this.numOfImages++;
 	var x = num % 4;
 	var y = Math.floor(num / 4);
 	
@@ -88,7 +100,10 @@ Divvy.View.generateImageThumbnail = function(num,image)
 		image: image,
 		hires: true,
 		borderWidth: 1,
-		borderColor: '#ccc'
+		borderColor: '#ccc',
+		imageNumber: num + 1,
+		imageFile: image,
+		backgroundColor: '#000000',
 	});
 	
 	return thumbnail;
