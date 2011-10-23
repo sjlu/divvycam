@@ -4,9 +4,8 @@ Divvy.Buckets.init = function()
 {
 	this.win = Ti.UI.createWindow({
 		title: 'Buckets',
-		barColor: '#3333',
-		barImage: 'images/BarBackground[Texture].png',
-		translucent: false
+		barColor: Divvy.winBarColor,
+		barImage: Divvy.winBarImage,
 	});
 
 	this.addButton = Ti.UI.createButton({
@@ -61,6 +60,9 @@ Divvy.Buckets.refresh = function()
 Divvy.Buckets.addBucket = function(name, id)
 {
 	var currBuckets = Ti.App.Properties.getList('buckets');
+	if (currBuckets == null)
+		currBuckets = [];
+		
 	currBuckets.push({name: name, id: id});
 	Ti.App.Properties.setList('buckets', currBuckets);
 	Divvy.Buckets.refresh();
@@ -88,7 +90,7 @@ Divvy.Buckets.generateRow = function(name, id, image)
 		height: 20,
 		width: '230',
 		top: 15, bottom: 15, left: 60,
-		font: { fontFamily: 'Helvetica Neue', fontWeight: 'bold', fontSize: 18 }
+		font: { fontWeight: 'bold', fontSize: 18 }
 	}));
 	
 	return row;

@@ -6,7 +6,6 @@ Divvy.Join.init = function()
 		title: 'Join A Bucket',
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
-		translucent: false
 	});
 	
 	this.navButtonBar = Ti.UI.createButtonBar({

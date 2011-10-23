@@ -5,7 +5,6 @@ Divvy.Preview.init = function ()
 	this.win = Ti.UI.createWindow({
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
-		translucent: false,
 		backButtonTitle: 'Thumbnails'
 	});
 	

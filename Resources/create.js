@@ -6,7 +6,6 @@ Divvy.Create.init = function()
 		title: 'New Bucket',
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
-		translucent: false
 	});	
 	
 	this.navButtonBar = Ti.UI.createButtonBar({
@@ -28,7 +27,8 @@ Divvy.Create.init = function()
 	this.label_bucketname = Ti.UI.createLabel({
 		text: 'Name',
 		left: 10,
-		font: { fontSize: 16, fontWeight: 'bold' }
+
+		font: { fontSize: 16, fontWeight: 'bold'}
 	});
 	
 	this.textarea_bucketname = Ti.UI.createTextField({
@@ -36,6 +36,7 @@ Divvy.Create.init = function()
 		left: 100,
 		width: 190, height: 24,
 		editable: true,
+		color: '#385487',
 		clearButtonMode: Titanium.UI.INPUT_BUTTONMODE_ONFOCUS,
 	});
 	
@@ -58,6 +59,7 @@ Divvy.Create.init = function()
 		width: 190, height: 24,
 		editable: true,
 		passwordMask: true,
+		color: '#385487',
       autocapitalization: Titanium.UI.TEXT_AUTOCAPITALIZATION_NONE,
 		clearButtonMode: Titanium.UI.INPUT_BUTTONMODE_ONFOCUS,
 	});
@@ -72,6 +74,20 @@ Divvy.Create.init = function()
 	this.tableview.appendRow(this.row_bucketname);
 	this.tableview.appendRow(this.row_bucketpw);
 	this.win.add(this.tableview);
+	
+	this.titleControlView = Ti.UI.createView({
+		width: 100, height: 60,
+		
+	});
+	this.titleControlLabel = Ti.UI.createLabel({
+		text: 'Creating',
+		color: '#fff',
+		font: { fontWeight: 'bold', fontSize: 20 }
+	});
+	this.titleControlView.add(this.titleControlLabel);
+	this.titleControlIndicator = Ti.UI.createActivityIndicator({left: 50});
+	this.titleControlIndicator.show();
+	this.titleControlView.add(this.titleControlIndicator);
 };
 
 Divvy.Create.open = function()
@@ -79,8 +95,29 @@ Divvy.Create.open = function()
 	Divvy.open(this.win);
 };
 
-Divvy.Create.onSubmit = function()
+Divvy.Create.showLoading = function()
 {
+	var fakeButton = Ti.UI.createView();
+	
+	this.win.titleControl = this.titleControlView;
+	this.win.leftNavButton = fakeButton;
+	this.win.rightNavButton = null;
+	this.textarea_bucketname.enabled = false;
+	this.textarea_bucketpw.enabled = false;
+};
+
+
+Divvy.Create.hideLoading = function()
+{
+	this.win.titleControl = null;
+	this.win.leftNavButton = null;
+	this.win.rightNavButton = this.navButtonBar;
+	this.textarea_bucketname.enabled = true;
+	this.textarea_bucketpw.enabled = true;
+};
+
+Divvy.Create.onSubmit = function()
+{	
 	if (this.textarea_bucketname.value == "")
 	{
 		alert("You did not provide a name for your bucket.");
@@ -97,6 +134,8 @@ Divvy.Create.onSubmit = function()
 		return;
 	}
 	
+	this.showLoading();
+	
 	Network.cache.asyncPost(
 		Divvy.url + 'create.php',
 		{ duid: Ti.Platform.id, name: this.textarea_bucketname.value, password: this.textarea_bucketpw.value },
@@ -108,6 +147,7 @@ Divvy.Create.onSubmit = function()
 Divvy.Create.onError = function(status, httpStatus)
 {
 	alert("We couldn't create your bucket, please try again.");
+	this.hideLoading();
 };
 
 Divvy.Create.onSuccess = function(data, date, status, user, xhr)
@@ -128,6 +168,8 @@ Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
+	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id);
+	Divvy.Create.hideLoading();
 	Divvy.Create.win.close();
 	Divvy.Create.reset();
 };
