@@ -77,8 +77,8 @@ Divvy.Create.init = function()
 	
 	this.titleControlView = Ti.UI.createView({
 		width: 100, height: 60,
-		
 	});
+	
 	this.titleControlLabel = Ti.UI.createLabel({
 		text: 'Creating',
 		color: '#fff',
@@ -158,13 +158,13 @@ Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 	}
 	catch (excep)
 	{
-		Divvy.create.onError(Network.PARSE_ERROR, 0);
+		Divvy.Create.onError(Network.PARSE_ERROR, 0);
 		return;
 	}
 
 	if (data.status == 'error')
 	{
-		Divvy.create.onError(Network.PARSE_ERROR, 0);
+		Divvy.Create.onError(Network.PARSE_ERROR, 0);
 		return;
 	}
 	
