@@ -4,8 +4,8 @@ Divvy.Buckets.init = function()
 {
 	this.win = Ti.UI.createWindow({
 		title: 'Buckets',
-		barColor: '#333',
-		barImage: 'images/BarBackground.png',
+		barColor: '#3333',
+		barImage: 'images/BarBackground[Texture].png',
 		translucent: false
 	});
 

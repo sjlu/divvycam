@@ -5,7 +5,7 @@ Divvy.Join.init = function()
 	this.win = Ti.UI.createWindow({
 		title: 'Join A Bucket',
 		barColor: '#333',
-		barImage: 'images/BarBackground.png',
+		barImage: 'images/BarBackground[Texture].png',
 		translucent: false
 	});
 	
@@ -42,7 +42,7 @@ Divvy.Join.init = function()
 	});
 	
 	this.textarea_bucketpw = Ti.UI.createTextField({
-		hintText: 'Optional',
+		hintText: 'Required',
 		left: 100,
 		width: 190, height: 24,
 		editable: true,
