@@ -87,9 +87,9 @@ Divvy.Create.onSubmit = function()
 {
 	Network.cache.asyncPost(
 		Divvy.url + 'create.php',
-		{ name: this.textarea_bucketname, password: this.textarea_bucketpw },
-		Divvy.Create.onError,
-		Divvy.Create.onSuccess
+		{ duid: Ti.Platform.id, name: this.textarea_bucketname.value, password: this.textarea_bucketpw.value },
+		Divvy.Create.onSuccess,
+		Divvy.Create.onError
 	);
 };
 
@@ -100,11 +100,21 @@ Divvy.Create.onError = function(status, httpStatus)
 
 Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 {
+	alert(data);
+	
 	try
 	{
 		data = JSON.parse(data);
 	}
 	catch (excep)
+	{
+		Divvy.create.onError(Network.PARSE_ERROR, 0);
+		return;
+	}
+	
+	alert(data);
+
+	if (data.status == 'error')
 	{
 		Divvy.create.onError(Network.PARSE_ERROR, 0);
 		return;
