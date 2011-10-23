@@ -163,18 +163,31 @@ Network.cache = (function () {
    */
    pub.asyncPost = function (url, data, onSuccess, onError) {
       var xhr = Ti.Network.createHTTPClient ();
-      xhr.onerror = onError;
-      xhr.onload = onSuccess;
+      xhr.successFunc = onSuccess;
+      xhr.errorFunc = onError;
       
       if (typeof data !== "object") {    // fatal bad error
          alert ('cache: asyncPost: data is not an object!');
          return;
       }
    
-      xhr.open ("POST", url);
-      xhr.send (data);
+      priv.asyncPost(xhr, data);
+   };
    
-      return xhr;
+   priv.asyncPost = function(xhr, data)
+   {
+   	xhr.onerror = priv.errorFunc;
+      xhr.onload = priv.successFunc;
+      xhr.timeout = 3000;
+      xhr.setTimeout (3000);
+      xhr.open ("POST", xhr.url);
+      xhr.timeout = 3000;
+      xhr.setTimeout (3000);
+      xhr.send (data);
+      xhr.timeout = 3000;
+      xhr.setTimeout (3000);
+      // setup a manual timeout
+      setTimeout (function() { priv.timeout (xhr); }, 3500);
    };
    
    /*
@@ -252,7 +265,7 @@ Network.cache = (function () {
          xhr      - *object* the xhr object to setup
    */
    priv.asyncGrab = function (xhr) {
-      Network.info (5, "cache: asyncGrab on url: " + xhr.url);
+//      Network.info (5, "cache: asyncGrab on url: " + xhr.url);
       xhr.onerror = priv.errorFunc;
       xhr.onload = priv.successFunc;
       xhr.timeout = 3000;
