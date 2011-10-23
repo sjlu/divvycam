@@ -163,6 +163,7 @@ Network.cache = (function () {
    */
    pub.asyncPost = function (url, data, onSuccess, onError) {
       var xhr = Ti.Network.createHTTPClient ();
+      xhr.url = url;
       xhr.successFunc = onSuccess;
       xhr.errorFunc = onError;
       
@@ -178,6 +179,7 @@ Network.cache = (function () {
    {
    	xhr.onerror = priv.errorFunc;
       xhr.onload = priv.successFunc;
+      xhr.cacheCheck = Network.CACHE_CHECK_NONE;
       xhr.timeout = 3000;
       xhr.setTimeout (3000);
       xhr.open ("POST", xhr.url);
@@ -265,7 +267,7 @@ Network.cache = (function () {
          xhr      - *object* the xhr object to setup
    */
    priv.asyncGrab = function (xhr) {
-//      Network.info (5, "cache: asyncGrab on url: " + xhr.url);
+//      Ru.info (5, "cache: asyncGrab on url: " + xhr.url);
       xhr.onerror = priv.errorFunc;
       xhr.onload = priv.successFunc;
       xhr.timeout = 3000;
