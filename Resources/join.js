@@ -166,7 +166,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 
 	if (data.status == 'error')
 	{
-		Divvy.Join.onError(Network.PARSE_ERROR, 0);
+		Divvy.Join.onError(data,error, 0);
 		return;
 	}
 	

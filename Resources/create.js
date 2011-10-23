@@ -164,7 +164,7 @@ Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 
 	if (data.status == 'error')
 	{
-		Divvy.Create.onError(Network.PARSE_ERROR, 0);
+		Divvy.Create.onError(data.error, 0);
 		return;
 	}
 	
