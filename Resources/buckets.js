@@ -41,8 +41,29 @@ Divvy.Buckets.init = function()
 
 Divvy.Buckets.open = function()
 {
-	this.tableview.appendRow(this.generateRow('Steven Lu bucket', 1, 'http://placehold.it/100x100'));
-	this.tableview.appendRow(this.generateRow('Burst Dev Bucket', 2, 'http://lh4.ggpht.com/-d9CkOpNkGrE/TOS0XPbrf9I/AAAAAAAAADo/NQshQqW5Kkc/Thumbnail-100x100.png'));						
+	this.refresh();
+};
+
+Divvy.Buckets.refresh = function()
+{
+	this.tableview.setData([]);
+	var buckets = Ti.App.Properties.getList('buckets');
+	
+	if (buckets == null)
+		return;
+	
+	for (var i = 0; i < buckets.length; i++)
+	{
+		this.tableview.appendRow(this.generateRow(buckets[i].name, buckets[i].id, 'http://lh4.ggpht.com/-d9CkOpNkGrE/TOS0XPbrf9I/AAAAAAAAADo/NQshQqW5Kkc/Thumbnail-100x100.png'));
+	}
+};
+
+Divvy.Buckets.addBucket = function(name, id)
+{
+	var currBuckets = Ti.App.Properties.getList('buckets');
+	currBuckets.push({name: name, id: id});
+	Ti.App.Properties.setList('buckets', currBuckets);
+	Divvy.Buckets.refresh();
 };
 
 Divvy.Buckets.generateRow = function(name, id, image)

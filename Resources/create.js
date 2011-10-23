@@ -79,14 +79,24 @@ Divvy.Create.open = function()
 	Divvy.open(this.win);
 };
 
-Divvy.Create.close = function()
-{
-	this.win.close();
-	this.reset();
-};
-
 Divvy.Create.onSubmit = function()
 {
+	if (this.textarea_bucketname.value == "")
+	{
+		alert("You did not provide a name for your bucket.");
+		return;
+	}
+	else if (this.textarea_bucketpw.value == "")
+	{
+		alert("You need to provide us a password.");	
+		return;
+	}
+	else if (this.textarea_bucketpw.value.length < 6)
+	{
+		alert("Your password needs to be six characters long.");
+		return;
+	}
+	
 	Network.cache.asyncPost(
 		Divvy.url + 'create.php',
 		{ duid: Ti.Platform.id, name: this.textarea_bucketname.value, password: this.textarea_bucketpw.value },
@@ -101,9 +111,7 @@ Divvy.Create.onError = function(status, httpStatus)
 };
 
 Divvy.Create.onSuccess = function(data, date, status, user, xhr)
-{
-	alert(data);
-	
+{		
 	try
 	{
 		data = JSON.parse(data);
@@ -113,14 +121,15 @@ Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 		Divvy.create.onError(Network.PARSE_ERROR, 0);
 		return;
 	}
-	
-	alert(data);
 
 	if (data.status == 'error')
 	{
 		Divvy.create.onError(Network.PARSE_ERROR, 0);
 		return;
 	}
+	
+	Divvy.Create.win.close();
+	Divvy.Create.reset();
 };
 
 Divvy.Create.reset = function()
