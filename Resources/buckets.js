@@ -89,6 +89,7 @@ Divvy.Buckets.generateRow = function(name, id, image)
 	var imageView = Ti.UI.createImageView({
 		width: '50', height: '50',
 		top: 0, left: 0,
+		//TODO: set default image
 		hires: true
 	});
 	

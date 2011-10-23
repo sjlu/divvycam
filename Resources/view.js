@@ -73,7 +73,12 @@ Divvy.View.open = function(name, id)
 	
 	for (var i = 0; i < 24; i++)
 	{
-		this.scrollView.add(this.generateImageThumbnail(i,'http://lh4.ggpht.com/-d9CkOpNkGrE/TOS0XPbrf9I/AAAAAAAAADo/NQshQqW5Kkc/Thumbnail-100x100.png'));
+		this.scrollView.add(
+			this.generateImageThumbnail(
+				i,
+				'http://lh4.ggpht.com/-d9CkOpNkGrE/TOS0XPbrf9I/AAAAAAAAADo/NQshQqW5Kkc/Thumbnail-100x100.png'
+			)
+		);
 	}
 	
 	Divvy.open(this.win);
@@ -96,7 +101,7 @@ Divvy.View.generateImageThumbnail = function(num,image)
 	var thumbnail = Ti.UI.createImageView({
 		width: dimension, height: dimension,
 		top: ((dimension+padding)*y)+padding, left: ((dimension+padding)*x)+padding,
-		image: image,
+		//TODO: set default image
 		hires: true,
 		borderWidth: 1,
 		borderColor: '#ccc',
@@ -105,5 +110,23 @@ Divvy.View.generateImageThumbnail = function(num,image)
 		backgroundColor: '#000000',
 	});
 	
+	Network.cache.run(
+		image,
+		168, //1 week
+		Divvy.View.onImageCacheSuccess,
+		Divvy.View.onImageCacheError,
+		thumbnail
+	);
+	
 	return thumbnail;
+};
+
+Divvy.View.onImageCacheSuccess = function(data, date, status, user, xhr)
+{
+	user.image = data;
+};
+
+Divvy.View.onImageCacheError = function(status, httpStatus)
+{
+	//do nothing
 };
