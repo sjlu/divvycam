@@ -166,7 +166,7 @@ Network.cache = (function () {
       xhr.url = url;
       xhr.successFunc = onSuccess;
       xhr.errorFunc = onError;
-      xhr.onsendstream = onSendStream;
+      xhr.stream = onSendStream;
       
       if (typeof data !== "object") {    // fatal bad error
          alert ('cache: asyncPost: data is not an object!');
@@ -180,6 +180,7 @@ Network.cache = (function () {
    {
    	xhr.onerror = priv.errorFunc;
       xhr.onload = priv.successFunc;
+      xhr.onsendstream = priv.onSendStream
       xhr.cacheCheck = Network.CACHE_CHECK_NONE;
       xhr.timeout = 3000;
       xhr.setTimeout (3000);
@@ -191,6 +192,12 @@ Network.cache = (function () {
       xhr.setTimeout (3000);
       // setup a manual timeout
       setTimeout (function() { priv.timeout (xhr); }, 3500);
+   };
+   
+   priv.onSendStream = function(e)
+   {
+   	var xhr = e.source;
+   	xhr.stream(e.progress);
    };
    
    /*
