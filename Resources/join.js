@@ -4,9 +4,25 @@ Divvy.Join.init = function()
 {
 	this.win = Ti.UI.createWindow({
 		title: 'Join A Bucket',
-		barColor: '#333',
-		barImage: 'images/BarBackground[Texture].png',
+		barColor: Divvy.winBarColor,
+		barImage: Divvy.winBarImage,
 		translucent: false
+	});
+	
+	this.navButtonBar = Ti.UI.createButtonBar({
+		labels: ['Join'],
+		style: Ti.UI.iPhone.SystemButtonStyle.DONE,
+		backgroundColor: '5383e4'
+	});
+
+	this.navButtonBar.addEventListener('click', function(e) {
+		Divvy.Join.onSubmit();
+	});
+
+	this.win.rightNavButton = this.navButtonBar;
+	
+	this.row_bucketname = Ti.UI.createTableViewRow({
+		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	});
 	
 	this.row_bucketid = Ti.UI.createTableViewRow({
@@ -20,7 +36,7 @@ Divvy.Join.init = function()
 	});
 	
 	this.textarea_bucketid = Ti.UI.createTextField({
-		hintText: '5-digit ID',
+		hintText: '6 Digit ID',
 		left: 100,
 		width: 190, height: 24,
 		editable: true,
@@ -66,4 +82,9 @@ Divvy.Join.init = function()
 Divvy.Join.open = function()
 {
 	Divvy.open(this.win);
+};
+
+Divvy.Join.onSubmit = function()
+{
+	
 };
