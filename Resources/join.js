@@ -5,6 +5,7 @@ Divvy.Join.init = function()
 	this.win = Ti.UI.createWindow({
 		title: 'Join A Bucket',
 		barColor: '#333',
+		barImage: 'images/BarBackground.png',
 		translucent: false
 	});
 	

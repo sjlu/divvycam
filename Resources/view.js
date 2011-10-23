@@ -4,6 +4,7 @@ Divvy.View.init = function()
 {
 	this.win = Ti.UI.createWindow({
 		barColor: '#333',
+		barImage: 'images/BarBackground.png',
 		translucent: false
 	});
 	
