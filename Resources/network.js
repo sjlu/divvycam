@@ -85,7 +85,9 @@ Network.cache = (function () {
       }
 //      Ru.info(5, "cache: run requested on url: " + url + " exp: " + exp);
       var xhr = Ti.Network.createHTTPClient ();
-      var file = Ti.Utils.md5HexDigest (url);
+      var url_noparams = url.split("?");
+      var url_noparams = url_noparams[0];
+      var file = Ti.Utils.md5HexDigest (url_noparams);
       var cc, data;
 
       var __run = function (cacheCheck) {
