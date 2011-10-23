@@ -6,7 +6,18 @@ Divvy.Create.init = function()
 		title: 'New Bucket',
 		barColor: '#333',
 		translucent: false
+	});	
+	
+	this.navButtonBar = Ti.UI.createButtonBar({
+		labels: ['Create'],
+		style: Ti.UI.iPhone.SystemButtonStyle.DONE
 	});
+
+	this.navButtonBar.addEventListener('click', function(e) {
+		Divvy.Create.onSubmit();
+	});
+
+	this.win.rightNavButton = this.navButtonBar;
 	
 	this.row_bucketname = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
@@ -64,4 +75,44 @@ Divvy.Create.init = function()
 Divvy.Create.open = function()
 {
 	Divvy.open(this.win);
+};
+
+Divvy.Create.close = function()
+{
+	this.win.close();
+	this.reset();
+};
+
+Divvy.Create.onSubmit = function()
+{
+	Network.cache.asyncPost(
+		Divvy.url + 'create.php',
+		{ name: this.textarea_bucketname, password: this.textarea_bucketpw },
+		Divvy.Create.onError,
+		Divvy.Create.onSuccess
+	);
+};
+
+Divvy.Create.onError = function(status, httpStatus)
+{
+	alert("We couldn't create your bucket, please try again.");
+};
+
+Divvy.Create.onSuccess = function(data, date, status, user, xhr)
+{
+	try
+	{
+		data = JSON.parse(data);
+	}
+	catch (excep)
+	{
+		Divvy.create.onError(Network.PARSE_ERROR, 0);
+		return;
+	}
+};
+
+Divvy.Create.reset = function()
+{
+	this.textarea_bucketname.value = "";
+	this.textarea_bucketpw.value = "";
 };

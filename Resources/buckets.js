@@ -13,7 +13,7 @@ Divvy.Buckets.init = function()
 	});
 	
 	this.addDialog = Ti.UI.createOptionDialog({
-		options: ['Join Existing Bucket', 'Create a Bucket', 'Cancel'],
+		options: ['Join Existing Bucket', 'Create A Bucket', 'Cancel'],
 		cancel: 2
 	});
 	

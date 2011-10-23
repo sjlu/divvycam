@@ -3,7 +3,7 @@ Divvy.Join = {};
 Divvy.Join.init = function()
 {
 	this.win = Ti.UI.createWindow({
-		title: 'Join a Bucket',
+		title: 'Join A Bucket',
 		barColor: '#333',
 		translucent: false
 	});

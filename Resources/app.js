@@ -3,12 +3,15 @@ Divvy = {};
 Divvy.tabs = Ti.UI.createTabGroup({bottom: -50});
 Divvy.tab = Ti.UI.createTab();
 
+Divvy.url = 'http://divvy.burst-dev.com/api/';
+
 Divvy.open = function(window)
 {
 	Divvy.tab.open(window, {animated: true});
 };
 
 Ti.include(
+	'network.js',
 	'buckets.js',
 	'view.js',
 	'create.js',
