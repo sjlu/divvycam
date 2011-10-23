@@ -5,12 +5,14 @@ Divvy.Create.init = function()
 	this.win = Ti.UI.createWindow({
 		title: 'New Bucket',
 		barColor: '#333',
+		barImage: 'images/BarBackground[Texture].png',
 		translucent: false
 	});	
 	
 	this.navButtonBar = Ti.UI.createButtonBar({
 		labels: ['Create'],
-		style: Ti.UI.iPhone.SystemButtonStyle.DONE
+		style: Ti.UI.iPhone.SystemButtonStyle.DONE,
+		backgroundColor: '5383e4'
 	});
 
 	this.navButtonBar.addEventListener('click', function(e) {
@@ -51,7 +53,7 @@ Divvy.Create.init = function()
 	});
 	
 	this.textarea_bucketpw = Ti.UI.createTextField({
-		hintText: 'Optional',
+		hintText: 'Required',
 		left: 100,
 		width: 190, height: 24,
 		editable: true,
