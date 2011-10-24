@@ -6,7 +6,7 @@ Divvy.tab = Ti.UI.createTab();
 Divvy.winBarImage = 'images/navbar-background.png';
 Divvy.winBarColor = '#333';
 
-Divvy.url = 'http://divvy.burst-dev.com/api/';
+Divvy.url = 'https://divvy.burst-dev.com/api/';
 
 Divvy.open = function(window)
 {
