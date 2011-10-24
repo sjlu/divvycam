@@ -144,8 +144,6 @@ Divvy.Join.onSubmit = function()
 	
 	this.showLoading();
 	
-	alert(this.textarea_bucketid.value);
-	
 	Network.cache.asyncPost(
 		Divvy.url + 'join',
 		{ duid: Ti.Platform.id, bucket_id: this.textarea_bucketid.value, password: this.textarea_bucketpw.value },
@@ -168,7 +166,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 
 	if (data.status == 'error')
 	{
-		Divvy.Join.onError(data,error, 0);
+		Divvy.Join.onError(data.error, 0);
 		return;
 	}
 	
