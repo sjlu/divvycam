@@ -79,8 +79,8 @@ Divvy.Join.init = function()
 	this.tableview.appendRow(this.row_bucketpw);
 	this.win.add(this.tableview);
 	
-		this.titleControlView = Ti.UI.createView({
-		width: 100, height: 60,
+	this.titleControlView = Ti.UI.createView({
+		width: 80, height: 60,
 	});
 	
 	this.titleControlLabel = Ti.UI.createLabel({
@@ -179,7 +179,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 Divvy.Join.onError = function(status, httpStatus)
 {
 	alert("We couldn't create your bucket, please try again. ("+status+")");
-	this.hideLoading();
+	Divvy.Join.hideLoading();
 };
 
 Divvy.Join.reset = function()
