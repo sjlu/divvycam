@@ -184,16 +184,16 @@ Network.cache = (function () {
       xhr.onload = priv.successFunc;
       xhr.onsendstream = priv.onSendStream
       xhr.cacheCheck = Network.CACHE_CHECK_NONE;
-      xhr.timeout = 15000;
-      xhr.setTimeout (15000);
+      xhr.timeout = 60000;
+      xhr.setTimeout (60000);
       xhr.open ("POST", xhr.url);
-      xhr.timeout = 15000;
-      xhr.setTimeout (15000);
+      xhr.timeout = 60000;
+      xhr.setTimeout (60000);
       xhr.send (data);
-      xhr.timeout = 15000;
-      xhr.setTimeout (15000);
+      xhr.timeout = 60000;
+      xhr.setTimeout (60000);
       // setup a manual timeout
-      setTimeout (function() { priv.timeout (xhr); }, 15000);
+      setTimeout (function() { priv.timeout (xhr); }, 60500);
    };
    
    priv.onSendStream = function(e)

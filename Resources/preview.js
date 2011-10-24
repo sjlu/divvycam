@@ -4,8 +4,11 @@ Divvy.Preview.init = function ()
 {
 	this.win = Ti.UI.createWindow({
 		barColor: Divvy.winBarColor,
-		barImage: Divvy.winBarImage,
 		backButtonTitle: 'Thumbnails'
+	});
+	
+	this.win.addEventListener('close', function(e) {
+		Divvy.Preview.close();
 	});
 /*	
 	this.toolbar = Ti.UI.createToolbar({
@@ -25,13 +28,18 @@ Divvy.Preview.open = function (currentNum, totalNum, imageId)
 	
 	Network.cache.run(
 		Divvy.url + 'image.php?image_id=' + imageId,
-		0, //1 week
+		Network.CACHE_INVALIDATE, //1 week
 		Divvy.Preview.onImageUrlSuccess,
 		Divvy.Preview.onImageUrlError,
 		Divvy.Preview.photo
 	);	
 
 	Divvy.open(this.win);
+};
+
+Divvy.Preview.close = function()
+{
+	this.photo.image = null;
 };
 
 Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)
