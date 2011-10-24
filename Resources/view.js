@@ -16,13 +16,13 @@ Divvy.View.init = function()
 		backgroundColor: '#00BFFF'
 	});
 	
+	this.cameraButton.addEventListener('click', function(e){
+		Divvy.View.cameraDialog.show();
+	});
+	
 	this.cameraDialog = Ti.UI.createOptionDialog({
 		options: ['Take Photo', 'Choose Existing', 'Cancel'],
 		cancel: 2
-	});
-	
-	this.cameraButton.addEventListener('click', function(e){
-		Divvy.View.cameraDialog.show();
 	});
 	
 	this.cameraDialog.addEventListener('click', function(e){

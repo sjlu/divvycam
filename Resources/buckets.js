@@ -12,6 +12,10 @@ Divvy.Buckets.init = function()
 		systemButton: Ti.UI.iPhone.SystemButton.ADD
 	});
 	
+	this.addButton.addEventListener('click', function(e){
+		Divvy.Buckets.addDialog.show();
+	});
+	
 	this.addDialog = Ti.UI.createOptionDialog({
 		options: ['Join Existing Bucket', 'Create New Bucket', 'Cancel'],
 		cancel: 2
@@ -22,10 +26,6 @@ Divvy.Buckets.init = function()
 			Divvy.Join.open();
 		else if (e.index == 1)
 			Divvy.Create.open();
-	});
-	
-	this.addButton.addEventListener('click', function(e){
-		Divvy.Buckets.addDialog.show();
 	});
 	
 	this.win.rightNavButton = this.addButton;
