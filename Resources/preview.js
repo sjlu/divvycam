@@ -4,7 +4,12 @@ Divvy.Preview.init = function ()
 {
 	this.win = Ti.UI.createWindow({
 		barColor: Divvy.winBarColor,
-		backButtonTitle: 'Thumbnails'
+		backButtonTitle: 'Thumbnails',
+		orientationModes: [
+			Titanium.UI.PORTRAIT,
+    		Titanium.UI.LANDSCAPE_LEFT,
+    		Titanium.UI.LANDSCAPE_RIGHT,
+		]
 	});
 	
 	this.win.addEventListener('close', function(e) {
