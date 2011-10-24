@@ -20,11 +20,16 @@ Divvy.Preview.init = function ()
 	this.photo = Ti.UI.createImageView();
 	
 	this.win.add(this.photo);
+	
+	this.activityIndicator = Ti.UI.createActivityIndicator();
+	this.activityIndicator.show();
 };
 
 Divvy.Preview.open = function (currentNum, totalNum, imageId)
 {
 	this.win.title = currentNum + ' of ' + totalNum;
+	
+	this.win.add(this.activityIndicator);
 	
 	Network.cache.run(
 		Divvy.url + 'image/'+imageId,
@@ -72,14 +77,17 @@ Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)
 Divvy.Preview.onImageUrlError = function(status, httpStatus)
 {
 	// do nothing
+	Divvy.Preview.win.remove(Divvy.Preview.activityIndicator);
 };
 
 Divvy.Preview.onImageSuccess = function(data, date, status, user, xhr)
 {
 	user.image = data;
+	Divvy.Preview.win.remove(Divvy.Preview.activityIndicator);
 };
 
 Divvy.Preview.onImageError = function(status, httpStatus)
 {
 	//do nothing
+	Divvy.Preview.win.remove(Divvy.Preview.activityIndicator);
 };
