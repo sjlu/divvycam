@@ -9,11 +9,36 @@ Divvy.Preview.init = function ()
 			Titanium.UI.PORTRAIT,
     		Titanium.UI.LANDSCAPE_LEFT,
     		Titanium.UI.LANDSCAPE_RIGHT,
-		]
+		],
+		translucent: false
 	});
 	
 	this.win.addEventListener('close', function(e) {
 		Divvy.Preview.close();
+	});
+/*	
+	this.scrollView = Ti.UI.createScrollView({
+		width: 320,
+		height: 480,
+		maxZoomScale: 2.0,
+		isFullScreen: false
+	});
+
+/*
+	this.scrollView.addEventListener('singletap', function(e) {
+		if (Divvy.Preview.scrollView.isFullScreen) {
+//			Ti.UI.iPhone.showStatusBar();
+//			Divvy.Preview.win.showNavBar();
+		} else {
+//			Ti.UI.iPhone.hideStatusBar();
+//			Divvy.Preview.win.hideNavBar();
+		}
+		
+		Divvy.Preview.scrollView.isFullScreen = !Divvy.Preview.scrollView.isFullScreen;
+	});
+
+	this.scrollView.addEventListener('doubletap', function(e) {  
+    	Divvy.Preview.scrollView.zoomScale = 2.0;
 	});
 /*	
 	this.toolbar = Ti.UI.createToolbar({
@@ -22,7 +47,10 @@ Divvy.Preview.init = function ()
 	
 	this.win.add(this.toolbar);
 */	
-	this.photo = Ti.UI.createImageView();
+	this.photo = Ti.UI.createImageView({
+		backgroundColor: '#000',
+		top: 0,
+	});
 	
 	this.win.add(this.photo);
 	
