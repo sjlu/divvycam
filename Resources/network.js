@@ -10,6 +10,8 @@ Network = {};
 Network.cache = (function () {
    "use strict";
    var pub = {}, priv = {};
+   Network.Timeout = 60000;
+   
    /*
       Group: Constants
    
@@ -184,16 +186,16 @@ Network.cache = (function () {
       xhr.onload = priv.successFunc;
       xhr.onsendstream = priv.onSendStream
       xhr.cacheCheck = Network.CACHE_CHECK_NONE;
-      xhr.timeout = 60000;
-      xhr.setTimeout (60000);
+      xhr.timeout = Network.Timeout;
+      xhr.setTimeout (Network.Timeout);
       xhr.open ("POST", xhr.url);
-      xhr.timeout = 60000;
-      xhr.setTimeout (60000);
+      xhr.timeout = Network.Timeout;
+      xhr.setTimeout (Network.Timeout);
       xhr.send (data);
-      xhr.timeout = 60000;
-      xhr.setTimeout (60000);
+      xhr.timeout = Network.Timeout;
+      xhr.setTimeout (Network.Timeout);
       // setup a manual timeout
-      setTimeout (function() { priv.timeout (xhr); }, 60500);
+      setTimeout (function() { priv.timeout (xhr); }, Network.Timeout+500);
    };
    
    priv.onSendStream = function(e)
@@ -280,16 +282,16 @@ Network.cache = (function () {
 //      Ru.info (5, "cache: asyncGrab on url: " + xhr.url);
       xhr.onerror = priv.errorFunc;
       xhr.onload = priv.successFunc;
-      xhr.timeout = 3000;
-      xhr.setTimeout (3000);
+      xhr.timeout = Network.Timeout;
+      xhr.setTimeout (Network.Timeout);
       xhr.open ("GET", xhr.url);
-      xhr.timeout = 3000;
-      xhr.setTimeout (3000);
+      xhr.timeout = Network.Timeout;
+      xhr.setTimeout (Network.Timeout);
       xhr.send ();
-      xhr.timeout = 3000;
-      xhr.setTimeout (3000);
+      xhr.timeout = Network.Timeout;
+      xhr.setTimeout (Network.Timeout);
       // setup a manual timeout
-      setTimeout (function() { priv.timeout (xhr); }, 3500);
+      setTimeout (function() { priv.timeout (xhr); }, Network.Timeout+500);
    };
    
    /*

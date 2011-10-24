@@ -137,7 +137,7 @@ Divvy.Create.onSubmit = function()
 	this.showLoading();
 	
 	Network.cache.asyncPost(
-		Divvy.url + 'create.php',
+		Divvy.url + 'create',
 		{ duid: Ti.Platform.id, name: this.textarea_bucketname.value, password: this.textarea_bucketpw.value },
 		Divvy.Create.onSuccess,
 		Divvy.Create.onError

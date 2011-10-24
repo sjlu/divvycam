@@ -89,7 +89,7 @@ Divvy.Join.init = function()
 		font: { fontWeight: 'bold', fontSize: 20 }
 	});
 	this.titleControlView.add(this.titleControlLabel);
-	this.titleControlIndicator = Ti.UI.createActivityIndicator({left: 50});
+	this.titleControlIndicator = Ti.UI.createActivityIndicator({left: 45});
 	this.titleControlIndicator.show();
 	this.titleControlView.add(this.titleControlIndicator);
 };
@@ -138,17 +138,17 @@ Divvy.Join.onSubmit = function()
 	}
 	else if (this.textarea_bucketpw.value.length < 6)
 	{
-		alert("Your password needs to be six characters long.");
+		alert("Password needs to be six characters long.");
 		return;
 	}
 	
 	this.showLoading();
 	
 	Network.cache.asyncPost(
-		Divvy.url + 'join.php',
+		Divvy.url + 'join',
 		{ duid: Ti.Platform.id, bucket_id: this.textarea_bucketid.value, password: this.textarea_bucketpw.value },
-		Divvy.Create.onSuccess,
-		Divvy.Create.onError
+		Divvy.Join.onSuccess,
+		Divvy.Join.onError
 	);
 };
 
@@ -166,7 +166,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 
 	if (data.status == 'error')
 	{
-		Divvy.Join.onError(data,error, 0);
+		Divvy.Join.onError(data.error, 0);
 		return;
 	}
 	
@@ -178,7 +178,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 
 Divvy.Join.onError = function(status, httpStatus)
 {
-	alert("We couldn't create your bucket, please try again. ("+status+")");
+	alert("We couldn't join the bucket, please try again. ("+status+")");
 	Divvy.Join.hideLoading();
 };
 

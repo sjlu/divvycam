@@ -51,7 +51,20 @@ Divvy.View.init = function()
 	this.win.add(this.scrollView);
 	
 	this.uploadIndicator = Ti.UI.createProgressBar({
-			//TODO: well, do the above, the uploadIndicator
+		width: 250,
+		min: 0,
+		max: 1,
+		value: 0,
+		color: '#fff',
+		message: 'Uploading Photo',
+		font: {fontSize: 14, fontWeight: 'bold'},
+		style: Ti.UI.iPhone.ProgressBarStyle.PLAIN,
+	});
+	
+	this.uploadIndicator.show();
+	
+	this.flexSpace = Ti.UI.createButton({
+		systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE
 	});
 };
 
@@ -67,7 +80,7 @@ Divvy.View.createScrollView = function()
 	
 	scrollView.addEventListener('touchstart',function(e)
 	{
-		e.source.opacity = 0.9;
+		e.source.opacity = 0.7;
 	});
 	
 	scrollView.addEventListener('touchend',function(e)
@@ -100,7 +113,7 @@ Divvy.View.refresh = function()
 {
 	this.numOfImages = 0;
 	Network.cache.run (
-		Divvy.url + 'thumbnails.php?bucket_id='+Divvy.View.win.id,
+		Divvy.url + 'thumbnails/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
 		Divvy.View.onRefreshSuccess, 
 		Divvy.View.onRefreshError
@@ -143,9 +156,44 @@ Divvy.View.savePhoto = function(e)
 {
 	var image = e.media;
 	
+	/*
+	 * iPhone 4S image dimensions
+	 * fullres: 3264x2448 (h x w)
+	 * halfres: 1632x1224 (h x w)
+	 * 
+	 * iPhone 4 image dimensions
+	 * fullres: 1936x2592 (h x w)
+	 * halfres: 968x612 (h x w)
+	 */
+	var targetHeight = 968;
+	var targetWidth = 612;
+	
+	if (image.height > targetHeight || image.width > targetWidth)
+	{
+		if (image.height > image.width)
+		{
+			var newHeight = targetHeight;
+			var newWidth = (targetHeight/image.height)*image.width;
+		}
+		else
+		{
+			var newWidth = targetWidth;
+			var newHeight = (targetWidth/image.width)*image.height;
+		}
+		
+		var resizedImage = Ti.UI.createImageView({
+			image: image,
+			width: newWidth, height: newHeight
+		});
+		
+		image = resizedImage.toImage();
+	}
+	
+	Divvy.View.win.setToolbar([Divvy.View.flexSpace, Divvy.View.uploadIndicator, Divvy.View.flexSpace]);
+	
 	Network.cache.asyncPost(
-		Divvy.url + 'upload.php',
-		{ image: image, bucket_id: Divvy.View.win.id },
+		Divvy.url + 'upload',
+		{ image:  image, bucket_id: Divvy.View.win.id },
 		Divvy.View.onSendSuccess,
 		Divvy.View.onSendError,
 		Divvy.View.onSendStream
@@ -168,16 +216,19 @@ Divvy.View.onSendSuccess = function(data, date, status, user, xhr)
 		Divvy.View.onSendError(data.error, 0);
 		
 	Divvy.View.refresh();
+	Divvy.Buckets.refresh();
+	Divvy.View.win.setToolbar(null, {animated: true});
 };
 
 Divvy.View.onSendError = function (status, httpStatus)
 {
 	alert('Image upload failed, please try again. ('+status+')');
+	Divvy.View.win.setToolbar(null, {animated: true});
 };
 
-Divvy.View.onSendStream  = function(progress)
+Divvy.View.onSendStream = function(progress)
 {
-	Divvy.View.uploadProgress.value = progress;
+	Divvy.View.uploadIndicator.value = progress;
 };
 
 Divvy.View.generateImageThumbnail = function(num,id,image)
