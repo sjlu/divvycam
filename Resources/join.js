@@ -79,8 +79,8 @@ Divvy.Join.init = function()
 	this.tableview.appendRow(this.row_bucketpw);
 	this.win.add(this.tableview);
 	
-		this.titleControlView = Ti.UI.createView({
-		width: 100, height: 60,
+	this.titleControlView = Ti.UI.createView({
+		width: 80, height: 60,
 	});
 	
 	this.titleControlLabel = Ti.UI.createLabel({
@@ -166,7 +166,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 
 	if (data.status == 'error')
 	{
-		Divvy.Join.onError(Network.PARSE_ERROR, 0);
+		Divvy.Join.onError(data,error, 0);
 		return;
 	}
 	
@@ -178,8 +178,8 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 
 Divvy.Join.onError = function(status, httpStatus)
 {
-	alert("We couldn't create your bucket, please try again.");
-	this.hideLoading();
+	alert("We couldn't create your bucket, please try again. ("+status+")");
+	Divvy.Join.hideLoading();
 };
 
 Divvy.Join.reset = function()

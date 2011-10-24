@@ -3,7 +3,7 @@ Divvy = {};
 Divvy.tabs = Ti.UI.createTabGroup({bottom: -50});
 Divvy.tab = Ti.UI.createTab();
 
-Divvy.winBarImage = 'images/BarBackground[Texture].png';
+Divvy.winBarImage = 'images/navbar-background.png';
 Divvy.winBarColor = '#333';
 
 Divvy.url = 'http://divvy.burst-dev.com/api/';

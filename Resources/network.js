@@ -85,7 +85,9 @@ Network.cache = (function () {
       }
 //      Ru.info(5, "cache: run requested on url: " + url + " exp: " + exp);
       var xhr = Ti.Network.createHTTPClient ();
-      var file = Ti.Utils.md5HexDigest (url);
+      var url_noparams = url.split("?");
+      var url_noparams = url_noparams[0];
+      var file = Ti.Utils.md5HexDigest (url_noparams);
       var cc, data;
 
       var __run = function (cacheCheck) {
@@ -161,11 +163,12 @@ Network.cache = (function () {
       Returns:
          *object* The xhr object created for the request.
    */
-   pub.asyncPost = function (url, data, onSuccess, onError) {
+   pub.asyncPost = function (url, data, onSuccess, onError, onSendStream) {
       var xhr = Ti.Network.createHTTPClient ();
       xhr.url = url;
       xhr.successFunc = onSuccess;
       xhr.errorFunc = onError;
+      xhr.stream = onSendStream;
       
       if (typeof data !== "object") {    // fatal bad error
          alert ('cache: asyncPost: data is not an object!');
@@ -179,17 +182,24 @@ Network.cache = (function () {
    {
    	xhr.onerror = priv.errorFunc;
       xhr.onload = priv.successFunc;
+      xhr.onsendstream = priv.onSendStream
       xhr.cacheCheck = Network.CACHE_CHECK_NONE;
-      xhr.timeout = 3000;
-      xhr.setTimeout (3000);
+      xhr.timeout = 60000;
+      xhr.setTimeout (60000);
       xhr.open ("POST", xhr.url);
-      xhr.timeout = 3000;
-      xhr.setTimeout (3000);
+      xhr.timeout = 60000;
+      xhr.setTimeout (60000);
       xhr.send (data);
-      xhr.timeout = 3000;
-      xhr.setTimeout (3000);
+      xhr.timeout = 60000;
+      xhr.setTimeout (60000);
       // setup a manual timeout
-      setTimeout (function() { priv.timeout (xhr); }, 3500);
+      setTimeout (function() { priv.timeout (xhr); }, 60500);
+   };
+   
+   priv.onSendStream = function(e)
+   {
+   	var xhr = e.source;
+   	xhr.stream(e.progress);
    };
    
    /*
