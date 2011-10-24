@@ -27,7 +27,7 @@ Divvy.Preview.open = function (currentNum, totalNum, imageId)
 	this.win.title = currentNum + ' of ' + totalNum;
 	
 	Network.cache.run(
-		Divvy.url + 'image.php?image_id=' + imageId,
+		Divvy.url + 'image/'+imageId,
 		Network.CACHE_INVALIDATE, //1 week
 		Divvy.Preview.onImageUrlSuccess,
 		Divvy.Preview.onImageUrlError,

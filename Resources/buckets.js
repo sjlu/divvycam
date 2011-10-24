@@ -92,7 +92,7 @@ Divvy.Buckets.generateRow = function(name, id, image)
 	row.add(imageView);
 	
 	Network.cache.run(
-		Divvy.url + 'thumbnails.php?order=desc&limit=1&bucket_id=' + id,
+		Divvy.url + 'thumbnails/'+id+'/1/desc',
 		Network.CACHE_INVALIDATE, //1 week
 		Divvy.Buckets.onImageUrlSuccess,
 		Divvy.Buckets.onImageUrlError,
