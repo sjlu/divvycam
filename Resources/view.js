@@ -51,7 +51,20 @@ Divvy.View.init = function()
 	this.win.add(this.scrollView);
 	
 	this.uploadIndicator = Ti.UI.createProgressBar({
-			//TODO: well, do the above, the uploadIndicator
+		width: 250,
+		min: 0,
+		max: 1,
+		value: 0,
+		color: '#fff',
+		message: 'Uploading Photo',
+		font: {fontSize: 14, fontWeight: 'bold'},
+		style: Ti.UI.iPhone.ProgressBarStyle.PLAIN,
+	});
+	
+	this.uploadIndicator.show();
+	
+	this.flexSpace = Ti.UI.createButton({
+		systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE
 	});
 };
 
@@ -176,6 +189,8 @@ Divvy.View.savePhoto = function(e)
 		image = resizedImage.toImage();
 	}
 	
+	Divvy.View.win.setToolbar([Divvy.View.flexSpace, Divvy.View.uploadIndicator, Divvy.View.flexSpace]);
+	
 	Network.cache.asyncPost(
 		Divvy.url + 'upload',
 		{ image:  image, bucket_id: Divvy.View.win.id },
@@ -202,16 +217,18 @@ Divvy.View.onSendSuccess = function(data, date, status, user, xhr)
 		
 	Divvy.View.refresh();
 	Divvy.Buckets.refresh();
+	Divvy.View.win.setToolbar(null, {animated: true});
 };
 
 Divvy.View.onSendError = function (status, httpStatus)
 {
 	alert('Image upload failed, please try again. ('+status+')');
+	Divvy.View.win.setToolbar(null, {animated: true});
 };
 
-Divvy.View.onSendStream  = function(progress)
+Divvy.View.onSendStream = function(progress)
 {
-	Divvy.View.uploadProgress.value = progress;
+	Divvy.View.uploadIndicator.value = progress;
 };
 
 Divvy.View.generateImageThumbnail = function(num,id,image)
