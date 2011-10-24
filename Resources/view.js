@@ -218,12 +218,14 @@ Divvy.View.onSendSuccess = function(data, date, status, user, xhr)
 	Divvy.View.refresh();
 	Divvy.Buckets.refresh();
 	Divvy.View.win.setToolbar(null, {animated: true});
+	Divvy.View.uploadIndicator.value = 0;
 };
 
 Divvy.View.onSendError = function (status, httpStatus)
 {
 	alert('Image upload failed, please try again. ('+status+')');
 	Divvy.View.win.setToolbar(null, {animated: true});
+	Divvy.View.uploadIndicator.value = 0;
 };
 
 Divvy.View.onSendStream = function(progress)
