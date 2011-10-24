@@ -15,13 +15,13 @@
  * Amazon Web Services Key. Found in the AWS Security Credentials. You can also pass this value as the first
  * parameter to a service constructor.
  */
-define('AWS_KEY', '');
+define('AWS_KEY', '1N5KSHW2AZTKDZ7K0Q82');
 
 /**
  * Amazon Web Services Secret Key. Found in the AWS Security Credentials. You can also pass this value as
  * the second parameter to a service constructor.
  */
-define('AWS_SECRET_KEY', '');
+define('AWS_SECRET_KEY', 'y+Kl7NnMJcBFWS/C3z9XV6Is5Q19HQaf/lBABW5g');
 
 /**
  * Amazon Account ID without dashes. Used for identification with Amazon EC2. Found in the AWS Security
