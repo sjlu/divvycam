@@ -2,6 +2,9 @@ Divvy.View = {};
 
 Divvy.View.init = function()
 {
+	/*
+	 * Window elements
+	 */
 	this.win = Ti.UI.createWindow({
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
@@ -20,15 +23,12 @@ Divvy.View.init = function()
 		Divvy.View.cameraDialog.show();
 	});
 	
+	this.win.rightNavButton = this.cameraButton;
+	
 	this.cameraDialog = Ti.UI.createOptionDialog({
 		options: ['Take Photo', 'Choose Existing', 'Cancel'],
 		cancel: 2
 	});
-	
-	this.activityIndicator = Ti.UI.createActivityIndicator({
-		style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
-	});
-	this.activityIndicator.show();
 	
 	this.cameraDialog.addEventListener('click', function(e){
 		if (e.index == 0)
@@ -49,8 +49,16 @@ Divvy.View.init = function()
 		}
 	});
 	
-	this.win.rightNavButton = this.cameraButton;
+	/*
+	 * View elements
+	 */
+	this.activityIndicator = Ti.UI.createActivityIndicator({
+		style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
+	});
 	
+	this.activityIndicator.show();
+	
+	// The top element that displays the bucket id and bucket url
 	this.infoView = Ti.UI.createView({
 		backgroundGradient: {
       	type: 'linear',
@@ -72,20 +80,27 @@ Divvy.View.init = function()
 	
 	this.infoView.add(this.infoLabel);
 	
+	// the element that shows the number of photos at the bottom
 	this.footerView = Ti.UI.createView({
 		height: 50
 	});
+	
 	this.footerLabel = Ti.UI.createLabel({
 		color: '#999',
 		width: 320,
 		textAlign: 'center',
 		font: {fontSize: 20}
 	});
+	
 	this.footerView.add(this.footerLabel);
 	
 	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
 	
+	/*
+	 * All other elements that
+	 * are invoked at a later time.
+	 */
 	this.uploadIndicator = Ti.UI.createProgressBar({
 		width: 250,
 		min: 0,
@@ -102,38 +117,6 @@ Divvy.View.init = function()
 	this.flexSpace = Ti.UI.createButton({
 		systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE
 	});
-};
-
-Divvy.View.createScrollView = function()
-{
-	var scrollView = Ti.UI.createScrollView({
-		contentWidth: 320,
-		contentHeight: 'auto',
-		top: 0,
-		showVerticalScrollIndicator: true,
-		backgroundColor: 'white'
-	});
-	
-	scrollView.add(Divvy.View.infoView);
-	scrollView.add(Divvy.View.footerView);
-	
-	scrollView.addEventListener('touchstart',function(e)
-	{
-		if (e.source.imageId == undefined)
-			return;
-		e.source.opacity = 0.7;
-	});
-	
-	scrollView.addEventListener('touchend',function(e)
-	{
-		if (e.source.imageId == undefined)
-			return;
-			
-		e.source.opacity = 1.0;
-		Divvy.Preview.open(e.source.imageNumber,Divvy.View.numOfImages,e.source.imageId);
-	});
-
-	return scrollView;
 };
 
 Divvy.View.open = function(name, id)
@@ -168,6 +151,46 @@ Divvy.View.refresh = function()
 	);
 };
 
+/*
+ * Because we don't want to constantly leave a full view
+ * in the memory, we want to constantly invoke this
+ * when we call new buckets.
+ */
+Divvy.View.createScrollView = function()
+{
+	var scrollView = Ti.UI.createScrollView({
+		contentWidth: 320,
+		contentHeight: 'auto',
+		top: 0,
+		showVerticalScrollIndicator: true,
+		backgroundColor: 'white'
+	});
+	
+	scrollView.add(Divvy.View.infoView);
+	scrollView.add(Divvy.View.footerView);
+	
+	scrollView.addEventListener('touchstart',function(e)
+	{
+		if (e.source.imageId == undefined)
+			return;
+		e.source.opacity = 0.7;
+	});
+	
+	scrollView.addEventListener('touchend',function(e)
+	{
+		if (e.source.imageId == undefined)
+			return;
+			
+		e.source.opacity = 1.0;
+		Divvy.Preview.open(e.source.imageNumber,Divvy.View.numOfImages,e.source.imageId);
+	});
+
+	return scrollView;
+};
+
+/*
+ * This is after we get all the thumbnails from the server.
+ */
 Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 {
 	try
@@ -203,6 +226,53 @@ Divvy.View.onRefreshError = function(status, httpStatus)
 {
 	Divvy.View.win.remove(Divvy.Preview.activityIndicator);
 	alert("Couldn't get bucket information. ("+status+")");
+};
+
+Divvy.View.generateImageThumbnail = function(num,id,image)
+{
+	this.numOfImages++;
+	var x = num % 4;
+	var y = Math.floor(num / 4);
+	
+	var top_offset = 50;
+
+	var padding = 4;
+	var dimension = 75;
+	
+	var thumbnail = Ti.UI.createImageView({
+		width: dimension, height: dimension,
+		top: ((dimension+padding)*y)+padding+top_offset, left: ((dimension+padding)*x)+padding,
+		//TODO: set default image
+		hires: true,
+		borderWidth: 1,
+		borderColor: '#ccc',
+		imageNumber: num + 1,
+		imageFile: image,
+		imageId: id,
+		backgroundColor: '#000000',
+		image: "/images/default_thumb.png",
+		defaultImage: "/images/default_thumb.png",
+	});
+	
+	Network.cache.run(
+		image,
+		168, //1 week
+		Divvy.View.onImageCacheSuccess,
+		Divvy.View.onImageCacheError,
+		thumbnail
+	);
+	
+	return thumbnail;
+};
+
+Divvy.View.onImageCacheSuccess = function(data, date, status, user, xhr)
+{
+	user.image = data;
+};
+
+Divvy.View.onImageCacheError = function(status, httpStatus)
+{
+	//do nothing
 };
 
 Divvy.View.savePhoto = function(e) 
@@ -254,6 +324,10 @@ Divvy.View.savePhoto = function(e)
 	);
 };
 
+/*
+ * This is invoked by the gallery or the camera, after when
+ * they have selected a photo
+ */
 Divvy.View.onSendSuccess = function(data, date, status, user, xhr)
 {
 	try
@@ -287,51 +361,4 @@ Divvy.View.onSendError = function (status, httpStatus)
 Divvy.View.onSendStream = function(progress)
 {
 	Divvy.View.uploadIndicator.value = progress;
-};
-
-Divvy.View.generateImageThumbnail = function(num,id,image)
-{
-	this.numOfImages++;
-	var x = num % 4;
-	var y = Math.floor(num / 4);
-	
-	var top_offset = 50;
-
-	var padding = 4;
-	var dimension = 75;
-	
-	var thumbnail = Ti.UI.createImageView({
-		width: dimension, height: dimension,
-		top: ((dimension+padding)*y)+padding+top_offset, left: ((dimension+padding)*x)+padding,
-		//TODO: set default image
-		hires: true,
-		borderWidth: 1,
-		borderColor: '#ccc',
-		imageNumber: num + 1,
-		imageFile: image,
-		imageId: id,
-		backgroundColor: '#000000',
-		image: "/images/default_thumb.png",
-		defaultImage: "/images/default_thumb.png",
-	});
-	
-	Network.cache.run(
-		image,
-		168, //1 week
-		Divvy.View.onImageCacheSuccess,
-		Divvy.View.onImageCacheError,
-		thumbnail
-	);
-	
-	return thumbnail;
-};
-
-Divvy.View.onImageCacheSuccess = function(data, date, status, user, xhr)
-{
-	user.image = data;
-};
-
-Divvy.View.onImageCacheError = function(status, httpStatus)
-{
-	//do nothing
 };

@@ -2,6 +2,9 @@ Divvy.Create = {};
 
 Divvy.Create.init = function()
 {
+	/*
+	 * Window objects
+	 */
 	this.win = Ti.UI.createWindow({
 		title: 'New Bucket',
 		barColor: Divvy.winBarColor,
@@ -19,6 +22,13 @@ Divvy.Create.init = function()
 	});
 
 	this.win.rightNavButton = this.navButtonBar;
+	
+	/*
+	 * View elements
+	 */
+	this.tableview = Ti.UI.createTableView({
+		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
+	});
 	
 	this.row_bucketname = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
@@ -67,14 +77,15 @@ Divvy.Create.init = function()
 	this.row_bucketpw.add(this.textarea_bucketpw);
 	this.row_bucketpw.add(this.label_bucketpw);
 	
-	this.tableview = Ti.UI.createTableView({
-		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
-	});
-	
 	this.tableview.appendRow(this.row_bucketname);
 	this.tableview.appendRow(this.row_bucketpw);
 	this.win.add(this.tableview);
 	
+	/*
+	 * All other elements
+	 * Elements that don't show intially
+	 * but are invoked by sections of code
+	 */
 	this.titleControlView = Ti.UI.createView({
 		width: 100, height: 60,
 	});
@@ -93,6 +104,12 @@ Divvy.Create.init = function()
 Divvy.Create.open = function()
 {
 	Divvy.open(this.win);
+};
+
+Divvy.Create.reset = function()
+{
+	this.textarea_bucketname.value = "";
+	this.textarea_bucketpw.value = "";
 };
 
 Divvy.Create.showLoading = function()
@@ -172,10 +189,4 @@ Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 	Divvy.Create.hideLoading();
 	Divvy.Create.win.close();
 	Divvy.Create.reset();
-};
-
-Divvy.Create.reset = function()
-{
-	this.textarea_bucketname.value = "";
-	this.textarea_bucketpw.value = "";
 };
