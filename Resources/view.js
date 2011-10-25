@@ -153,7 +153,7 @@ Divvy.View.close = function()
 	delete this.scrollView;
 	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
-	Divvy.View.footerLabel = "";
+	Divvy.View.footerLabel.text = "";
 };
 
 Divvy.View.refresh = function()
