@@ -14,6 +14,21 @@ Divvy.Preview.init = function ()
 		fullscreen: true,
 		navBarHidden: true
 	});
+	
+	Titanium.Gesture.addEventListener('orientationchange', function(e)
+	{
+		alert(e.orientation);
+	    if (e.orientation == Titanium.UI.PORTRAIT)
+	    {
+	    	Divvy.Preview.scrollView.height = 480;
+	    	Divvy.Preview.scrollView.width = 320;
+	    }
+	    else if (e.orientation == Titanium.UI.LANDSCAPE_LEFT || e.orientation == Titanium.UI.LANDSCAPE_RIGHT)
+	    {
+	    	Divvy.Preview.scrollView.height = 320;
+	    	Divvy.Preview.scrollView.width = 480;
+	    }
+	});
 
 	this.win.addEventListener('close', function(e) {
 		Divvy.Preview.close();
@@ -53,6 +68,7 @@ Divvy.Preview.init = function ()
 	
 	this.scrollView = Ti.UI.createScrollView({
 //		top: -20,
+		width: 320, height: 480,
 		maxZoomScale: 3.0,
 		isFullScreen: false,
 		scaled: false,
@@ -145,6 +161,9 @@ Divvy.Preview.close = function()
 	this.photo.image = null;
 	Divvy.Preview.win.hideNavBar({animated: false});
 	Divvy.Preview.scrollView.isFullScreen = true;
+	Divvy.Preview.scrollView.scrollZoom = 1.0;
+	Divvy.Preview.scrollView.height = 480;
+	Divvy.Preview.scrollView.width = 320;
 };
 
 Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)

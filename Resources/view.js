@@ -10,8 +10,17 @@ Divvy.View.init = function()
 		barImage: Divvy.winBarImage,
 	});
 	
-	this.win.addEventListener('close', function(e){
+	this.win.addEventListener('close', function(e)
+	{
 		Divvy.View.close();
+	});
+	
+	// this is a bug fix if the other 
+	// view was in a different orientation
+	this.win.addEventListener('focus', function(e) 
+	{
+		Divvy.View.win.hideNavBar({animated: false});
+		Divvy.View.win.showNavBar({animated: false});
 	});
 	
 	this.cameraButton = Ti.UI.createButton({
