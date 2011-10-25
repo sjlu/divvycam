@@ -19,7 +19,7 @@
     <prerendered-icon>false</prerendered-icon>
     <statusbar-style>translucent</statusbar-style>
     <statusbar-hidden>false</statusbar-hidden>
-    <fullscreen>false</fullscreen>
+    <fullscreen>true</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
     <guid>fb788863-8084-4efc-800f-3b7382099ef3</guid>

@@ -46,8 +46,27 @@ Divvy.View.init = function()
 	
 	this.win.rightNavButton = this.cameraButton;
 	
-	this.scrollView = this.createScrollView();
+	this.infoView = Ti.UI.createView({
+		backgroundGradient: {
+      	type: 'linear',
+         colors: [{ color: '#eeeeee', position: 0.0 }, { color: '#cccccc', position: 1.0}]
+     	},
+     	top: 0,
+     	height: 50
+	});
 	
+	this.infoLabel = Ti.UI.createLabel({
+		text: 'Bucket ID:',
+		shadowColor:'#fff',
+		left: 20,
+		width: 300,
+    	shadowOffset:{x:0,y:1},
+    	font:{fontSize: 14}
+	});
+	
+	this.infoView.add(this.infoLabel);
+	
+	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
 	
 	this.uploadIndicator = Ti.UI.createProgressBar({
@@ -78,13 +97,20 @@ Divvy.View.createScrollView = function()
 		backgroundColor: 'white'
 	});
 	
+	scrollView.add(Divvy.View.infoView);
+	
 	scrollView.addEventListener('touchstart',function(e)
 	{
+		if (e.source.imageId == undefined)
+			return;
 		e.source.opacity = 0.7;
 	});
 	
 	scrollView.addEventListener('touchend',function(e)
 	{
+		if (e.source.imageId == undefined)
+			return;
+			
 		e.source.opacity = 1.0;
 		Divvy.Preview.open(e.source.imageNumber,Divvy.View.numOfImages,e.source.imageId);
 	});
@@ -96,6 +122,8 @@ Divvy.View.open = function(name, id)
 {
 	this.win.title = name;
 	this.win.id = id;
+	
+	this.infoLabel.text = "Bucket ID: " + id + "\nURL: divvy.burst-dev.com/b/"+id;
 	
 	this.refresh();
 	Divvy.open(this.win);
@@ -189,6 +217,7 @@ Divvy.View.savePhoto = function(e)
 		image = resizedImage.toImage();
 	}
 	
+	Divvy.View.cameraButton.enabled = false;
 	Divvy.View.win.setToolbar([Divvy.View.flexSpace, Divvy.View.uploadIndicator, Divvy.View.flexSpace]);
 	
 	Network.cache.asyncPost(
@@ -219,6 +248,7 @@ Divvy.View.onSendSuccess = function(data, date, status, user, xhr)
 	Divvy.Buckets.refresh();
 	Divvy.View.win.setToolbar(null, {animated: true});
 	Divvy.View.uploadIndicator.value = 0;
+	Divvy.View.cameraButton.enabled = true;
 };
 
 Divvy.View.onSendError = function (status, httpStatus)
@@ -226,6 +256,7 @@ Divvy.View.onSendError = function (status, httpStatus)
 	alert('Image upload failed, please try again. ('+status+')');
 	Divvy.View.win.setToolbar(null, {animated: true});
 	Divvy.View.uploadIndicator.value = 0;
+	Divvy.View.cameraButton.enabled = true;
 };
 
 Divvy.View.onSendStream = function(progress)
@@ -239,12 +270,14 @@ Divvy.View.generateImageThumbnail = function(num,id,image)
 	var x = num % 4;
 	var y = Math.floor(num / 4);
 	
+	var top_offset = 50;
+
 	var padding = 4;
 	var dimension = 75;
 	
 	var thumbnail = Ti.UI.createImageView({
 		width: dimension, height: dimension,
-		top: ((dimension+padding)*y)+padding, left: ((dimension+padding)*x)+padding,
+		top: ((dimension+padding)*y)+padding+top_offset, left: ((dimension+padding)*x)+padding,
 		//TODO: set default image
 		hires: true,
 		borderWidth: 1,

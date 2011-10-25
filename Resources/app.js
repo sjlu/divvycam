@@ -1,5 +1,7 @@
 Divvy = {};
 
+Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.TRANSLUCENT_BLACK;
+
 Divvy.tabs = Ti.UI.createTabGroup({bottom: -50});
 Divvy.tab = Ti.UI.createTab();
 
