@@ -150,7 +150,7 @@ Divvy.View.close = function()
 
 Divvy.View.refresh = function()
 {
-	Divvy.View.win.add(Divvy.Preview.activityIndicator);
+	Divvy.View.win.add(Divvy.View.activityIndicator);
 	this.numOfImages = 0;
 	Network.cache.run (
 		Divvy.url + 'thumbnails/'+Divvy.View.win.id+"/-1/asc",
@@ -218,7 +218,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	Divvy.View.win.remove(Divvy.Preview.activityIndicator);
+	Divvy.View.win.remove(Divvy.View.activityIndicator);
 		
 	var thumbnails = data.thumbnails;
 	Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*79)+50;
@@ -233,7 +233,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 
 Divvy.View.onRefreshError = function(status, httpStatus)
 {
-	Divvy.View.win.remove(Divvy.Preview.activityIndicator);
+	Divvy.View.win.remove(Divvy.View.activityIndicator);
 	alert("Couldn't get bucket information. ("+status+")");
 };
 
@@ -292,13 +292,14 @@ Divvy.View.savePhoto = function(e)
 	 * iPhone 4S image dimensions
 	 * fullres: 3264x2448 (h x w)
 	 * halfres: 1632x1224 (h x w)
+	 * 1/4res: 968x612 (h x w) (500kb)
 	 * 
 	 * iPhone 4 image dimensions
 	 * fullres: 1936x2592 (h x w)
 	 * halfres: 968x612 (h x w)
 	 */
-	var targetHeight = 968;
-	var targetWidth = 612;
+	var targetHeight = 1632;
+	var targetWidth = 1224;
 	
 	if (image.height > targetHeight || image.width > targetWidth)
 	{
