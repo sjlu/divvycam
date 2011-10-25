@@ -19,6 +19,38 @@ Divvy.Preview.init = function ()
 		Divvy.Preview.close();
 	});
 
+	this.saveToGalleryDialog = Ti.UI.createOptionDialog({
+		options: ['Save To Gallery', 'Cancel'],
+		cancel: 1
+	});
+
+	this.saveToGalleryDialog.addEventListener('click', function(e)
+	{
+		if (e.index != 0)
+			return;
+			
+		Ti.Media.saveToPhotoGallery(Divvy.Preview.photo.toImage(), {
+			success: function(e)
+			{
+				alert("Saved to your photo gallery!");
+			},
+			error: function(e)
+			{
+				alert("Couldn't save to your photo gallery.");
+			}
+		});
+	});
+
+	this.saveButton = Ti.UI.createButton({
+		systemButton: Ti.UI.iPhone.SystemButton.ORGANIZE
+	});
+	
+	this.saveButton.addEventListener('click', function(e){
+		Divvy.Preview.saveToGalleryDialog.show();
+	});
+	
+	this.win.rightNavButton = this.saveButton;
+	
 	this.scrollView = Ti.UI.createScrollView({
 //		top: -20,
 		maxZoomScale: 3.0,
@@ -27,7 +59,7 @@ Divvy.Preview.init = function ()
 	});
 
 
-	this.scrollView.addEventListener('singletap', function(e) {
+	this.scrollView.addEventListener('touchend', function(e) {
 		if (Divvy.Preview.scrollView.isFullScreen) {
 			Ti.UI.iPhone.showStatusBar({animated: false});
 //			Divvy.Preview.scrollView.animate({top: -20});
@@ -80,7 +112,7 @@ Divvy.Preview.init = function ()
 	this.scrollView.add(this.photo);
 	this.win.add(this.scrollView);
 	
-	this.activityIndicator = Ti.UI.createActivityIndicator();
+	this.activityIndicator = Ti.UI.createActivityIndicator({width: 50, height: 50});
 	this.activityIndicator.show();
 };
 
