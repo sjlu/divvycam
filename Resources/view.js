@@ -25,6 +25,11 @@ Divvy.View.init = function()
 		cancel: 2
 	});
 	
+	this.activityIndicator = Ti.UI.createActivityIndicator({
+		style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
+	});
+	this.activityIndicator.show();
+	
 	this.cameraDialog.addEventListener('click', function(e){
 		if (e.index == 0)
 		{
@@ -148,11 +153,12 @@ Divvy.View.close = function()
 	delete this.scrollView;
 	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
-	Divvy.View.footerLabel = "";
+	Divvy.View.footerLabel.text = "";
 };
 
 Divvy.View.refresh = function()
 {
+	Divvy.View.win.add(Divvy.Preview.activityIndicator);
 	this.numOfImages = 0;
 	Network.cache.run (
 		Divvy.url + 'thumbnails/'+Divvy.View.win.id+"/-1/asc",
@@ -180,6 +186,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
+	Divvy.View.win.remove(Divvy.Preview.activityIndicator);
+		
 	var thumbnails = data.thumbnails;
 	Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*79)+50;
 	Divvy.View.footerLabel.text = thumbnails.length+" Photos"
@@ -193,6 +201,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 
 Divvy.View.onRefreshError = function(status, httpStatus)
 {
+	Divvy.View.win.remove(Divvy.Preview.activityIndicator);
 	alert("Couldn't get bucket information. ("+status+")");
 };
 
