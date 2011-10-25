@@ -17,15 +17,18 @@ Divvy.Preview.init = function ()
 	
 	Titanium.Gesture.addEventListener('orientationchange', function(e)
 	{
+		Divvy.Preview.scrollView.add(Divvy.Preview.photo);
+		
 	    if (e.orientation == Titanium.UI.PORTRAIT)
 	    {
-	    	Divvy.Preview.scrollView.height = 480;
-	    	Divvy.Preview.scrollView.width = 320;
+	    	Divvy.Preview.scrollView.contentWidth = 320;
+	    	Divvy.Preview.scrollView.contentHeight = 480;
+
 	    }
 	    else if (e.orientation == Titanium.UI.LANDSCAPE_LEFT || e.orientation == Titanium.UI.LANDSCAPE_RIGHT)
 	    {
-	    	Divvy.Preview.scrollView.height = 320;
-	    	Divvy.Preview.scrollView.width = 480;
+	    	Divvy.Preview.scrollView.contentHeight = 320;
+	    	Divvy.Preview.scrollView.contentWidth = 480;
 	    }
 	});
 
@@ -67,8 +70,11 @@ Divvy.Preview.init = function ()
 	
 	this.scrollView = Ti.UI.createScrollView({
 //		top: -20,
-		width: 320, height: 480,
+		contentWidth: 320, contentHeight: 480,
+		width: 480, height: 480,
+		minZoomScale: 1.0,
 		maxZoomScale: 3.0,
+		zoomScale: 1.0,
 		isFullScreen: false,
 		scaled: false,
 	});
@@ -123,7 +129,6 @@ Divvy.Preview.init = function ()
 		top: 0,
 	});
 	
-	
 	this.scrollView.add(this.photo);
 	this.win.add(this.scrollView);
 	
@@ -161,8 +166,8 @@ Divvy.Preview.close = function()
 	Divvy.Preview.win.hideNavBar({animated: false});
 	Divvy.Preview.scrollView.isFullScreen = true;
 	Divvy.Preview.scrollView.scrollZoom = 1.0;
-	Divvy.Preview.scrollView.height = 480;
-	Divvy.Preview.scrollView.width = 320;
+	Divvy.Preview.scrollView.contentHeight = 480;
+	Divvy.Preview.scrollView.contentWidth = 320;
 };
 
 Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)
