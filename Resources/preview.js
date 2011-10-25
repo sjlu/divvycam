@@ -17,7 +17,6 @@ Divvy.Preview.init = function ()
 	
 	Titanium.Gesture.addEventListener('orientationchange', function(e)
 	{
-		alert(e.orientation);
 	    if (e.orientation == Titanium.UI.PORTRAIT)
 	    {
 	    	Divvy.Preview.scrollView.height = 480;
