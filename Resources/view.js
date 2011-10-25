@@ -84,7 +84,7 @@ Divvy.View.init = function()
 		left: 20,
 		width: 300,
     	shadowOffset:{x:0,y:1},
-    	font:{fontSize: 14}
+    	font:{fontSize: 14, fontWeight: 'bold'}
 	});
 	
 	this.infoView.add(this.infoLabel);
@@ -136,6 +136,7 @@ Divvy.View.open = function(name, id)
 	this.infoLabel.text = "Bucket ID: " + id + "\nURL: divvy.burst-dev.com/b/"+id;
 	
 	this.refresh();
+	setTimeout(function(){Divvy.View.scrollView.scrollTo(0, 45)}, 50); //nice and subtle
 	Divvy.open(this.win);
 };
 
@@ -221,8 +222,15 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
 		
 	var thumbnails = data.thumbnails;
-	Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*79)+50;
-	Divvy.View.footerLabel.text = thumbnails.length+" Photos"
+	
+	Divvy.View.footerView.top = 410;
+	
+	if ((thumbnails.length) > 16)
+	{
+		Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*79)+50;
+		Divvy.View.footerLabel.text = thumbnails.length+" Photos";
+	}
+		
 	var i = 0;
 	for (var j in thumbnails)
 	{
