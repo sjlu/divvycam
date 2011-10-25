@@ -85,7 +85,7 @@ Divvy.Buckets.generateRow = function(name, id, image)
 	var imageView = Ti.UI.createImageView({
 		width: '50', height: '50',
 		top: 0, left: 0,
-		//TODO: set default image
+		defaultImage: "images/default_thumb.png",
 		hires: true
 	});
 	
@@ -122,13 +122,20 @@ Divvy.Buckets.onImageUrlSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	Network.cache.run(
-		data.thumbnails[0].url,
-		168, //1 week
-		Divvy.Buckets.onImageCacheSuccess,
-		Divvy.Buckets.onImageCacheError,
-		user
-	);
+	if(thumbnails[0].url != null && thumbnails[0].url != "")
+	{
+		Network.cache.run(
+			data.thumbnails[0].url,
+			168, //1 week
+			Divvy.Buckets.onImageCacheSuccess,
+			Divvy.Buckets.onImageCacheError,
+			user // this is imageview
+		);
+	}
+	else
+	{
+		user.image = "images/default_thumb.png";	
+	}
 };
 
 Divvy.Buckets.onImageUrlError = function(status, httpStatus)
