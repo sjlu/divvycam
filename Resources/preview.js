@@ -112,7 +112,7 @@ Divvy.Preview.init = function ()
 	this.scrollView.add(this.photo);
 	this.win.add(this.scrollView);
 	
-	this.activityIndicator = Ti.UI.createActivityIndicator();
+	this.activityIndicator = Ti.UI.createActivityIndicator({width: 50, height: 50});
 	this.activityIndicator.show();
 };
 
