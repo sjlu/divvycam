@@ -311,6 +311,7 @@ Divvy.View.generateImageThumbnail = function(num,id,image)
 		imageFile: image,
 		imageId: id,
 		backgroundColor: '#000000',
+		image: "/images/default_thumb.png",
 		defaultImage: "/images/default_thumb.png",
 	});
 	
