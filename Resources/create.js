@@ -157,7 +157,8 @@ Divvy.Create.onSubmit = function()
 		Divvy.url + 'create',
 		{ duid: Ti.Platform.id, name: this.textarea_bucketname.value, password: this.textarea_bucketpw.value },
 		Divvy.Create.onSuccess,
-		Divvy.Create.onError
+		Divvy.Create.onError,
+		this.textarea_bucketpw.value
 	);
 };
 
@@ -185,7 +186,7 @@ Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id);
+	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id, user);
 	Divvy.Create.hideLoading();
 	Divvy.Create.win.close();
 	Divvy.Create.reset();

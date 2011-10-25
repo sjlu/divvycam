@@ -164,7 +164,8 @@ Divvy.Join.onSubmit = function()
 		Divvy.url + 'join',
 		{ duid: Ti.Platform.id, bucket_id: this.textarea_bucketid.value, password: this.textarea_bucketpw.value },
 		Divvy.Join.onSuccess,
-		Divvy.Join.onError
+		Divvy.Join.onError,
+		this.textarea_bucketpw.value
 	);
 };
 
@@ -186,7 +187,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id);
+	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id, user);
 	Divvy.Join.hideLoading();
 	Divvy.Join.win.close();
 	Divvy.Join.reset();

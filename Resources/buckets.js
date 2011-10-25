@@ -39,7 +39,7 @@ Divvy.Buckets.init = function()
 
 	this.tableview = Ti.UI.createTableView();
 	this.tableview.addEventListener('click', function(e) {
-		Divvy.View.open(e.row.bucketName, e.row.bucketId);
+		Divvy.View.open(e.row.bucketName, e.row.bucketId, e.row.bucketPw);
 	});
 	
 	this.win.add(this.tableview);
@@ -68,7 +68,7 @@ Divvy.Buckets.refresh = function()
 	for (var i = 0; i < buckets.length; i++)
 	{
 		this.tableview.appendRow(
-			this.generateRow(buckets[i].name, buckets[i].id)
+			this.generateRow(buckets[i].name, buckets[i].id, buckets[i].pw)
 		);
 	}
 };
@@ -79,14 +79,15 @@ Divvy.Buckets.refresh = function()
  * this function will dynamically generate a single row
  * for placement into the tableview
  */
-Divvy.Buckets.generateRow = function(name, id, image)
+Divvy.Buckets.generateRow = function(name, id, pw)
 {
 	var row = Ti.UI.createTableViewRow({
 		className: 'bucketRow',
 		height: 'auto', 
 		hasChild: true,
 		bucketName: name,
-		bucketId: id
+		bucketId: id,
+		bucketPw: pw
 	});
 	
 	var imageView = Ti.UI.createImageView({
@@ -196,7 +197,7 @@ Divvy.Buckets.onImageCacheError = function(status, httpStatus)
  * @input: name, id
  * @output: void
  */
-Divvy.Buckets.addBucket = function(name, id)
+Divvy.Buckets.addBucket = function(name, id, pw)
 {
 	//TODO: make sure the bucket doesn't exist first
 	
@@ -204,7 +205,7 @@ Divvy.Buckets.addBucket = function(name, id)
 	if (currBuckets == null)
 		currBuckets = [];
 		
-	currBuckets.push({name: name, id: id});
+	currBuckets.push({name: name, id: id, pw: pw});
 	Ti.App.Properties.setList('buckets', currBuckets);
 	Divvy.Buckets.refresh();
 };
