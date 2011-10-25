@@ -81,13 +81,31 @@ Divvy.View.init = function()
 		text: 'Bucket ID:',
 		shadowColor:'#fff',
 		top: 200,
-		left: 20,
+		left: 60,
 		width: 300,
     	shadowOffset:{x:0,y:1},
     	font:{fontSize: 14, fontWeight: 'bold'}
 	});
 	
 	this.infoView.add(this.infoLabel);
+	
+	this.messageButton = Ti.UI.createButton({
+		height: 49, width: 50,
+		top: 202, left: 5,
+		image: "images/mail.png",
+		style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+		systemButton: Ti.UI.iPhone.SystemButton.ACTION
+	});
+	
+	this.messageButton.addEventListener('click', function(e)
+	{
+		var emailDialog = Titanium.UI.createEmailDialog({barcolor: Divvy.winBarColor});
+		emailDialog.subject = "You've been invited to share photos!";
+		emailDialog.messageBody = 'Todo.';
+		emailDialog.open();
+ 	});
+	
+	this.infoView.add(this.messageButton);
 	
 	// the element that shows the number of photos at the bottom
 	this.footerView = Ti.UI.createView({
