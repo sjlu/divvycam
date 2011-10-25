@@ -56,13 +56,14 @@ Divvy.View.init = function()
       	type: 'linear',
          colors: [{ color: '#eeeeee', position: 0.0 }, { color: '#cccccc', position: 1.0}]
      	},
-     	top: 0,
-     	height: 50
+     	top: -200,
+     	height: 250
 	});
 	
 	this.infoLabel = Ti.UI.createLabel({
 		text: 'Bucket ID:',
 		shadowColor:'#fff',
+		top: 200,
 		left: 20,
 		width: 300,
     	shadowOffset:{x:0,y:1},
@@ -70,6 +71,17 @@ Divvy.View.init = function()
 	});
 	
 	this.infoView.add(this.infoLabel);
+	
+	this.footerView = Ti.UI.createView({
+		height: 50
+	});
+	this.footerLabel = Ti.UI.createLabel({
+		color: '#999',
+		width: 320,
+		textAlign: 'center',
+		font: {fontSize: 20}
+	});
+	this.footerView.add(this.footerLabel);
 	
 	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
@@ -103,6 +115,7 @@ Divvy.View.createScrollView = function()
 	});
 	
 	scrollView.add(Divvy.View.infoView);
+	scrollView.add(Divvy.View.footerView);
 	
 	scrollView.addEventListener('touchstart',function(e)
 	{
@@ -140,6 +153,7 @@ Divvy.View.close = function()
 	delete this.scrollView;
 	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
+	Divvy.View.footerLabel = "";
 };
 
 Divvy.View.refresh = function()
@@ -175,6 +189,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	Divvy.View.win.remove(Divvy.Preview.activityIndicator);
 		
 	var thumbnails = data.thumbnails;
+	Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*79)+50;
+	Divvy.View.footerLabel.text = thumbnails.length+" Photos"
 	var i = 0;
 	for (var j in thumbnails)
 	{
@@ -210,12 +226,12 @@ Divvy.View.savePhoto = function(e)
 		if (image.height > image.width)
 		{
 			var newHeight = targetHeight;
-			var newWidth = (targetHeight/image.height)*image.width;
+			var newWidth = Math.ceil((targetHeight/image.height)*image.width);
 		}
 		else
 		{
 			var newWidth = targetWidth;
-			var newHeight = (targetWidth/image.width)*image.height;
+			var newHeight = Math.ceil((targetWidth/image.width)*image.height);
 		}
 		
 		var resizedImage = Ti.UI.createImageView({
