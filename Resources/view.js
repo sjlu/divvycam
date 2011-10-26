@@ -239,7 +239,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		if (data.error == 'no_such_bucket')
 		{
 			Divvy.Buckets.removeBucket(user);
-			Divvy.Buckets.win.close();
+//			Divvy.Buckets.win.close();
 		}
 		
 		Divvy.View.onRefreshError(data.error, 0);
