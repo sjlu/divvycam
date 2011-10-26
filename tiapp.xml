@@ -8,15 +8,15 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <id>com.burst.divvycam</id>
-    <name>divvycam</name>
-    <version>1.0</version>
-    <publisher>sjlu</publisher>
-    <url>http://burst-dev.com</url>
-    <description>not specified</description>
-    <copyright>2011 by sjlu</copyright>
+    <name>Divvycam</name>
+    <version>0.1a</version>
+    <publisher>Burst Development</publisher>
+    <url>https://divvy.burst-dev.com</url>
+    <description>Cloud-like and social camera application.</description>
+    <copyright>2011 by Steven Lu, Jason Caetano</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
-    <prerendered-icon>false</prerendered-icon>
+    <prerendered-icon>true</prerendered-icon>
     <statusbar-style>translucent</statusbar-style>
     <statusbar-hidden>false</statusbar-hidden>
     <fullscreen>true</fullscreen>
@@ -29,9 +29,6 @@
         </orientations>
         <orientations device="ipad">
             <orientation>Ti.UI.PORTRAIT</orientation>
-            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>

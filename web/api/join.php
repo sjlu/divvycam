@@ -16,6 +16,8 @@ function join_bucket($id, $password)
    $output['bucket_id'] = $pw_verify[0]['id'];
    $output['bucket_name'] = $pw_verify[0]['name'];
 
+   db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $id);
+
    return $output;
 }
 

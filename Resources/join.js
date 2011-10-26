@@ -2,10 +2,16 @@ Divvy.Join = {};
 
 Divvy.Join.init = function()
 {
+	/*
+	 * Window elements
+	 */
 	this.win = Ti.UI.createWindow({
 		title: 'Join A Bucket',
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
+		orientationModes: [
+			Titanium.UI.PORTRAIT
+		],
 	});
 	
 	this.navButtonBar = Ti.UI.createButtonBar({
@@ -19,6 +25,13 @@ Divvy.Join.init = function()
 	});
 
 	this.win.rightNavButton = this.navButtonBar;
+	
+	/*
+	 * View elements
+	 */
+	this.tableview = Ti.UI.createTableView({
+		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
+	});
 	
 	this.row_bucketname = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
@@ -71,14 +84,14 @@ Divvy.Join.init = function()
 	this.row_bucketpw.add(this.textarea_bucketpw);
 	this.row_bucketpw.add(this.label_bucketpw);
 	
-	this.tableview = Ti.UI.createTableView({
-		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
-	});
-	
 	this.tableview.appendRow(this.row_bucketid);
 	this.tableview.appendRow(this.row_bucketpw);
 	this.win.add(this.tableview);
 	
+	/*
+	 * All other elements that are invoked
+	 * at a later time.
+	 */
 	this.titleControlView = Ti.UI.createView({
 		width: 80, height: 60,
 	});
@@ -97,6 +110,12 @@ Divvy.Join.init = function()
 Divvy.Join.open = function()
 {
 	Divvy.open(this.win);
+};
+
+Divvy.Join.reset = function()
+{
+	this.textarea_bucketid.value = "";
+	this.textarea_bucketpw.value = "";
 };
 
 Divvy.Join.showLoading = function()
@@ -148,7 +167,8 @@ Divvy.Join.onSubmit = function()
 		Divvy.url + 'join',
 		{ duid: Ti.Platform.id, bucket_id: this.textarea_bucketid.value, password: this.textarea_bucketpw.value },
 		Divvy.Join.onSuccess,
-		Divvy.Join.onError
+		Divvy.Join.onError,
+		this.textarea_bucketpw.value
 	);
 };
 
@@ -170,7 +190,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id);
+	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id, user);
 	Divvy.Join.hideLoading();
 	Divvy.Join.win.close();
 	Divvy.Join.reset();
@@ -180,10 +200,4 @@ Divvy.Join.onError = function(status, httpStatus)
 {
 	alert("We couldn't join the bucket, please try again. ("+status+")");
 	Divvy.Join.hideLoading();
-};
-
-Divvy.Join.reset = function()
-{
-	this.textarea_bucketid.value = "";
-	this.textarea_bucketpw.value = "";
 };

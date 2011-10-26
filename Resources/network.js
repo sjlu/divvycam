@@ -165,12 +165,13 @@ Network.cache = (function () {
       Returns:
          *object* The xhr object created for the request.
    */
-   pub.asyncPost = function (url, data, onSuccess, onError, onSendStream) {
+   pub.asyncPost = function (url, data, onSuccess, onError, userData, onSendStream) {
       var xhr = Ti.Network.createHTTPClient ();
       xhr.url = url;
       xhr.successFunc = onSuccess;
       xhr.errorFunc = onError;
       xhr.stream = onSendStream;
+      xhr.userData = userData;
       
       if (typeof data !== "object") {    // fatal bad error
          alert ('cache: asyncPost: data is not an object!');

@@ -16,6 +16,8 @@ function get_thumbnails($bucket_id, $limit = -1, $order = "ASC")
    foreach ($images as $image)
       $output[] = array('id' => $image['id'], 'url' => $s3->get_object_url('divvycam', $image['filename'] . '-thumbnail.jpg', '60 seconds'));
 
+   db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $bucket_id);
+
    return $output;
 }
 
@@ -55,5 +57,5 @@ if (!isset($_GET['limit']))
 else
    $limit = $_GET['limit'];
 
-echo json_encode(array('status' => 'success', 'thumbnails' => get_thumbnails($_GET['bucket_id'], $limit, $order)));
+echo json_encode(array('status' => 'success', 'bucket_id'=> $_GET['bucket_id'], 'thumbnails' => get_thumbnails($_GET['bucket_id'], $limit, $order)));
 ?>

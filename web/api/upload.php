@@ -45,6 +45,7 @@ function check_if_bucket_exists($bucket_id)
 function add_image_to_db($bucket_id, $filename)
 {
    db_query('INSERT INTO photos (bucket_id, filename) VALUES ("%s","%s")', $bucket_id, $filename);
+   db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $bucket_id);
    return true;
 }
 
