@@ -10,7 +10,7 @@ Network = {};
 Network.cache = (function () {
    "use strict";
    var pub = {}, priv = {};
-   Network.Timeout = 60000;
+   Network.Timeout = 20000;
    
    /*
       Group: Constants
