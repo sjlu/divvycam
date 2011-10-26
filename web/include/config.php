@@ -7,10 +7,10 @@ if (isset($_SERVER['db_hostname']))
 }
 else
 {
-   if (gethostname() == 'ip-10-196-35-202')
+   if (gethostname() == 'ip-10-202-187-8')
       define('DB_HOST', 'localhost');
    else
-      define('DB_HOST', 'ip-10-196-35-202.ec2.internal');
+      define('DB_HOST', 'ip-10-202-187-8.ec2.internal');
 }
 
 define('DB_NAME', 'divvy');
