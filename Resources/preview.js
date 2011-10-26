@@ -90,7 +90,7 @@ Divvy.Preview.init = function ()
 	});
 
 
-	this.scrollView.addEventListener('touchend', function(e) {
+	this.scrollView.addEventListener('singletap', function(e) {
 		if (Divvy.Preview.scrollView.isFullScreen) {
 			Ti.UI.iPhone.showStatusBar({animated: false});
 //			Divvy.Preview.scrollView.animate({top: -20});
