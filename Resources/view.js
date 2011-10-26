@@ -44,6 +44,7 @@ Divvy.View.init = function()
 		{
 			Ti.Media.showCamera({
 				success: Divvy.View.savePhoto,
+				error: function(e) { if (e.code == Ti.Media.NO_CAMERA) alert("No camera detected!"); },
 				allowEditing: false,
 				mediaTypes: [Ti.Media.MEDIA_TYPE_PHOTO]
 			});
