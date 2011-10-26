@@ -3,23 +3,23 @@
     <deployment-targets>
         <target device="mobileweb">false</target>
         <target device="iphone">true</target>
-        <target device="ipad">true</target>
+        <target device="ipad">false</target>
         <target device="android">false</target>
         <target device="blackberry">false</target>
     </deployment-targets>
     <id>com.burst.divvycam</id>
-    <name>divvycam</name>
-    <version>1.0</version>
-    <publisher>sjlu</publisher>
-    <url>http://burst-dev.com</url>
-    <description>not specified</description>
-    <copyright>2011 by sjlu</copyright>
+    <name>Divvycam</name>
+    <version>0.1a</version>
+    <publisher>Burst Development</publisher>
+    <url>https://divvy.burst-dev.com</url>
+    <description>Cloud-like and social camera application.</description>
+    <copyright>2011 by Steven Lu, Jason Caetano</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
-    <prerendered-icon>false</prerendered-icon>
+    <prerendered-icon>true</prerendered-icon>
     <statusbar-style>translucent</statusbar-style>
     <statusbar-hidden>false</statusbar-hidden>
-    <fullscreen>false</fullscreen>
+    <fullscreen>true</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
     <guid>fb788863-8084-4efc-800f-3b7382099ef3</guid>
