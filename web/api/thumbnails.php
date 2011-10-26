@@ -57,5 +57,5 @@ if (!isset($_GET['limit']))
 else
    $limit = $_GET['limit'];
 
-echo json_encode(array('status' => 'success', 'thumbnails' => get_thumbnails($_GET['bucket_id'], $limit, $order)));
+echo json_encode(array('status' => 'success', 'bucket_id'=> $_GET['bucket_id'], 'thumbnails' => get_thumbnails($_GET['bucket_id'], $limit, $order)));
 ?>

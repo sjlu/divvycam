@@ -198,9 +198,7 @@ Divvy.Buckets.onImageCacheError = function(status, httpStatus)
  * @output: void
  */
 Divvy.Buckets.addBucket = function(name, id, pw)
-{
-	//TODO: make sure the bucket doesn't exist first
-	
+{	
 	var currBuckets = Ti.App.Properties.getList('buckets');
 	if (currBuckets == null)
 		currBuckets = [];
@@ -209,3 +207,21 @@ Divvy.Buckets.addBucket = function(name, id, pw)
 	Ti.App.Properties.setList('buckets', currBuckets);
 	Divvy.Buckets.refresh();
 };
+
+Divvy.Buckets.removeBucket = function(id)
+{
+	var buckets = Ti.App.Properties.getList('buckets');
+	
+	if (buckets == null)
+		return;
+
+	for (var i = 0; i < buckets.length; i++)
+	{
+		if (buckets[i].id == id)
+		{
+			buckets.splice(i, 1); // remove the element by ID
+			Ti.App.Properties.setList('buckets', buckets);
+			return;
+		}
+	}
+}

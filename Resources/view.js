@@ -177,7 +177,8 @@ Divvy.View.refresh = function()
 		Divvy.url + 'thumbnails/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
 		Divvy.View.onRefreshSuccess, 
-		Divvy.View.onRefreshError
+		Divvy.View.onRefreshError,
+		Divvy.View.win.id
 	);
 };
 
@@ -235,6 +236,12 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	
 	if (data.status == 'error')
 	{
+		if (data.error == 'no_such_bucket')
+		{
+			Divvy.Buckets.removeBucket(user);
+			Divvy.Buckets.win.close();
+		}
+		
 		Divvy.View.onRefreshError(data.error, 0);
 		return;
 	}
@@ -284,7 +291,6 @@ Divvy.View.generateImageThumbnail = function(num,id,image)
 	var thumbnail = Ti.UI.createImageView({
 		width: dimension, height: dimension,
 		top: ((dimension+padding)*y)+padding+top_offset, left: ((dimension+padding)*x)+padding,
-		//TODO: set default image
 		hires: true,
 		borderWidth: 1,
 		borderColor: '#ccc',
