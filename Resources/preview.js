@@ -15,20 +15,30 @@ Divvy.Preview.init = function ()
 		navBarHidden: true
 	});
 	
+	this.contentWidth = 320;
+	this.contentHeight = 480;
+	
+	if (Ti.Platform.osname == 'ipad')
+	{
+		this.contentWidth = 768;
+		this.contentHeight = 1024;		
+	}
+
+	
 	Titanium.Gesture.addEventListener('orientationchange', function(e)
 	{
 		Divvy.Preview.scrollView.add(Divvy.Preview.photo);
 		
 	    if (e.orientation == Titanium.UI.PORTRAIT)
 	    {
-	    	Divvy.Preview.scrollView.contentWidth = 320;
-	    	Divvy.Preview.scrollView.contentHeight = 480;
+	    	Divvy.Preview.scrollView.contentWidth = Divvy.Preview.contentWidth;
+	    	Divvy.Preview.scrollView.contentHeight = Divvy.Preview.contentHeight;
 
 	    }
 	    else if (e.orientation == Titanium.UI.LANDSCAPE_LEFT || e.orientation == Titanium.UI.LANDSCAPE_RIGHT)
 	    {
-	    	Divvy.Preview.scrollView.contentHeight = 320;
-	    	Divvy.Preview.scrollView.contentWidth = 480;
+	    	Divvy.Preview.scrollView.contentHeight = Divvy.Preview.contentWidth;
+	    	Divvy.Preview.scrollView.contentWidth = Divvy.Preview.contentHeight;
 	    }
 	});
 
@@ -70,8 +80,8 @@ Divvy.Preview.init = function ()
 	
 	this.scrollView = Ti.UI.createScrollView({
 //		top: -20,
-		contentWidth: 320, contentHeight: 480,
-		width: 480, height: 480,
+		contentWidth: Divvy.Preview.contentWidth, contentHeight: Divvy.Preview.contentHeight,
+		width: Divvy.Preview.contentHeight, height: Divvy.Preview.contentHeight,
 		minZoomScale: 1.0,
 		maxZoomScale: 3.0,
 		zoomScale: 1.0,
@@ -166,8 +176,8 @@ Divvy.Preview.close = function()
 	Divvy.Preview.win.hideNavBar({animated: false});
 	Divvy.Preview.scrollView.isFullScreen = true;
 	Divvy.Preview.scrollView.scrollZoom = 1.0;
-	Divvy.Preview.scrollView.contentHeight = 480;
-	Divvy.Preview.scrollView.contentWidth = 320;
+	Divvy.Preview.scrollView.contentHeight = Divvy.Preview.contentHeight;
+	Divvy.Preview.scrollView.contentWidth = Divvy.Preview.contentWidth;
 };
 
 Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)

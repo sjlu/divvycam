@@ -274,7 +274,12 @@ Divvy.View.generateImageThumbnail = function(num,id,image)
 
 	var padding = 4;
 	var dimension = 75;
-	
+	if (Ti.Platform.osname == 'ipad')
+	{
+		var dimension = 175;
+		var padding = 13;
+	}
+
 	var thumbnail = Ti.UI.createImageView({
 		width: dimension, height: dimension,
 		top: ((dimension+padding)*y)+padding+top_offset, left: ((dimension+padding)*x)+padding,
