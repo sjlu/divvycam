@@ -5,6 +5,7 @@ Divvy = {}; // We want to intialize our program into a single function first
  * throughout the application. Kind of like Global Variables in a sense.
  */
 Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.TRANSLUCENT_BLACK;
+Titanium.UI.orientation = Ti.UI.PORTRAIT;
 
 Divvy.winBarImage = 'images/navbar-background.png';
 Divvy.winBarColor = '#333';

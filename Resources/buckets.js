@@ -9,6 +9,9 @@ Divvy.Buckets.init = function()
 		title: 'Buckets',
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
+		orientationModes: [
+			Titanium.UI.PORTRAIT
+		],
 	});
 
 	this.addButton = Ti.UI.createButton({

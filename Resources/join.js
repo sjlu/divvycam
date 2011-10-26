@@ -9,6 +9,9 @@ Divvy.Join.init = function()
 		title: 'Join A Bucket',
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
+		orientationModes: [
+			Titanium.UI.PORTRAIT
+		],
 	});
 	
 	this.navButtonBar = Ti.UI.createButtonBar({

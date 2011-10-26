@@ -9,6 +9,9 @@ Divvy.Create.init = function()
 		title: 'New Bucket',
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
+		orientationModes: [
+			Titanium.UI.PORTRAIT
+		],
 	});	
 	
 	this.navButtonBar = Ti.UI.createButtonBar({

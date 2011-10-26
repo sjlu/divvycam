@@ -8,6 +8,9 @@ Divvy.View.init = function()
 	this.win = Ti.UI.createWindow({
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
+		orientationModes: [
+			Titanium.UI.PORTRAIT
+		],
 	});
 	
 	this.win.addEventListener('close', function(e)
