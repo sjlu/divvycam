@@ -49,7 +49,8 @@ Divvy.Preview.init = function ()
 			return;
 		
 		// method to saving the curretn photo	
-		Ti.Media.saveToPhotoGallery(Divvy.Preview.photo.toImage(), { //TODO: FIX THIS
+		Ti.Media.saveToPhotoGallery(Divvy.Preview.currentView.photo.toImage(), 
+		{
 			success: function(e)
 			{
 				alert("Saved to your photo gallery!");
@@ -238,6 +239,7 @@ Divvy.Preview.addImageToView = function(view, imageId)
 		{imageView: imageView, viewContainer: view}
 	);
 	
+	view.photo = imageView;
 	view.add(imageView);
 	view.add(Divvy.Preview.activityIndicator);
 };
