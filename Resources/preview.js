@@ -83,7 +83,7 @@ Divvy.Preview.init = function ()
 		height: this.deviceHeight, width: this.deviceWidth,
 //		contentWidth: Divvy.Preview.contentWidth, contentHeight: Divvy.Preview.contentHeight,
 		showPagingControl: false, // this hides the little dots
-		maxZoomScale: 2, // this just allows us to pinch and zoom
+		maxZoomScale: 3, // this just allows us to pinch and zoom
 		minZoomScale: 1,
 		isFullScreen: true, // this is not an element to the function itself, but a variable we'll use (just our own data).
 	});
