@@ -128,6 +128,8 @@ Divvy.View.init = function()
 	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
 	
+	this.imageArray = [];
+	
 	/*
 	 * All other elements that
 	 * are invoked at a later time.
@@ -174,8 +176,9 @@ Divvy.View.close = function()
 
 Divvy.View.refresh = function()
 {
-	Divvy.View.win.add(Divvy.View.activityIndicator);
+	this.imageArray = [];
 	this.numOfImages = 0;
+	Divvy.View.win.add(Divvy.View.activityIndicator);
 	Network.cache.run (
 		Divvy.url + 'thumbnails/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
@@ -216,7 +219,7 @@ Divvy.View.createScrollView = function()
 			return;
 			
 		e.source.opacity = 1.0;
-		Divvy.Preview.open(e.source.imageNumber,Divvy.View.numOfImages,e.source.imageId);
+		Divvy.Preview.open(e.source.imageNumber-1);
 	});
 
 	return scrollView;
@@ -264,7 +267,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	var i = 0;
 	for (var j in thumbnails)
 	{
-		Divvy.View.scrollView.add(Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url));
+		Divvy.View.imageArray[i] = Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url);
+		Divvy.View.scrollView.add(Divvy.View.imageArray[i]);
 		i++;
 	}
 };
