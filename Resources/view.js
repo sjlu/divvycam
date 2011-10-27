@@ -265,7 +265,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		
 	var thumbnails = data.thumbnails;
 	
-	Divvy.View.footerView.top = 4*(Divvy.View.dimension+Divvy.View.padding)+50;
+	Divvy.View.footerView.top = 5*(Divvy.View.dimension+Divvy.View.padding)+15;
 	
 	if ((thumbnails.length) > 16)
 	{
