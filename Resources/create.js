@@ -73,7 +73,7 @@ Divvy.Create.init = function()
 		editable: true,
 		passwordMask: true,
 		color: '#385487',
-      autocapitalization: Titanium.UI.TEXT_AUTOCAPITALIZATION_NONE,
+      	autocapitalization: Titanium.UI.TEXT_AUTOCAPITALIZATION_NONE,
 		clearButtonMode: Titanium.UI.INPUT_BUTTONMODE_ONFOCUS,
 	});
 	
