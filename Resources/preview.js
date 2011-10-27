@@ -176,7 +176,7 @@ Divvy.Preview.close = function()
 	Divvy.Preview.scrollView.isFullScreen = true;
 	Divvy.Preview.scrollView.views = [];
 	Divvy.Preview.scrollView.height = Divvy.deviceHeight;
-	Divvy.PReview.scrollView.width = Divvy.deviceWidth;
+	Divvy.Preview.scrollView.width = Divvy.deviceWidth;
 };
 
 Divvy.Preview.loadViews = function(index, dataset)
