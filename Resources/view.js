@@ -13,6 +13,15 @@ Divvy.View.init = function()
 		],
 	});
 	
+	this.padding = 4;
+	this.dimension = 75;
+	
+	if (Ti.Platform.osname == 'ipad')
+	{
+		this.padding = 13;
+		this.dimension = 175;
+	}
+	
 	this.win.addEventListener('close', function(e)
 	{
 		Divvy.View.close();
@@ -256,11 +265,11 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		
 	var thumbnails = data.thumbnails;
 	
-	Divvy.View.footerView.top = 410;
+	Divvy.View.footerView.top = 4*(Divvy.View.dimension+Divvy.View.padding)+50;
 	
 	if ((thumbnails.length) > 16)
 	{
-		Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*79)+50;
+		Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+50;
 		Divvy.View.footerLabel.text = thumbnails.length+" Photos";
 	}
 		
@@ -287,17 +296,9 @@ Divvy.View.generateImageThumbnail = function(num,id,image)
 	
 	var top_offset = 50;
 
-	var padding = 4;
-	var dimension = 75;
-	if (Ti.Platform.osname == 'ipad')
-	{
-		var dimension = 175;
-		var padding = 13;
-	}
-
 	var thumbnail = Ti.UI.createImageView({
-		width: dimension, height: dimension,
-		top: ((dimension+padding)*y)+padding+top_offset, left: ((dimension+padding)*x)+padding,
+		width: this.dimension, height: this.dimension,
+		top: ((this.dimension+this.padding)*y)+this.padding+top_offset, left: ((this.dimension+this.padding)*x)+this.padding,
 		hires: true,
 		borderWidth: 1,
 		borderColor: '#ccc',
