@@ -10,6 +10,17 @@ Titanium.UI.orientation = Ti.UI.PORTRAIT;
 Divvy.winBarImage = 'images/navbar-background.png';
 Divvy.winBarColor = '#333';
 
+Divvy.deviceHeight = 480;
+Divvy.deviceWidth = 320;
+Divvy.device = 'iphone';
+
+if (Ti.Platform.osname == 'ipad')
+{
+	Divvy.deviceHeight = 1024;
+	Divvy.deviceWidth = 768;
+	Divvy.device = 'ipad';
+}
+
 Divvy.url = 'https://divvy.burst-dev.com/api/';
 
 /*
