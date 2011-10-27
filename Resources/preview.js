@@ -83,8 +83,9 @@ Divvy.Preview.init = function ()
 		height: this.deviceHeight, width: this.deviceWidth,
 //		contentWidth: Divvy.Preview.contentWidth, contentHeight: Divvy.Preview.contentHeight,
 		showPagingControl: false, // this hides the little dots
-		maxZoomScale: 3, // this just allows us to pinch and zoom
+		maxZoomScale: 1, // this just allows us to pinch and zoom
 		minZoomScale: 1,
+		isZoomed: false,
 		isFullScreen: true, // this is not an element to the function itself, but a variable we'll use (just our own data).
 	});
 	
@@ -118,36 +119,7 @@ Divvy.Preview.init = function ()
 			
 		Divvy.Preview.loadViews(e.view.index, Divvy.View.imageArray); //borrowed from other pages.
 	});
-/*
-	this.scrollView.addEventListener('doubletap', function(e) {  
-		clearInterval(Divvy.Preview.scrollAnimation);
-		
-		if (Divvy.Preview.scrollView.scaled)
-		{
-			Divvy.Preview.scrollAnimation = setInterval(function() {
-				if (Divvy.Preview.scrollView.zoomScale >= 2.0)
-					clearInterval(Divvy.Preview.scrollAnimation);
-				Divvy.Preview.scrollView.zoomScale += 0.1;
-			}, 20);
-		}
-		else
-		{
-			Divvy.Preview.scrollAnimation = setInterval(function() {
-				if (Divvy.Preview.scrollView.zoomScale <= 1.0)
-					clearInterval(Divvy.Preview.scrollAnimation);
-				Divvy.Preview.scrollView.zoomScale -= 0.1;
-			}, 20);
-		}
-		
-    	Divvy.Preview.scrollView.scaled = !Divvy.Preview.scrollView.scaled;
-	});
-/*	
-	this.toolbar = Ti.UI.createToolbar({
-		
-	});
-	
-	this.win.add(this.toolbar);
-*/	
+
 	this.activityIndicator = Ti.UI.createActivityIndicator({
 		width: 50, height: 50,
 	});
@@ -200,7 +172,15 @@ Divvy.Preview.loadViews = function(index, dataset)
 	}
 	
 	i = index;
-	var v2 = Ti.UI.createView({index: i});
+	var v2 = Ti.UI.createScrollView({index: i, minZoomScale: 1.0, maxZoomScale: 3.0, zoomScale: 1.0});
+	v2.addEventListener('doubletap', function(e)
+	{
+		if (Divvy.Preview.currentView.zoomScale > 1.0)
+			Divvy.Preview.currentView.zoomScale = 1.0;
+		else
+			Divvy.Preview.currentView.zoomScale = 2.0;
+	});
+	
 	this.addImageToView(v2, dataset[i].imageId);
 	loadedViews.push(v2);
 	
