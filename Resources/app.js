@@ -7,7 +7,11 @@ Divvy = {}; // We want to intialize our program into a single function first
 Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.TRANSLUCENT_BLACK;
 Titanium.UI.orientation = Ti.UI.PORTRAIT;
 
-Divvy.winBarImage = 'images/navbar-background.png';
+if (Ti.Platform.osname == 'ipad')	
+	Divvy.winBarImage = 'images/navbar-ipad.png';
+else
+	Divvy.winBarImage = 'images/navbar-iphone.png';
+	
 Divvy.winBarColor = '#333';
 
 Divvy.deviceHeight = 480;
