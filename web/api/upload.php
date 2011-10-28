@@ -16,7 +16,7 @@ function upload_to_s3($file, $filename)
       return false;
 
    $imagick = new Imagick($file);
-   $imagick->cropThumbnailImage(100,100);
+   $imagick->cropThumbnailImage(200,200);
    $thumbnailFile = tempnam('/tmp', 'thumb_');
    $imagick->writeImage($thumbnailFile);
 
