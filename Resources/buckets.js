@@ -202,12 +202,22 @@ Divvy.Buckets.onImageCacheError = function(status, httpStatus)
  */
 Divvy.Buckets.addBucket = function(name, id, pw)
 {	
-	var currBuckets = Ti.App.Properties.getList('buckets');
-	if (currBuckets == null)
-		currBuckets = [];
+	var buckets = Ti.App.Properties.getList('buckets');
+	if (buckets == null)
+	{
+		buckets = [];
+	}
+	else
+	{
+		for (var i = 0; i < buckets.length; i++)
+		{
+			if (buckets[i].id == id)
+				return;
+		}
+	}
 		
-	currBuckets.push({name: name, id: id, pw: pw});
-	Ti.App.Properties.setList('buckets', currBuckets);
+	buckets.push({name: name, id: id, pw: pw});
+	Ti.App.Properties.setList('buckets', buckets);
 	Divvy.Buckets.refresh();
 };
 
