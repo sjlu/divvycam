@@ -102,6 +102,13 @@ Divvy.View.init = function()
 	
 	this.infoView.add(this.infoLabel);
 	
+	this.emailDialog = Titanium.UI.createEmailDialog({barcolor: Divvy.winBarColor});	
+ 	this.emailDialog.addEventListener('complete', function(e)
+	{
+		if (e.result == Divvy.View.emailDialog.FAILED)
+			alert("Either something went wrong or there isn't any email account.");
+	});	
+	
 	this.messageButton = Ti.UI.createButton({
 		height: 49, width: 50,
 		top: 202, left: 5,
@@ -112,11 +119,16 @@ Divvy.View.init = function()
 	
 	this.messageButton.addEventListener('click', function(e)
 	{
-		var emailDialog = Titanium.UI.createEmailDialog({barcolor: Divvy.winBarColor});
-		emailDialog.subject = "You've been invited to share photos!";
-		emailDialog.messageBody = "https://divvy.burst-dev.com/b/"+Divvy.View.win.id+"\n\n"+Divvy.View.win.title+"\nBucket ID: "+Divvy.View.win.id+"\nPassword: "+Divvy.View.win.pw+"\n\nDivvycam is an app where you can take photos with your friends and store it all in one place. It's like sharing the same memory card, but without the hassles.\n\nFor more information visit:\nhttps://divvy.burst-dev.com/";
-		emailDialog.open();
- 	});
+		if (!Divvy.View.emailDialog.isSupported())
+		{
+			alert("Couldn't open the email application.");
+			return;
+		}
+		
+		Divvy.View.emailDialog.subject = "You've been invited to share photos!";
+		Divvy.View.emailDialog.messageBody = "https://divvy.burst-dev.com/b/"+Divvy.View.win.id+"\n\n"+Divvy.View.win.title+"\nBucket ID: "+Divvy.View.win.id+"\nPassword: "+Divvy.View.win.pw+"\n\nDivvycam is an app where you can take photos with your friends and store it all in one place. It's like sharing the same memory card, but without the hassles.\n\nFor more information visit:\nhttps://divvy.burst-dev.com/";
+		Divvy.View.emailDialog.open();
+	});
 	
 	this.infoView.add(this.messageButton);
 	
