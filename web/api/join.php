@@ -1,7 +1,7 @@
 <?php
 include_once '../include/config.php';
 
-function join_bucket($id, $password)
+function join_bucket($duid, $id, $password)
 {
    $pw_verify = db_query('SELECT id, name, AES_DECRYPT(password, "%s") AS secret FROM buckets WHERE id="%s" LIMIT 1', $password, $id);
 
@@ -23,8 +23,14 @@ function join_bucket($id, $password)
    return $output;
 }
 
-if (isset($_POST['bucket_id']) && isset($_POST['password']))
-   echo json_encode(join_bucket($_POST['bucket_id'], $_POST['password']));
+if (!check_if_user_belongs_to_bucket($_POST['duid'], $_POST['bucket_id']))
+{
+	echo '{"status":"error", "error":"permission_denied"}';
+	die();
+}
+
+if (isset($_POST['bucket_id']) && isset($_POST['password']) && isset($_POST['duid']))
+   echo json_encode(join_bucket($_POST['duid'], $_POST['bucket_id'], $_POST['password']));
 else
    echo '{"status":"error", "error":"invalid_request"}';
 ?>
