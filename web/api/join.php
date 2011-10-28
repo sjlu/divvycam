@@ -23,12 +23,6 @@ function join_bucket($duid, $id, $password)
    return $output;
 }
 
-if (!check_if_user_belongs_to_bucket($_POST['duid'], $_POST['bucket_id']))
-{
-	echo '{"status":"error", "error":"permission_denied"}';
-	die();
-}
-
 if (isset($_POST['bucket_id']) && isset($_POST['password']) && isset($_POST['duid']))
    echo json_encode(join_bucket($_POST['duid'], $_POST['bucket_id'], $_POST['password']));
 else
