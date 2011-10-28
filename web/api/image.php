@@ -8,7 +8,7 @@ function get_image($duid, $image_id)
    if (count($image) < 1 || count($image) > 1)
       return array('status' => 'error', 'error' => 'no_such_image');
 
-	if (check_if_user_belongs_to_bucket($duid, $image[0]['bucket_id']))
+	if (!check_if_user_belongs_to_bucket($duid, $image[0]['bucket_id']))
 		return array('status' => 'error', 'error' => 'permission_denied');
 
 	db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $image[0]['bucket_id'], $duid);
