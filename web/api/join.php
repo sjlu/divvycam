@@ -11,7 +11,7 @@ function join_bucket($duid, $id, $password)
    if ($pw_verify[0]['secret'] !== BLOWFISH_SECRET)
       return array('status' => 'error', 'error' => 'pw_incorrect');
 
-	db_query('INSERT IF NOT EXISTS INTO buckets_devices (duid, bucket_id) VALUES ("%s", "%s")', $duid, $pw_verify[0]['id']);
+	db_query('INSERT IGNORE INTO buckets_devices (duid, bucket_id) VALUES ("%s", "%s")', $duid, $pw_verify[0]['id']);
 
    $output = array();
    $output['status'] = 'success';
