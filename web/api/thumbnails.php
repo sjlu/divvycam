@@ -1,7 +1,7 @@
 <?php
 include_once '../include/config.php';
 
-function get_thumbnails($bucket_id, $limit = -1, $order = "ASC")
+function get_thumbnails($bucket_id, $duid, $limit = -1, $order = "ASC")
 {
    if ($limit > 0)
       $limit_string = 'LIMIT %s';
@@ -17,17 +17,9 @@ function get_thumbnails($bucket_id, $limit = -1, $order = "ASC")
       $output[] = array('id' => $image['id'], 'url' => $s3->get_object_url('divvycam', $image['filename'] . '-thumbnail.jpg', '60 seconds'));
 
    db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $bucket_id);
+	db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $bucket_id, $duid);
 
    return $output;
-}
-
-function check_if_bucket_exists($bucket_id)
-{
-   $check_exists = db_query('SELECT COUNT(*) FROM buckets WHERE id="%s"', $bucket_id);
-   if ($check_exists[0]['COUNT(*)'] == 1)
-      return true;
-   else
-      return false;  
 }
 
 if (!isset($_GET['bucket_id']))
@@ -40,6 +32,12 @@ if (!check_if_bucket_exists($_GET['bucket_id']))
 {
    echo '{"status":"error","error":"no_such_bucket"}';
    die();
+}
+
+if (!check_if_user_belongs_to_bucket($_GET['duid'], $_GET['bucket_id']))
+{
+	echo '{"status":"error", "error":"permission_denied"}';
+	die();
 }
 
 if (isset($_GET['order']))
@@ -57,5 +55,5 @@ if (!isset($_GET['limit']))
 else
    $limit = $_GET['limit'];
 
-echo json_encode(array('status' => 'success', 'bucket_id'=> $_GET['bucket_id'], 'thumbnails' => get_thumbnails($_GET['bucket_id'], $limit, $order)));
+echo json_encode(array('status' => 'success', 'bucket_id'=> $_GET['bucket_id'], 'thumbnails' => get_thumbnails($_GET['bucket_id'], $_GET['duid'], $limit, $order)));
 ?>

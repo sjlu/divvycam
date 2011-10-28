@@ -4,7 +4,9 @@ include_once '../include/config.php';
 function create_bucket($duid, $name, $password)
 {
    db_query('INSERT INTO buckets (duid, name, password) VALUES ("%s", "%s", AES_ENCRYPT("%s", "%s"))',$duid,$name,BLOWFISH_SECRET,$password);
+
    $newBucket = db_query('SELECT id,name FROM buckets WHERE duid="%s" ORDER BY id DESC LIMIT 1', $duid);
+	db_query('INSERT INTO buckets_devices (duid, bucket_id) VALUES ("%s", "%s")', $duid, $newBucket[0]['id']);
 
    $output = array();
    $output['status'] = 'success';

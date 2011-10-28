@@ -33,19 +33,11 @@ function upload_to_s3($file, $filename)
       return false;
 }
 
-function check_if_bucket_exists($bucket_id)
-{
-   $check_exists = db_query('SELECT COUNT(*) FROM buckets WHERE id="%s"', $bucket_id);
-   if ($check_exists[0]['COUNT(*)'] == 1)
-      return true;
-   else
-      return false;  
-}
-
-function add_image_to_db($bucket_id, $filename)
+function add_image_to_db($bucket_id, $filename, $duid)
 {
    db_query('INSERT INTO photos (bucket_id, filename) VALUES ("%s","%s")', $bucket_id, $filename);
    db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $bucket_id);
+	db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $bucket_id, $duid);
    return true;
 }
 
@@ -56,7 +48,7 @@ if ($_FILES["image"]["error"] > 0)
    die();
 }
 
-if (!isset($_POST["bucket_id"]))
+if (!isset($_POST["bucket_id"]) || !isset($_POST["duid"]))
 {
    echo '{"status":"error", "error":"invalid_request"}';
    die();
@@ -74,8 +66,15 @@ if (!check_if_bucket_exists($_POST['bucket_id']))
    die();
 }
 
+if (!check_if_user_belongs_to_bucket($_POST['duid'], $_POST['bucket_id']))
+{
+	echo '{"status":"error", "error":"permission_denied"}';
+	die();
+}
+
 $file = $_FILES["image"]["tmp_name"];
 $bucket_id = $_POST['bucket_id'];
+$duid = $_POST['duid'];
 
 $filename = $bucket_id . "-" . md5($file);
 
@@ -85,7 +84,7 @@ if (!upload_to_s3($file, $filename))
    die();
 }
 
-if (!add_image_to_db($bucket_id, $filename))
+if (!add_image_to_db($bucket_id, $filename, $uid))
 {
    echo '{"status":"error", "error":"db_error"}';
    die();
