@@ -1,7 +1,7 @@
 <?php
 include_once '../include/config.php';
 
-function get_image($image_id, $duid)
+function get_image($duid, $image_id)
 {
    $image = db_query('SELECT bucket_id, filename FROM photos WHERE id="%s" LIMIT 1', $image_id);
 
@@ -17,5 +17,5 @@ function get_image($image_id, $duid)
 	return array('status' => 'success', 'url' => $s3->get_object_url('divvycam', $image[0]['filename'] . '.jpg', '60 seconds'));
 }
 
-echo json_encode(get_image($_GET['image_id']));
+echo json_encode(get_image($_GET['duid'], $_GET['image_id']));
 ?>
