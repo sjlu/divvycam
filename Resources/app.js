@@ -4,7 +4,7 @@ Divvy = {}; // We want to intialize our program into a single function first
  * Any configurations to Titanium itself, and variables that need to be set
  * throughout the application. Kind of like Global Variables in a sense.
  */
-Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.TRANSLUCENT_BLACK;
+Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.OPAQUE_BLACK;
 Titanium.UI.orientation = Ti.UI.PORTRAIT;
 
 if (Ti.Platform.osname == 'ipad')	

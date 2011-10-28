@@ -17,9 +17,9 @@
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>true</prerendered-icon>
-    <statusbar-style>translucent</statusbar-style>
+    <statusbar-style>black</statusbar-style>
     <statusbar-hidden>false</statusbar-hidden>
-    <fullscreen>true</fullscreen>
+    <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
     <guid>fb788863-8084-4efc-800f-3b7382099ef3</guid>
