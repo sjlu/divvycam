@@ -227,4 +227,6 @@ Divvy.Buckets.removeBucket = function(id)
 			return;
 		}
 	}
+	
+	Divvy.Buckets.refresh();
 }
