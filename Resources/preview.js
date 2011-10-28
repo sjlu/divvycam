@@ -155,6 +155,7 @@ Divvy.Preview.close = function()
 Divvy.Preview.loadViews = function(index, dataset)
 {
 	this.win.title = (index+1) + ' of ' + dataset.length;
+	this.saveButton.enabled = false;
 	
 	var loadedViews = [];
 	var selectedPage = 0;
@@ -258,6 +259,7 @@ Divvy.Preview.onImageUrlError = function(status, httpStatus)
 
 Divvy.Preview.onImageSuccess = function(data, date, status, user, xhr)
 {
+	Divvy.Preview.saveButton.enabled = true;
 	user.viewContainer.remove(Divvy.Preview.activityIndicator);
 	user.imageView.image = data;
 };
