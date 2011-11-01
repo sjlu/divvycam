@@ -33,6 +33,17 @@ Divvy.Join.init = function()
 		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 	});
 	
+	this.footerView = Ti.UI.createView({height: 60});
+	this.footerLabel = Ti.UI.createLabel({
+		text: "Type in the 6 digit bucket ID and the password that was provided in order to join an existing bucket.",
+		textAlign: "center", width: 280,
+		color: '#4c566c',
+		shadowOffset:{x:0,y:1},
+		font: { fontSize: 16 }
+	});
+	this.footerView.add(this.footerLabel);
+	this.tableview.footerView = this.footerView;
+	
 	this.row_bucketname = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	});

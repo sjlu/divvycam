@@ -33,6 +33,17 @@ Divvy.Create.init = function()
 		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 	});
 	
+	this.footerView = Ti.UI.createView({height: 180});
+	this.footerLabel = Ti.UI.createLabel({
+		text: "Buckets are intended for temporary use and not for backup purposes.\n\nYou can always download your bucket's content from the web at any time.\n\nBuckets that are stale will be eventually deleted.",
+		textAlign: "center", width: 280,
+		color: '#4c566c',
+		shadowOffset:{x:0,y:1},
+		font: { fontSize: 16 }
+	});
+	this.footerView.add(this.footerLabel);
+	this.tableview.footerView = this.footerView;
+	
 	this.row_bucketname = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	});
@@ -40,7 +51,6 @@ Divvy.Create.init = function()
 	this.label_bucketname = Ti.UI.createLabel({
 		text: 'Name',
 		left: 10,
-
 		font: { fontSize: 16, fontWeight: 'bold'}
 	});
 	
