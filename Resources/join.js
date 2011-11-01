@@ -12,6 +12,7 @@ Divvy.Join.init = function()
 		orientationModes: [
 			Titanium.UI.PORTRAIT
 		],
+		backgroundColor: '#d6d8de'
 	});
 	
 	this.navButtonBar = Ti.UI.createButtonBar({
@@ -61,7 +62,7 @@ Divvy.Join.init = function()
 	this.textarea_bucketid = Ti.UI.createTextField({
 		hintText: '6 Digit ID',
 		left: 100,
-		width: 190, height: 24,
+		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
 		editable: true,
 		color: '#385487',
 		keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
@@ -84,7 +85,7 @@ Divvy.Join.init = function()
 	this.textarea_bucketpw = Ti.UI.createTextField({
 		hintText: 'Required',
 		left: 100,
-		width: 190, height: 24,
+		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
 		editable: true,
 		passwordMask: true,
 		color: '#385487',

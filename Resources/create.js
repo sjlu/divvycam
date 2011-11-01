@@ -12,6 +12,7 @@ Divvy.Create.init = function()
 		orientationModes: [
 			Titanium.UI.PORTRAIT
 		],
+		backgroundColor: '#d6d8de'
 	});	
 	
 	this.navButtonBar = Ti.UI.createButtonBar({
@@ -57,7 +58,7 @@ Divvy.Create.init = function()
 	this.textarea_bucketname = Ti.UI.createTextField({
 		hintText: 'My New Bucket',
 		left: 100,
-		width: 190, height: 24,
+		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
 		editable: true,
 		color: '#385487',
 		clearButtonMode: Titanium.UI.INPUT_BUTTONMODE_ONFOCUS,
@@ -79,7 +80,7 @@ Divvy.Create.init = function()
 	this.textarea_bucketpw = Ti.UI.createTextField({
 		hintText: 'Required',
 		left: 100,
-		width: 190, height: 24,
+		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
 		editable: true,
 		passwordMask: true,
 		color: '#385487',
