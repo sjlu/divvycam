@@ -292,6 +292,9 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		Divvy.View.scrollView.add(Divvy.View.imageArray[i]);
 		i++;
 	}
+	
+	if (Divvy.testflightActive)
+		Divvy.testflight.passCheckpoint("opened a bucket");
 };
 
 Divvy.View.onRefreshError = function(status, httpStatus)
@@ -418,6 +421,9 @@ Divvy.View.onSendSuccess = function(data, date, status, user, xhr)
 	Divvy.View.win.setToolbar(null, {animated: true});
 	Divvy.View.uploadIndicator.value = 0;
 	Divvy.View.cameraButton.enabled = true;
+	
+	if (Divvy.testflightActive)
+		Divvy.testflight.passCheckpoint("uploaded a photo");
 };
 
 Divvy.View.onSendError = function (status, httpStatus)
@@ -426,6 +432,9 @@ Divvy.View.onSendError = function (status, httpStatus)
 	Divvy.View.win.setToolbar(null, {animated: true});
 	Divvy.View.uploadIndicator.value = 0;
 	Divvy.View.cameraButton.enabled = true;
+	
+	if (Divvy.testflightActive)
+		Divvy.testflight.passCheckpoint("upload photo error ("+status+")");
 };
 
 Divvy.View.onSendStream = function(progress)

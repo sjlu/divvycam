@@ -22,6 +22,19 @@ Divvy.Buckets.init = function()
 		Divvy.Buckets.addDialog.show();
 	});
 	
+	if (Divvy.testflightActive)
+	{
+		this.feedbackButton = Ti.UI.createButton({
+			systemButton: Ti.UI.iPhone.SystemButton.COMPOSE
+		});
+		
+		this.feedbackButton.addEventListener('click', function(e){
+			Divvy.testflight.openFeedbackView();
+		});
+		
+		this.win.leftNavButton = this.feedbackButton;
+	}
+	
 	this.addDialog = Ti.UI.createOptionDialog({
 		options: ['Join Existing Bucket', 'Create New Bucket', 'Cancel'],
 		cancel: 2

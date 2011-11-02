@@ -141,6 +141,9 @@ Divvy.Preview.open = function (index)
 			Divvy.Preview.win.showNavBar({animated: false});
 		}
 	}, 2000);
+	
+	if (Divvy.testflightActive)
+		Divvy.testflight.passCheckpoint("viewed a photo");
 };
 
 Divvy.Preview.close = function()

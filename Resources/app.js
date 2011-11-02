@@ -1,5 +1,13 @@
 Divvy = {}; // We want to intialize our program into a single function first
 
+Divvy.testflightActive = true;
+
+if (Divvy.testflightActive)
+{
+	Divvy.testflight = require('com.0x82.testflight');
+	Divvy.testflight.takeOff('488eb7c844eded229570cdf2384e8137_MzgyNDcyMDExLTExLTAxIDIyOjIxOjQwLjA3NjIzNg');
+}
+
 /*
  * Any configurations to Titanium itself, and variables that need to be set
  * throughout the application. Kind of like Global Variables in a sense.
@@ -63,3 +71,6 @@ Divvy.Buckets.open();
 Divvy.tab.window = Divvy.Buckets.win; // this is our intial window, we need to pass it to the overlord
 Divvy.tabs.addTab(Divvy.tab);
 Divvy.tabs.open();
+
+if (Divvy.testflightActive)
+	Divvy.testflight.passCheckpoint("app opened");
