@@ -15,6 +15,11 @@ Divvy.Join.init = function()
 		backgroundColor: '#d6d8de'
 	});
 	
+	this.win.addEventListener('close', function(e)
+	{
+		Divvy.Join.reset();
+	});
+	
 	this.navButtonBar = Ti.UI.createButtonBar({
 		labels: ['Join'],
 		style: Ti.UI.iPhone.SystemButtonStyle.DONE,

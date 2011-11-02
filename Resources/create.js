@@ -13,7 +13,12 @@ Divvy.Create.init = function()
 			Titanium.UI.PORTRAIT
 		],
 		backgroundColor: '#d6d8de'
-	});	
+	});
+	
+	this.win.addEventListener('close', function(e)
+	{
+		Divvy.Create.reset();
+	});
 	
 	this.navButtonBar = Ti.UI.createButtonBar({
 		labels: ['Create'],
