@@ -40,6 +40,11 @@ Divvy.Join.init = function()
 	});
 	
 	this.footerView = Ti.UI.createView({height: 60});
+	this.footerView.addEventListener('touchstart', function(e)
+	{
+		Divvy.Join.textarea_bucketid.blur();
+		Divvy.Join.textarea_bucketpw.blur();
+	});
 	this.footerLabel = Ti.UI.createLabel({
 		text: "Type in the 6 digit bucket ID and the password that was provided in order to join an existing bucket.",
 		textAlign: "center", width: 280,

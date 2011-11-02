@@ -39,7 +39,14 @@ Divvy.Create.init = function()
 		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 	});
 	
+
+	
 	this.footerView = Ti.UI.createView({height: 180});
+	this.footerView.addEventListener('touchstart', function(e)
+	{
+		Divvy.Create.textarea_bucketname.blur();
+		Divvy.Create.textarea_bucketpw.blur();
+	});
 	this.footerLabel = Ti.UI.createLabel({
 		text: "Buckets are intended for temporary use and not for backup purposes.\n\nYou can always download your bucket's content from the web at any time.\n\nBuckets that are stale will be eventually deleted.",
 		textAlign: "center", width: 280,
