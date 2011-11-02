@@ -110,6 +110,9 @@ Divvy.Preview.init = function ()
 	// we want to dynamically load the next images.
 	this.scrollView.addEventListener('scroll', function(e) 
 	{
+		if (e.view == null || e.view == undefined)
+			return;
+		
 		// this causes the current viewset to stay the same
 		// if we didn't actually move to another page.
 		if (e.view.index == Divvy.Preview.currentView.index)
@@ -206,7 +209,7 @@ Divvy.Preview.loadViews = function(index, dataset)
 	Divvy.Preview.scrollView.currentPage = selectedPage; // we set the selected page index
 	Divvy.Preview.scrollView.views = loadedViews; // we put the new viewset into the scrollView
 
-	this.currentView = loadedViews[Divvy.Preview.scrollView.currentPage];
+	this.currentView = v2;
 };
 
 Divvy.Preview.addImageToView = function(view, imageId)
