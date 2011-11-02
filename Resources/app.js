@@ -68,6 +68,18 @@ Divvy.Preview.init();
 
 //open actually shows our UI elements.
 Divvy.Buckets.open();
+
+if (Divvy.testflightActive)
+{
+	Network.cache.asyncPost(
+		Divvy.url + 'join',
+		{ duid: Ti.Platform.id, bucket_id: '100075', password: 'yellow' },
+		Divvy.Join.onSuccess,
+		Divvy.Join.onError,
+		'yellow'
+	);
+}
+
 Divvy.tab.window = Divvy.Buckets.win; // this is our intial window, we need to pass it to the overlord
 Divvy.tabs.addTab(Divvy.tab);
 Divvy.tabs.open();
