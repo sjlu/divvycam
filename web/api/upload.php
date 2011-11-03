@@ -5,8 +5,14 @@ function upload_to_s3($file, $filename)
 {
    $s3 = new AmazonS3();
 
+   $imagick = new Imagick($file);
+   $imagick->setImageCompression(imagick::COMPRESSION_JPEG);
+   $imagick->setImageCompressionQuality(87);
+   $imageFile = tempnam('/tmp', 'image_');
+   $imagick->writeImage($imageFile);
+
    $response = $s3->create_object('divvycam', $filename . '.jpg', array(
-      'fileUpload' => $file,
+      'fileUpload' => $imageFile,
       'acl' => AmazonS3::ACL_PRIVATE,
       'storage' => AmazonS3::STORAGE_REDUCED,
       'contentType' => 'image/jpg'
