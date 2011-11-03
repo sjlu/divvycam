@@ -384,6 +384,12 @@ Divvy.View.savePhoto = function(e)
 		image = resizedImage.toImage();
 	}
 	
+	var compImgPath, compImg;
+	compImgPath = Divvy.jpgcompressor.compress(image, 'temp_image.png');
+	compImg = Ti.Filesystem.getFile(compImgPath);
+	alert(compImg.read.blob.length);
+	image = compImg.read.blob;
+	
 	Divvy.View.cameraButton.enabled = false;
 	Divvy.View.win.setToolbar([Divvy.View.flexSpace, Divvy.View.uploadIndicator, Divvy.View.flexSpace]);
 	

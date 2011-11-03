@@ -1,5 +1,9 @@
 Divvy = {}; // We want to intialize our program into a single function first
 
+Divvy.jpgcompressor = require('com.sideshowcoder.jpgcompressor');
+Divvy.jpgcompressor.setCompressSize(204800);
+Divvy.jpgcompressor.setWorstCompressQuality(0.87);
+
 Divvy.testflightActive = true;
 
 if (Divvy.testflightActive)
