@@ -7,7 +7,7 @@ function upload_to_s3($file, $filename)
 
    $imagick = new Imagick($file);
    $imagick->setImageCompression(imagick::COMPRESSION_JPEG);
-   $imagick->setImageCompressionQuality(87);
+   $imagick->setImageCompressionQuality(90);
    $imageFile = tempnam('/tmp', 'image_');
    $imagick->writeImage($imageFile);
 

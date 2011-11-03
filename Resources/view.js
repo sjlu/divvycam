@@ -387,7 +387,6 @@ Divvy.View.savePhoto = function(e)
 	var compImgPath, compImg;
 	compImgPath = Divvy.jpgcompressor.compress(image, 'temp_image.png');
 	compImg = Ti.Filesystem.getFile(compImgPath);
-	alert(compImg.read.blob.length);
 	image = compImg.read.blob;
 	
 	Divvy.View.cameraButton.enabled = false;
