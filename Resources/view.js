@@ -348,6 +348,9 @@ Divvy.View.onImageCacheError = function(status, httpStatus)
 
 Divvy.View.savePhoto = function(e) 
 {
+	Divvy.View.cameraButton.enabled = false;
+	Divvy.View.win.setToolbar([Divvy.View.flexSpace, Divvy.View.uploadIndicator, Divvy.View.flexSpace]);
+	
 	var image = e.media;
 	
 	/*
@@ -388,9 +391,6 @@ Divvy.View.savePhoto = function(e)
 	compImgPath = Divvy.jpgcompressor.compress(image, 'temp_image.png');
 	compImg = Ti.Filesystem.getFile(compImgPath);
 	image = compImg.read.blob;
-	
-	Divvy.View.cameraButton.enabled = false;
-	Divvy.View.win.setToolbar([Divvy.View.flexSpace, Divvy.View.uploadIndicator, Divvy.View.flexSpace]);
 	
 	Network.cache.asyncPost(
 		Divvy.url + 'upload',
