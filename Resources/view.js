@@ -263,7 +263,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	
 	if (data.status == 'error')
 	{
-		if (data.error == 'no_such_bucket')
+		if (data.error == 'no_such_bucket' || data.error == 'permission_denied')
 		{
 			Divvy.Buckets.removeBucket(user);
 //			Divvy.Buckets.win.close();
