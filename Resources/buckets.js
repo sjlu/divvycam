@@ -22,7 +22,7 @@ Divvy.Buckets.init = function()
 		Divvy.Buckets.addDialog.show();
 	});
 	
-	if (Divvy.testflightActive)
+	if (Divvy.developmentMode)
 	{
 		this.feedbackButton = Ti.UI.createButton({
 			systemButton: Ti.UI.iPhone.SystemButton.COMPOSE

@@ -145,7 +145,7 @@ Divvy.Preview.open = function (index)
 		}
 	}, 2000);
 	
-	if (Divvy.testflightActive)
+	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("viewed a photo");
 };
 

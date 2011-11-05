@@ -4,9 +4,9 @@ Divvy.jpgcompressor = require('com.sideshowcoder.jpgcompressor');
 Divvy.jpgcompressor.setCompressSize(204800);
 Divvy.jpgcompressor.setWorstCompressQuality(0.87);
 
-Divvy.testflightActive = true;
+Divvy.developmentMode = true;
 
-if (Divvy.testflightActive)
+if (Divvy.developmentMode)
 {
 	Divvy.testflight = require('com.0x82.testflight');
 	Divvy.testflight.takeOff('488eb7c844eded229570cdf2384e8137_MzgyNDcyMDExLTExLTAxIDIyOjIxOjQwLjA3NjIzNg');
@@ -73,7 +73,7 @@ Divvy.Preview.init();
 //open actually shows our UI elements.
 Divvy.Buckets.open();
 
-if (Divvy.testflightActive)
+if (Divvy.developmentMode)
 {
 	Network.cache.asyncPost(
 		Divvy.url + 'join',
@@ -88,5 +88,5 @@ Divvy.tab.window = Divvy.Buckets.win; // this is our intial window, we need to p
 Divvy.tabs.addTab(Divvy.tab);
 Divvy.tabs.open();
 
-if (Divvy.testflightActive)
+if (Divvy.developmentMode)
 	Divvy.testflight.passCheckpoint("app opened");
