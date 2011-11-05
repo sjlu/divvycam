@@ -9,6 +9,7 @@ Divvy.Buckets.init = function()
 		title: 'Buckets',
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
+		editable: true,
 		orientationModes: [
 			Titanium.UI.PORTRAIT
 		],
@@ -56,6 +57,9 @@ Divvy.Buckets.init = function()
 	this.tableview = Ti.UI.createTableView();
 	this.tableview.addEventListener('click', function(e) {
 		Divvy.View.open(e.row.bucketName, e.row.bucketId, e.row.bucketPw);
+	});
+	this.tableview.addEventListener('delete', function(e) {
+
 	});
 	
 	this.win.add(this.tableview);
@@ -135,7 +139,7 @@ Divvy.Buckets.generateRow = function(name, id, pw)
 	 * and any object you like, in this case, the imageview
 	 */
 	Network.cache.run(
-		Divvy.url + 'thumbnails/'+Ti.Network.remoteDeviceUUID+'/'+id+'/1/desc',
+		Divvy.url + 'thumbnails/'+Ti.Platform.id+'/'+id+'/1/desc',
 		Network.CACHE_INVALIDATE, //1 week
 		Divvy.Buckets.onImageUrlSuccess,
 		Divvy.Buckets.onImageUrlError,

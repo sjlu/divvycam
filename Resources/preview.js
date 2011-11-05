@@ -219,7 +219,7 @@ Divvy.Preview.addImageToView = function(view, imageId)
 	});
 	
 	Network.cache.run(
-		Divvy.url + 'image/'+Ti.Network.remoteDeviceUUID+'/'+imageId,
+		Divvy.url + 'image/'+Ti.Platform.id+'/'+imageId,
 		Network.CACHE_INVALIDATE,
 		Divvy.Preview.onImageUrlSuccess,
 		Divvy.Preview.onImageUrlError,

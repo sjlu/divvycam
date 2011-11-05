@@ -43,6 +43,7 @@ Divvy.url = 'https://divvy.burst-dev.com/api/';
  * Take in all the other code we need.
  */
 Ti.include(
+	'aps.js',
 	'network.js',
 	'buckets.js',
 	'view.js',
@@ -77,7 +78,7 @@ if (Divvy.developmentMode)
 {
 	Network.cache.asyncPost(
 		Divvy.url + 'join',
-		{ duid: Ti.Network.remoteDeviceUUID, bucket_id: '100075', password: 'yellow' },
+		{ duid: Ti.Platform.id, bucket_id: '100075', password: 'yellow' },
 		Divvy.Join.onSuccess,
 		Divvy.Join.onError,
 		'yellow'

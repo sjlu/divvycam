@@ -187,7 +187,7 @@ Divvy.Join.onSubmit = function()
 	
 	Network.cache.asyncPost(
 		Divvy.url + 'join',
-		{ duid: Ti.Network.remoteDeviceUUID, bucket_id: this.textarea_bucketid.value, password: this.textarea_bucketpw.value },
+		{ duid: Ti.Platform.id, bucket_id: this.textarea_bucketid.value, password: this.textarea_bucketpw.value },
 		Divvy.Join.onSuccess,
 		Divvy.Join.onError,
 		this.textarea_bucketpw.value
