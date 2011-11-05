@@ -57,7 +57,7 @@ Divvy.View.init = function()
 			Ti.Media.showCamera({
 				success: Divvy.View.savePhoto,
 				error: function(e) { if (e.code == Ti.Media.NO_CAMERA) alert("No camera detected!"); },
-				allowEditing: false,
+				allowEditing: true,
 				mediaTypes: [Ti.Media.MEDIA_TYPE_PHOTO]
 			});
 		}
@@ -65,7 +65,7 @@ Divvy.View.init = function()
 		{
 			Ti.Media.openPhotoGallery({
 				success: Divvy.View.savePhoto,
-				allowEditing: false,
+				allowEditing: true,
 				mediaTyles: [Ti.Media.MEDIA_TYPE_PHOTO]
 			});
 		}
