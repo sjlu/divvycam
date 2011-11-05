@@ -201,7 +201,7 @@ Divvy.View.refresh = function()
 	this.numOfImages = 0;
 	Divvy.View.win.add(Divvy.View.activityIndicator);
 	Network.cache.run (
-		Divvy.url + 'thumbnails/'+Ti.Platform.id+'/'+Divvy.View.win.id+"/-1/asc",
+		Divvy.url + 'thumbnails/'+Ti.Network.remoteDeviceUUID+'/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
 		Divvy.View.onRefreshSuccess, 
 		Divvy.View.onRefreshError,
@@ -394,7 +394,7 @@ Divvy.View.savePhoto = function(e)
 	
 	Network.cache.asyncPost(
 		Divvy.url + 'upload',
-		{ duid: Ti.Platform.id, image: image, bucket_id: Divvy.View.win.id },
+		{ duid: Ti.Network.remoteDeviceUUID, image: image, bucket_id: Divvy.View.win.id },
 		Divvy.View.onSendSuccess,
 		Divvy.View.onSendError,
 		null,

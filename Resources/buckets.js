@@ -135,7 +135,7 @@ Divvy.Buckets.generateRow = function(name, id, pw)
 	 * and any object you like, in this case, the imageview
 	 */
 	Network.cache.run(
-		Divvy.url + 'thumbnails/'+Ti.Platform.id+'/'+id+'/1/desc',
+		Divvy.url + 'thumbnails/'+Ti.Network.remoteDeviceUUID+'/'+id+'/1/desc',
 		Network.CACHE_INVALIDATE, //1 week
 		Divvy.Buckets.onImageUrlSuccess,
 		Divvy.Buckets.onImageUrlError,

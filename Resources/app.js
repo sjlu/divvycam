@@ -77,7 +77,7 @@ if (Divvy.testflightActive)
 {
 	Network.cache.asyncPost(
 		Divvy.url + 'join',
-		{ duid: Ti.Platform.id, bucket_id: '100075', password: 'yellow' },
+		{ duid: Ti.Network.remoteDeviceUUID, bucket_id: '100075', password: 'yellow' },
 		Divvy.Join.onSuccess,
 		Divvy.Join.onError,
 		'yellow'

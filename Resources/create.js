@@ -181,7 +181,7 @@ Divvy.Create.onSubmit = function()
 	
 	Network.cache.asyncPost(
 		Divvy.url + 'create',
-		{ duid: Ti.Platform.id, name: this.textarea_bucketname.value, password: this.textarea_bucketpw.value },
+		{ duid: Ti.Network.remoteDeviceUUID, name: this.textarea_bucketname.value, password: this.textarea_bucketpw.value },
 		Divvy.Create.onSuccess,
 		Divvy.Create.onError,
 		this.textarea_bucketpw.value
