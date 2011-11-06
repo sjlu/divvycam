@@ -19,7 +19,7 @@ function get_thumbnails($bucket_id, $duid, $limit = -1, $order = "ASC")
 	if ($limit !== 1)
 		update_timestamps($duid, $bucket_id);
 	
-   return array('status' => 'success', 'bucket_id' => $bucket_id, 'md5' => md5($images), 'thumbnails' => $output);
+   return array('status' => 'success', 'bucket_id' => $bucket_id, 'md5' => md5(serialize($images)), 'thumbnails' => $output);
 }
 
 if (!isset($_GET['bucket_id']))
