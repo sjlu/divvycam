@@ -44,13 +44,13 @@ Divvy.Buckets.init = function()
 	this.tableview.addEventListener('click', function(e) {
 		Divvy.View.open(e.row.bucketName, e.row.bucketId, e.row.bucketPw);
 	});
-	this.tableview.addEventListener('delete', function(e) {
+	this.tableview.addEventListener('delete', function(e) {		
 		Network.cache.asyncPost(
 			Divvy.url + 'delete/bucket',
-			{ duid: Ti.Platform.id, id: e.row.id },
+			{ duid: Ti.Platform.id, id: e.rowData.bucketId },
 			Divvy.Buckets.onDeleteSuccess,
 			Divvy.Buckets.onDeleteError,
-			e.row.id
+			e.rowData.bucketId
 		);
 	});
 	
