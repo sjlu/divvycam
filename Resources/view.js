@@ -188,6 +188,8 @@ Divvy.View.open = function(name, id, pw)
 
 Divvy.View.close = function()
 {
+	this.win.id = null;
+	this.win.pw = null;
 	this.win.remove(this.scrollView);
 	delete this.scrollView;
 	this.scrollView = this.createScrollView();
