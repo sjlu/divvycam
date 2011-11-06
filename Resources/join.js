@@ -217,7 +217,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 	Divvy.Join.win.close();
 	Divvy.Join.reset();
 	
-	if (Divvy.testflightActive)
+	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("joined existing bucket");
 };
 
@@ -226,6 +226,6 @@ Divvy.Join.onError = function(status, httpStatus)
 	alert("We couldn't join the bucket, please try again. ("+status+")");
 	Divvy.Join.hideLoading();
 	
-	if (Divvy.testflightActive)
+	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("exiting bucket join error ("+status+")");
 };

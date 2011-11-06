@@ -193,7 +193,7 @@ Divvy.Create.onError = function(status, httpStatus)
 	alert("We couldn't create your bucket, please try again. ("+status+")");
 	this.hideLoading();
 	
-	if (Divvy.testflightActive)
+	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("create bucket network error ("+status+")");
 };
 
@@ -220,6 +220,6 @@ Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 	Divvy.Create.win.close();
 	Divvy.Create.reset();
 	
-	if (Divvy.testflightActive)
+	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("created new bucket");
 };
