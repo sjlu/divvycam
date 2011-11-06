@@ -9,7 +9,6 @@ Divvy.Buckets.init = function()
 		title: 'Buckets',
 		barColor: Divvy.winBarColor,
 		barImage: Divvy.winBarImage,
-		editable: true,
 		orientationModes: [
 			Titanium.UI.PORTRAIT
 		],
@@ -22,19 +21,6 @@ Divvy.Buckets.init = function()
 	this.addButton.addEventListener('click', function(e){
 		Divvy.Buckets.addDialog.show();
 	});
-	
-	if (Divvy.developmentMode)
-	{
-		this.feedbackButton = Ti.UI.createButton({
-			systemButton: Ti.UI.iPhone.SystemButton.COMPOSE
-		});
-		
-		this.feedbackButton.addEventListener('click', function(e){
-			Divvy.testflight.openFeedbackView();
-		});
-		
-		this.win.leftNavButton = this.feedbackButton;
-	}
 	
 	this.addDialog = Ti.UI.createOptionDialog({
 		options: ['Join Existing Bucket', 'Create New Bucket', 'Cancel'],
@@ -54,15 +40,42 @@ Divvy.Buckets.init = function()
 	 * Views and more.
 	 */
 
-	this.tableview = Ti.UI.createTableView();
+	this.tableview = Ti.UI.createTableView({editable: true});
 	this.tableview.addEventListener('click', function(e) {
 		Divvy.View.open(e.row.bucketName, e.row.bucketId, e.row.bucketPw);
 	});
 	this.tableview.addEventListener('delete', function(e) {
-
+		Network.cache.run(
+			Divvy.url + 'delete/bucket/'+Ti.Platform.id+'/'+e.row.id,
+			Network.CACHE_INVALIDATE, //1 week
+			Divvy.Buckets.onDeleteSuccess,
+			Divvy.Buckets.onDeleteError,
+			e.row.id
+		);
 	});
 	
 	this.win.add(this.tableview);
+};
+
+Divvy.Buckets.onDeleteSuccess = function(data, date, status, user, xhr)
+{
+	try
+	{
+		data = JSON.parse(data)
+	}
+	catch (excp)
+	{
+		Divvy.Buckets.onDeleteError(Network.PARSE_ERROR, 0);
+		return;
+	}
+	
+	Divvy.Buckets.removeBucket(user);
+};
+
+Divvy.Buckets.onDeleteError = function(status, httpStatus)
+{
+	alert("Couldn't successfully delete your bucket. ("+status+")");
+	Divvy.Buckets.refresh();
 };
 
 /*
