@@ -89,5 +89,32 @@ Divvy.tab.window = Divvy.Buckets.win; // this is our intial window, we need to p
 Divvy.tabs.addTab(Divvy.tab);
 Divvy.tabs.open();
 
+/*
+ * Adding event listeners if app is brought in and out background
+ * and refresh services, to refresh the bucket views.
+ */
+
+function startRefreshDaemon()
+{
+	Divvy.refreshDaemon = setInterval(function()
+	{
+		if (Divvy.View.win.id != null)
+			Divvy.View.refresh();
+	}, 60000);
+}
+	
+Ti.App.addEventListener('resume', function(e)
+{
+	Divvy.View.refresh();
+	startRefreshDaemon();
+});
+	
+Ti.App.addEventListener('pause', function(e)
+{
+	clearInterval(Divvy.refreshDaemon);
+});
+
+startRefreshDaemon();
+
 if (Divvy.developmentMode)
 	Divvy.testflight.passCheckpoint("app opened");
