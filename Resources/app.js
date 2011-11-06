@@ -100,7 +100,7 @@ function startRefreshDaemon()
 	{
 		if (Divvy.View.win.id != null)
 			Divvy.View.refresh();
-	}, 60000);
+	}, 30000);
 }
 	
 Ti.App.addEventListener('resume', function(e)
