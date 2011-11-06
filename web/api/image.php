@@ -11,8 +11,8 @@ function get_image($duid, $image_id)
 	if (!check_if_user_belongs_to_bucket($duid, $image[0]['bucket_id']))
 		return array('status' => 'error', 'error' => 'permission_denied');
 
-	db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $image[0]['bucket_id'], $duid);
-
+	update_timestamps($duid, $image[0]['bucket_id']);
+	
    $s3 = new AmazonS3();
 	return array('status' => 'success', 'url' => $s3->get_object_url('divvycam', $image[0]['filename'] . '.jpg', '60 seconds'));
 }

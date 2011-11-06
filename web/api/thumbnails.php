@@ -17,10 +17,8 @@ function get_thumbnails($bucket_id, $duid, $limit = -1, $order = "ASC")
       $output[] = array('id' => $image['id'], 'url' => $s3->get_object_url('divvycam', $image['filename'] . '-thumbnail.jpg', '60 seconds'));
 
 	if ($limit !== 1)
-		db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $bucket_id);
+		update_timestamps($duid, $bucket_id);
 	
-	db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $bucket_id, $duid);
-
    return $output;
 }
 

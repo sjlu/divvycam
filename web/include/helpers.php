@@ -16,4 +16,10 @@ function check_if_bucket_exists($bucket_id)
    else
       return false;  
 }
+
+function update_timestamps($duid, $bucket_id)
+{
+	db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $bucket_id);
+	db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $bucket_id, $duid);
+}
 ?>

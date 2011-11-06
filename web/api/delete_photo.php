@@ -13,7 +13,7 @@ function check_photo_permissions($duid, $photo_id)
 
 function delete_photo($photo_id)
 {
-	$query = db_query('SELECT filename FROM photos WHERE id="%s"', $photo_id);
+	$query = db_query('SELECT duid,bucket_id,filename FROM photos WHERE id="%s"', $photo_id);
 	
 	if (count($query) > 1 || count($query) < 1)
 		return '{"status":"error", "error","photo_not_found"}';
@@ -23,6 +23,7 @@ function delete_photo($photo_id)
 	
 	if ($response->isOK())
 	{
+		update_timestamps($query[0]['duid'], $query[0]['bucket_id']);
 		db_query('DELETE FROM photos WHERE id="%s" LIMIT 1', $photo_id);
 		return '{"status":"success"}';
 	}
