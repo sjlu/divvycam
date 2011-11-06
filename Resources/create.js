@@ -48,7 +48,7 @@ Divvy.Create.init = function()
 		Divvy.Create.textarea_bucketpw.blur();
 	});
 	this.footerLabel = Ti.UI.createLabel({
-		text: "Buckets are intended for temporary use and not for backup purposes.\n\nYou can always download your bucket's content from the web at any time.\n\nBuckets that are stale will be eventually deleted.",
+		text: "Buckets are meant to be shared, don't use a password you currently use.\n\nBuckets are intended for temporary use and not for backup purposes, they are eventually deleted. You can always download a copy onto your device or on the web.",
 		textAlign: "center", width: 280,
 		color: '#4c566c',
 		shadowOffset:{x:0,y:1},
@@ -90,7 +90,7 @@ Divvy.Create.init = function()
 	});
 	
 	this.textarea_bucketpw = Ti.UI.createTextField({
-		hintText: 'Required',
+		hintText: 'Required (>6 characters)',
 		left: 100,
 		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
 		editable: true,
