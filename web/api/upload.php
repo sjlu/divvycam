@@ -44,8 +44,7 @@ function upload_to_s3($file, $filename)
 function add_image_to_db($bucket_id, $filename, $duid)
 {
    db_query('INSERT INTO photos (bucket_id, filename, duid) VALUES ("%s","%s","%s")', $bucket_id, $filename, $duid);
-   db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $bucket_id);
-   db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $bucket_id, $duid);
+	update_timestamps($duid, $bucket_id);
    return true;
 }
 
