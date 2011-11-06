@@ -48,11 +48,42 @@ Divvy.APS.success = function(e)
 	request.open('PUT', 'https://go.urbanairship.com/api/device_tokens/' + e.deviceToken, true);
 	request.setRequestHeader('Authorization','Basic ' + Titanium.Utils.base64encode(Divvy.APS.KEY + ':' + Divvy.APS.SECRET));
 	request.send();
+	
+	Network.cache.asyncPost(
+		Divvy.url + 'delete/bucket',
+		{ duid: Ti.Platform.id, push_key: e.deviceToken },
+		Divvy.APS.onSuccess,
+		Divvy.APS.onError
+	);
+};
+
+Divvy.APS.onSuccess = function(data, date, status, user, xhr)
+{
+	try
+	{
+		data = JSON.parse(data);
+	}
+	catch (excp)
+	{
+		Divvy.APS.onError(Network.PARSE_ERROR, 0);
+		return;
+	}
+	
+	if (data.status == 'error')
+	{
+		Divvy.APS.onError(data.error, 0);
+		return;
+	}
+};
+
+Divvy.APS.onError = function(status, httpStatus)
+{
+	alert('Had an issue registering to the notification service. ('+status+')');
 };
 
 Divvy.APS.error = function(e)
 {
-	Ti.API.info("Error during registration: " + e.error);
+	Ti.API.info("Local device push notifications error: " + e.error);
 };
 
 Divvy.APS.receive = function(e)
