@@ -1,7 +1,11 @@
+<<<<<<< HEAD
+#Thu Nov 03 14:50:52 EDT 2011
+=======
 #Thu Nov 03 23:10:58 EDT 2011
+>>>>>>> 98dc2dfcd13d41c35ead3a7bf73e0b1abe595654
 eclipse.preferences.version=1
 provisioning_profiles/distribution/5CED158C-ED4B-45B5-B1FD-E78E00B8D938/appid=com.burst.divvycam
-provisioning_profiles/distribution/5CED158C-ED4B-45B5-B1FD-E78E00B8D938/filepath=/Users/sjlu/Downloads/Divvycam_Ad_Hoc (2).mobileprovision
+provisioning_profiles/distribution/5CED158C-ED4B-45B5-B1FD-E78E00B8D938/filepath=/Users/sjlu/Downloads/Divvycam_Ad_Hoc.mobileprovision
 provisioning_profiles/distribution/5CED158C-ED4B-45B5-B1FD-E78E00B8D938/name=Divvycam Ad Hoc
 provisioning_profiles/distribution/5CED158C-ED4B-45B5-B1FD-E78E00B8D938/uuid=5CED158C-ED4B-45B5-B1FD-E78E00B8D938
 provisioning_profiles/distribution/7AB3381A-50A0-4F32-BAB8-D4AA05421018/appid=com.burst.divvycam
