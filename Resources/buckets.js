@@ -45,9 +45,9 @@ Divvy.Buckets.init = function()
 		Divvy.View.open(e.row.bucketName, e.row.bucketId, e.row.bucketPw);
 	});
 	this.tableview.addEventListener('delete', function(e) {
-		Network.cache.run(
-			Divvy.url + 'delete/bucket/'+Ti.Platform.id+'/'+e.row.id,
-			Network.CACHE_INVALIDATE, //1 week
+		Network.cache.asyncPost(
+			Divvy.url + 'delete/bucket',
+			{ duid: Ti.Platform.id, id: e.row.id },
 			Divvy.Buckets.onDeleteSuccess,
 			Divvy.Buckets.onDeleteError,
 			e.row.id

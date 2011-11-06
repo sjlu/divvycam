@@ -31,17 +31,17 @@ function delete_photo($photo_id)
 		return '{"status":"error", "status","could_not_delete"}';
 }
 
-if (!isset($_GET['duid']) || !isset($_GET['id']))
+if (!isset($_POST['duid']) || !isset($_POST['id']))
 {
 	echo '{"status":"error", "error":"invalid_request"}';
    die();
 }
 
-if (!check_photo_permissions($_GET['duid'], $_GET['id']))
+if (!check_photo_permissions($_POST['duid'], $_POST['id']))
 {
 	echo '{"status":"error", "error":"permission_denied"}';
 	die();
 }
 
-echo delete_photo($_GET['id']);
+echo delete_photo($_POST['id']);
 ?>

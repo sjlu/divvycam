@@ -11,11 +11,11 @@ function delete_bucket_reference($duid, $bucket_id)
 	return '{"status":"success"}';
 }
 
-if (!isset($_GET['duid']) || !isset($_GET['id']))
+if (!isset($_POST['duid']) || !isset($_POST['id']))
 {
 	echo '{"status":"error", "error":"invalid_request"}';
    die();
 }
 
-echo delete_bucket_reference($_GET['duid'], $_GET['id']);
+echo delete_bucket_reference($_POST['duid'], $_POST['id']);
 ?>
