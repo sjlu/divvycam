@@ -57,7 +57,7 @@ Divvy.View.init = function()
 			Ti.Media.showCamera({
 				success: Divvy.View.savePhoto,
 				error: function(e) { if (e.code == Ti.Media.NO_CAMERA) alert("No camera detected!"); },
-				allowEditing: true,
+				allowEditing: false,
 				mediaTypes: [Ti.Media.MEDIA_TYPE_PHOTO]
 			});
 		}
@@ -65,7 +65,7 @@ Divvy.View.init = function()
 		{
 			Ti.Media.openPhotoGallery({
 				success: Divvy.View.savePhoto,
-				allowEditing: true,
+				allowEditing: false,
 				mediaTyles: [Ti.Media.MEDIA_TYPE_PHOTO]
 			});
 		}
@@ -171,6 +171,11 @@ Divvy.View.init = function()
 	this.flexSpace = Ti.UI.createButton({
 		systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE
 	});
+	
+	this.uploadQueue = [];
+	this.numberOfPhotosUploaded = 0;
+	this.photosInUploadQueue = 0;
+	this.uploading = 0;
 };
 
 Divvy.View.open = function(name, id, pw)
@@ -350,9 +355,8 @@ Divvy.View.onImageCacheError = function(status, httpStatus)
 
 Divvy.View.savePhoto = function(e) 
 {
-	Divvy.View.cameraButton.enabled = false;
-	Divvy.View.win.setToolbar([Divvy.View.flexSpace, Divvy.View.uploadIndicator, Divvy.View.flexSpace]);
-	
+//	Divvy.View.cameraButton.enabled = false;
+
 	var image = e.media;
 	
 	/*
@@ -394,6 +398,48 @@ Divvy.View.savePhoto = function(e)
 	compImg = Ti.Filesystem.getFile(compImgPath);
 	image = compImg.read.blob;
 	
+	Divvy.View.addToUploadQueue(image, Divvy.View.win.id);
+	
+	/*
+	Network.cache.asyncPost(
+		Divvy.url + 'upload',
+		{ duid: Ti.Platform.id, image: image, bucket_id: Divvy.View.win.id },
+		Divvy.View.onSendSuccess,
+		Divvy.View.onSendError,
+		null,
+		Divvy.View.onSendStream
+	);
+	*/
+};
+
+Divvy.View.addToUploadQueue = function(image, bucket_id)
+{	
+	this.uploadQueue.push({image: image, bucket_id: bucket_id});
+	this.photosInUploadQueue++;
+	
+	Divvy.View.uploadIndicator.message = 'Uploading '+Divvy.View.numberOfPhotosUploaded+' of '+Divvy.View.photosInUploadQueue+' Photos';
+	
+	if (Divvy.View.uploading == 0)
+		Divvy.View.uploadNextPhotoInQueue();
+};
+
+Divvy.View.uploadNextPhotoInQueue = function()
+{
+	var next_in_queue = this.uploadQueue.shift();
+	
+	if (next_in_queue == null)
+		return;	
+
+	Divvy.View.numberOfPhotosUploaded++;
+	
+	Divvy.View.uploadIndicator.message = 'Uploading '+Divvy.View.numberOfPhotosUploaded+' of '+Divvy.View.photosInUploadQueue+' Photos';
+	Divvy.View.uploadIndicator.value = 0;
+	Divvy.View.win.setToolbar([Divvy.View.flexSpace, Divvy.View.uploadIndicator, Divvy.View.flexSpace]);
+	
+	var image = next_in_queue.image;
+	var bucket_id = next_in_queue.bucket_id;
+	
+	this.uploading = 1;
 	Network.cache.asyncPost(
 		Divvy.url + 'upload',
 		{ duid: Ti.Platform.id, image: image, bucket_id: Divvy.View.win.id },
@@ -425,9 +471,19 @@ Divvy.View.onSendSuccess = function(data, date, status, user, xhr)
 		
 	Divvy.View.refresh();
 	Divvy.Buckets.refresh();
-	Divvy.View.win.setToolbar(null, {animated: true});
-	Divvy.View.uploadIndicator.value = 0;
-	Divvy.View.cameraButton.enabled = true;
+	if (Divvy.View.numberOfPhotosUploaded == Divvy.View.photosInUploadQueue)
+	{
+		Divvy.View.win.setToolbar(null, {animated: true});
+		Divvy.View.numberOfPhotosUploaded = 0;
+		Divvy.View.photosInUploadQueue = 0;
+		Divvy.View.uploading = 0;
+	}
+	else
+	{
+		Divvy.View.uploadNextPhotoInQueue();
+	}
+	
+	//Divvy.View.cameraButton.enabled = true;
 	
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("uploaded a photo");
@@ -437,8 +493,10 @@ Divvy.View.onSendError = function (status, httpStatus)
 {
 	alert('Image upload failed, please try again. ('+status+')');
 	Divvy.View.win.setToolbar(null, {animated: true});
-	Divvy.View.uploadIndicator.value = 0;
-	Divvy.View.cameraButton.enabled = true;
+	Divvy.View.numberOfPhotosUploaded = 0;
+	Divvy.View.photosInUploadQueue = 0;
+	Divvy.View.uploadQueue = [];
+	Divvy.View.uploading = 0;
 	
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("upload photo error ("+status+")");
