@@ -22,6 +22,8 @@ function upload_to_s3($file, $filename)
       return false;
 
    $imagick = new Imagick($file);
+   $imagick->setImageCompression(imagick::COMPRESSION_JPEG);
+   $imagick->setImageCompressionQuality(65);
    $imagick->cropThumbnailImage(200,200);
    $thumbnailFile = tempnam('/tmp', 'thumb_');
    $imagick->writeImage($thumbnailFile);
@@ -41,9 +43,9 @@ function upload_to_s3($file, $filename)
 
 function add_image_to_db($bucket_id, $filename, $duid)
 {
-   db_query('INSERT INTO photos (bucket_id, filename) VALUES ("%s","%s")', $bucket_id, $filename);
+   db_query('INSERT INTO photos (bucket_id, filename, duid) VALUES ("%s","%s","%s")', $bucket_id, $filename, $duid);
    db_query('UPDATE buckets SET last_updated=CURRENT_TIMESTAMP WHERE id="%s"', $bucket_id);
-	db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $bucket_id, $duid);
+   db_query('UPDATE buckets_devices SET last_activity=CURRENT_TIMESTAMP WHERE bucket_id="%s" AND duid="%s"', $bucket_id, $duid);
    return true;
 }
 
