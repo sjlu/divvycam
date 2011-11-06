@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #Thu Nov 03 14:50:52 EDT 2011
+=======
+#Thu Nov 03 23:10:58 EDT 2011
+>>>>>>> 98dc2dfcd13d41c35ead3a7bf73e0b1abe595654
 eclipse.preferences.version=1
 provisioning_profiles/distribution/5CED158C-ED4B-45B5-B1FD-E78E00B8D938/appid=com.burst.divvycam
 provisioning_profiles/distribution/5CED158C-ED4B-45B5-B1FD-E78E00B8D938/filepath=/Users/sjlu/Downloads/Divvycam_Ad_Hoc.mobileprovision
@@ -8,3 +12,11 @@ provisioning_profiles/distribution/7AB3381A-50A0-4F32-BAB8-D4AA05421018/appid=co
 provisioning_profiles/distribution/7AB3381A-50A0-4F32-BAB8-D4AA05421018/filepath=/Users/sjlu/Downloads/Divvycam_Ad_Hoc (1).mobileprovision
 provisioning_profiles/distribution/7AB3381A-50A0-4F32-BAB8-D4AA05421018/name=Divvycam Ad Hoc
 provisioning_profiles/distribution/7AB3381A-50A0-4F32-BAB8-D4AA05421018/uuid=7AB3381A-50A0-4F32-BAB8-D4AA05421018
+provisioning_profiles/distribution/846E075D-00DF-4848-BFAC-C6EACBCDE2FD/appid=com.burst.divvycam
+provisioning_profiles/distribution/846E075D-00DF-4848-BFAC-C6EACBCDE2FD/filepath=/Users/sjlu/Downloads/Divvycam_Ad_Hoc (1).mobileprovision
+provisioning_profiles/distribution/846E075D-00DF-4848-BFAC-C6EACBCDE2FD/name=Divvycam Ad Hoc
+provisioning_profiles/distribution/846E075D-00DF-4848-BFAC-C6EACBCDE2FD/uuid=846E075D-00DF-4848-BFAC-C6EACBCDE2FD
+provisioning_profiles/distribution/A0C230D0-98A4-4AF3-A080-183108490D19/appid=com.burst.divvycam
+provisioning_profiles/distribution/A0C230D0-98A4-4AF3-A080-183108490D19/filepath=/Users/sjlu/Downloads/Divvycam_Ad_Hoc (2).mobileprovision
+provisioning_profiles/distribution/A0C230D0-98A4-4AF3-A080-183108490D19/name=Divvycam Ad Hoc
+provisioning_profiles/distribution/A0C230D0-98A4-4AF3-A080-183108490D19/uuid=A0C230D0-98A4-4AF3-A080-183108490D19
