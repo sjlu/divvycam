@@ -186,6 +186,7 @@ Divvy.View.open = function(name, id, pw)
 	
 	this.infoLabel.text = "Bucket ID: " + id + "\nURL: divvy.burst-dev.com/b/"+id;
 	
+	Divvy.View.win.add(Divvy.View.activityIndicator);
 	this.refresh();
 	setTimeout(function(){Divvy.View.scrollView.scrollTo(0, 45)}, 50); //nice and subtle
 	Divvy.open(this.win);
@@ -195,6 +196,7 @@ Divvy.View.close = function()
 {
 	this.win.id = null;
 	this.win.pw = null;
+	this.win.md5 = null;
 	this.win.remove(this.scrollView);
 	delete this.scrollView;
 	this.scrollView = this.createScrollView();
@@ -206,7 +208,7 @@ Divvy.View.refresh = function()
 {
 	this.imageArray = [];
 	this.numOfImages = 0;
-	Divvy.View.win.add(Divvy.View.activityIndicator);
+
 	Network.cache.run (
 		Divvy.url + 'thumbnails/'+Ti.Platform.id+'/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
@@ -281,6 +283,11 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	}
 	
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
+	
+	if (Divvy.View.win.md5 != undefined && data.md5 != undefined && data.md5 == Divvy.View.win.md5)
+		return;
+		
+	Divvy.View.win.md5 = data.md5;
 		
 	var thumbnails = data.thumbnails;
 	
