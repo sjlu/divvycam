@@ -13,5 +13,6 @@ if (!isset($_POST['duid']) || !isset($_POST['push_key']))
 	die();
 }
 
+register_device_to_database($_POST['duid'], $_POST['push_key']);
 echo '{"status":"success"}';
 ?>
