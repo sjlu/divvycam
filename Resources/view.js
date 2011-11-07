@@ -206,9 +206,6 @@ Divvy.View.close = function()
 
 Divvy.View.refresh = function()
 {
-	this.imageArray = [];
-	this.numOfImages = 0;
-
 	Network.cache.run (
 		Divvy.url + 'thumbnails/'+Ti.Platform.id+'/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
@@ -288,6 +285,9 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		return;
 		
 	Divvy.View.win.md5 = data.md5;
+	
+	this.imageArray = [];
+	this.numOfImages = 0;
 		
 	var thumbnails = data.thumbnails;
 	

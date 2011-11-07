@@ -73,6 +73,9 @@ Divvy.APS.receive = function(e)
 	
 	Ti.UI.iPhone.appBadge = 0;
 	
+	if (Divvy.View.win.id != null)
+		Divvy.View.refresh();
+	
 	// For now, Titanium has no way of differentiating between outside-aps event handlers
 	// and inside-aps event handlers. So at this current moment, nothing can be done.
 	// please watch CB ticket #55 for more information

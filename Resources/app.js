@@ -91,5 +91,16 @@ Divvy.tabs.open();
 
 Divvy.APS.open();
 
+/*
+ * Adding event listeners if app is brought in and out of background
+ * and refresh services, to refresh the bucket views.
+ */
+
+Ti.App.addEventListener('resume', function(e)
+{
+	if (Divvy.View.win.id != null)
+		Divvy.View.refresh();
+});
+
 if (Divvy.developmentMode)
 	Divvy.testflight.passCheckpoint("app opened");
