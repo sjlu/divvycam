@@ -48,7 +48,13 @@ function add_image_to_db($bucket_id, $filename, $duid)
 	
    db_query('INSERT INTO photos (bucket_id, filename, duid, filesize) VALUES ("%s","%s","%s","%s")', $bucket_id, $filename, $duid, $response);
 	update_timestamps($duid, $bucket_id);
+   write_notifications($bucket_id, $duid);
    return true;
+}
+
+function write_notifications($bucket_id, $duid)
+{
+   db_query('INSERT INTO photos_notifications (bucket_id, duid) SELECT bucket_id, duid FROM buckets_devices WHERE bucket_id="%s" AND duid!="%s"', $bucket_id, $duid);
 }
 
 if ($_FILES["image"]["error"] > 0)
