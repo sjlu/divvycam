@@ -176,8 +176,6 @@ Divvy.View.init = function()
 	this.numberOfPhotosUploaded = 0;
 	this.photosInUploadQueue = 0;
 	this.uploading = 0;
-	
-
 };
 
 Divvy.View.open = function(name, id, pw)
