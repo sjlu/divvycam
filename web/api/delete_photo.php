@@ -19,9 +19,10 @@ function delete_photo($photo_id)
 		return '{"status":"error", "error","photo_not_found"}';
 	
 	$s3 = new AmazonS3();
-	$response = $s3->delete_object('divvycam', $query[0]['filename']);
+	$response_thumb = $s3->delete_object('divvycam', $query[0]['filename'] . '-thumbnail.jpg');
+	$response_photo = $s3->delete_object('divvycam', $query[0]['filename'] . '.jpg');
 	
-	if ($response->isOK())
+	if ($response_thumb->isOK() && $response_photo->isOK())
 	{
 		update_timestamps($query[0]['duid'], $query[0]['bucket_id']);
 		db_query('DELETE FROM photos WHERE id="%s" LIMIT 1', $photo_id);
