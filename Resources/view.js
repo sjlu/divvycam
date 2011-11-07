@@ -385,7 +385,12 @@ Divvy.View.savePhoto = function(e)
 			var newHeight = Math.ceil((targetWidth/image.width)*image.height);
 		}
 		
-		image = jpgcompressor.scale(image, newWidth, newHeight);
+		var resizedImage = Ti.UI.createImageView({
+			image: image,
+			width: newWidth, height: newHeight
+		});
+		
+		image = resizedImage.toImage();
 	}
 	
 	var compImgPath, compImg;
