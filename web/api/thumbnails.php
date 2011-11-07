@@ -19,7 +19,7 @@ function get_thumbnails($bucket_id, $duid, $limit = -1, $order = "ASC")
 	if ($limit !== 1)
 		update_timestamps($duid, $bucket_id);
 	
-   return $output;
+   return array('status' => 'success', 'bucket_id' => $bucket_id, 'md5' => md5(serialize($output)), 'thumbnails' => $output);
 }
 
 if (!isset($_GET['bucket_id']))
@@ -55,5 +55,5 @@ if (!isset($_GET['limit']))
 else
    $limit = $_GET['limit'];
 
-echo json_encode(array('status' => 'success', 'bucket_id'=> $_GET['bucket_id'], 'thumbnails' => get_thumbnails($_GET['bucket_id'], $_GET['duid'], $limit, $order)));
+echo json_encode(get_thumbnails($_GET['bucket_id'], $_GET['duid'], $limit, $order));
 ?>
