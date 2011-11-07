@@ -91,7 +91,7 @@ if (!upload_to_s3($file, $filename))
    die();
 }
 
-if (!add_image_to_db($bucket_id, $filename, $uid))
+if (!add_image_to_db($bucket_id, $filename, $duid))
 {
    echo '{"status":"error", "error":"db_error"}';
    die();
