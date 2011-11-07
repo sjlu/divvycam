@@ -18,7 +18,7 @@ function delete_photo($photo_id)
 	if (count($query) > 1 || count($query) < 1)
 		return '{"status":"error", "error","photo_not_found"}';
 	
-	$s3 = new AmaoznS3();
+	$s3 = new AmazonS3();
 	$response = $s3->delete_object('divvycam', $query[0]['filename']);
 	
 	if ($response->isOK())
