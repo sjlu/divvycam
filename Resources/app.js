@@ -89,5 +89,7 @@ Divvy.tab.window = Divvy.Buckets.win; // this is our intial window, we need to p
 Divvy.tabs.addTab(Divvy.tab);
 Divvy.tabs.open();
 
+Divvy.APS.open();
+
 if (Divvy.developmentMode)
 	Divvy.testflight.passCheckpoint("app opened");

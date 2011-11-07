@@ -28,29 +28,9 @@ Divvy.APS.open = function()
 };
 
 Divvy.APS.success = function(e)
-{
-	var request = Titanium.Network.createHTTPClient({
-		onload:function(e) 
-		{
-			if (request.status != 200 && request.status != 201) 
-			{
-				request.onerror(e);
-				return;
-			}
-		},
-		
-		onerror:function(e) {
-			Ti.API.info("Register with Urban Airship Push Service failed. Error: " + e.error);
-		}
-   });
-
-	// Register device token with UA
-	request.open('PUT', 'https://go.urbanairship.com/api/device_tokens/' + e.deviceToken, true);
-	request.setRequestHeader('Authorization','Basic ' + Titanium.Utils.base64encode(Divvy.APS.KEY + ':' + Divvy.APS.SECRET));
-	request.send();
-	
+{	
 	Network.cache.asyncPost(
-		Divvy.url + 'delete/bucket',
+		Divvy.url + 'aps',
 		{ duid: Ti.Platform.id, push_key: e.deviceToken },
 		Divvy.APS.onSuccess,
 		Divvy.APS.onError
@@ -89,9 +69,7 @@ Divvy.APS.error = function(e)
 Divvy.APS.receive = function(e)
 {
 	if (e['data'] == undefined || e['data']['aps'] == undefined)
-	{
 		return;
-	}
 	
 	Ti.UI.iPhone.appBadge = 0;
 	
