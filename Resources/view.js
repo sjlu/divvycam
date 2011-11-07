@@ -281,11 +281,6 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	}
 	
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
-	
-	if (Divvy.View.win.md5 != undefined && data.md5 != undefined && data.md5 == Divvy.View.win.md5)
-		return;
-		
-	Divvy.View.win.md5 = data.md5;
 		
 	var thumbnails = data.thumbnails;
 	
