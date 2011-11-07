@@ -36,6 +36,16 @@ Divvy.Buckets.init = function()
 	
 	this.win.rightNavButton = this.addButton;
 
+	this.settingsButton = Ti.UI.createButton({
+			systemButton: Ti.UI.iPhone.SystemButton.SETTING
+		});
+		
+	this.settingsButton.addEventListener('click', function(e){
+		Divvy.Settings.open();
+	})
+	
+	this.win.leftNavButton = this.settingsButton;
+	
 	/*
 	 * Views and more.
 	 */

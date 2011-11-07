@@ -49,7 +49,8 @@ Ti.include(
 	'view.js',
 	'create.js',
 	'join.js',
-	'preview.js'
+	'preview.js',
+	'settings.js'
 );
 
 /* 
@@ -70,6 +71,7 @@ Divvy.View.init();
 Divvy.Create.init();
 Divvy.Join.init();
 Divvy.Preview.init();
+Divvy.Settings.init();
 
 //open actually shows our UI elements.
 Divvy.Buckets.open();
