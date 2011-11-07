@@ -17,10 +17,15 @@ foreach ($notifications as $notification)
 {
    if (is_null($notification['push_key']))
       continue;
+	
+	if ($notification['COUNT(*)'] > 1)
+		$lang = 'photos';
+	else
+		$lang = 'photo';
 
    $message = new ApnsPHP_Message($notification['push_key']);
    $message->setCustomIdentifier('photo-notification');
-   $message->setText($notification['COUNT(*)'] . ' new photos were added to "' . $notification['name'] . '"');
+   $message->setText($notification['COUNT(*)'] . ' new ' . $lang . ' in "' . $notification['name'] . '"');
    $message->setSound();
    $message->setCustomProperty('bucket_id', $notification['bucket_id']);
    $message->setExpiry(30);
