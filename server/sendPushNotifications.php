@@ -10,10 +10,14 @@ $push->setRootCertificationAuthority('entrust_root_certification_authority.pem')
 $push->connect();
 
 // get messages
-$notifications = db_query('SELECT COUNT(*), buckets.name, photos_notifications.bucket_id, devices.push_key FROM photos_notifications LEFT JOIN buckets ON photos_notifications.bucket_id = buckets.id LEFT JOIN devices ON photos_notifications.duid = devices.duid GROUP BY photos_notifications.bucket_id, photos_notifications.duid; DELETE FROM photos_notifications');
+$notifications = db_query('SELECT COUNT(*), buckets.name, photos_notifications.bucket_id, devices.push_key FROM photos_notifications LEFT JOIN buckets ON photos_notifications.bucket_id = buckets.id LEFT JOIN devices ON photos_notifications.duid = devices.duid GROUP BY photos_notifications.bucket_id, photos_notifications.duid;');
+db_query('DELETE FROM photos_notifications');
 
 foreach ($notifications as $notification)
 {
+   if (is_null($notification['push_key']))
+      continue;
+
    $message = new ApnsPHP_Message($notification['push_key']);
    $message->setCustomIdentifier('photo-notification');
    $message->setText($notification['COUNT(*)'] . ' new photos were added to "' . $notification['name'] . '"');
