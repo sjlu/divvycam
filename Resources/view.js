@@ -134,7 +134,7 @@ Divvy.View.init = function()
 	
 	// the element that shows the number of photos at the bottom
 	this.footerView = Ti.UI.createView({
-		height: 50
+		height: 80
 	});
 	
 	this.footerLabel = Ti.UI.createLabel({
@@ -188,6 +188,7 @@ Divvy.View.open = function(name, id, pw)
 	
 	Divvy.View.win.add(Divvy.View.activityIndicator);
 	this.refresh();
+	
 	setTimeout(function(){Divvy.View.scrollView.scrollTo(0, 45)}, 50); //nice and subtle
 	Divvy.open(this.win);
 };
@@ -199,8 +200,12 @@ Divvy.View.close = function()
 	this.win.md5 = null;
 	this.win.remove(this.scrollView);
 	delete this.scrollView;
+	delete this.imageArray;
+	
+	this.imageArray = [];
 	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
+	
 	Divvy.View.footerLabel.text = "";
 };
 
@@ -279,8 +284,6 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	Divvy.View.win.remove(Divvy.View.activityIndicator);
-	
 	if (Divvy.View.win.md5 != undefined && data.md5 != undefined && data.md5 == Divvy.View.win.md5)
 		return;
 		
@@ -295,7 +298,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	
 	if ((thumbnails.length) > 16)
 	{
-		Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+50;
+		Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+40;
 		Divvy.View.footerLabel.text = thumbnails.length+" Photos";
 	}
 		
@@ -303,9 +306,12 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	for (var j in thumbnails)
 	{
 		Divvy.View.imageArray[i] = Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url);
-		Divvy.View.scrollView.add(Divvy.View.imageArray[i]);
+//		Divvy.View.scrollView.add(Divvy.View.imageArray[i]);
 		i++;
 	}
+	
+	Divvy.View.win.remove(Divvy.View.activityIndicator);
+	Divvy.View.scrollView.add(Divvy.View.imageArray);
 	
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("opened a bucket");
