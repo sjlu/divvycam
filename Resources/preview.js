@@ -36,30 +36,37 @@ Divvy.Preview.init = function ()
 	});
 
 	// pop-over dialog
-	this.saveToGalleryDialog = Ti.UI.createOptionDialog({
-		options: ['Save To Gallery', 'Cancel'],
-		cancel: 1
+	this.optionsDialog = Ti.UI.createOptionDialog({
+		options: ['Save To Gallery', 'Copy To Bucket', 'Cancel'],
+		cancel: 2
 	});
 
 	// when something is clicked in the dialog
-	this.saveToGalleryDialog.addEventListener('click', function(e)
-	{
-		// if it isn't "Save To Gallery", then we just stop here.
-		if (e.index != 0)
-			return;
-		
-		// method to saving the curretn photo	
-		Ti.Media.saveToPhotoGallery(Divvy.Preview.currentView.photo.toImage(), 
+	this.optionsDialog.addEventListener('click', function(e)
+	{		
+		// method to saving the curretn photo
+		if (e.index == 0)
 		{
-			success: function(e)
+			Ti.Media.saveToPhotoGallery(Divvy.Preview.currentView.photo.toImage(), 
 			{
-				alert("Saved to your photo gallery!");
-			},
-			error: function(e)
-			{
-				alert("Couldn't save to your photo gallery.");
-			}
-		});
+				success: function(e)
+				{
+					alert("Saved to your photo gallery!");
+				},
+				error: function(e)
+				{
+					alert("Couldn't save to your photo gallery.");
+				}
+			});
+		}
+		else if (e.index == 1)
+		{
+			// perform copy functions here.
+		}
+		else if (e.index == 2 && Divvy.Preview.optionsDialog.cancel != 2)
+		{
+			// perform delete functions here.
+		}
 	});
 
 	// the folder looking icon on the top right
@@ -69,7 +76,7 @@ Divvy.Preview.init = function ()
 	
 	// open the dialog view if the folder looking icon button is clicked
 	this.saveButton.addEventListener('click', function(e){
-		Divvy.Preview.saveToGalleryDialog.show();
+		Divvy.Preview.optionsDialog.show();
 	});
 	
 	// this just adds the button window navBar.
@@ -256,6 +263,19 @@ Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)
 		Divvy.Preview.onImageError,
 		user
 	);	
+	
+	if (data.permissions == '1')
+	{
+		Divvy.Preview.optionsDialog.options = ['Save To Gallery', 'Copy To Bucket', 'Delete Photo', 'Cancel'];
+		Divvy.Preview.cancel = '3';
+		Divvy.Preview.destructive = '2';
+	}
+	else
+	{
+		Divvy.Preview.optionsDialog.options = ['Save To Gallery', 'Copy To Bucket', 'Cancel'];
+		Divvy.Preview.cancel = '2';
+		Divvy.Preview.destructive = '-1';
+	}
 };
 
 Divvy.Preview.onImageUrlError = function(status, httpStatus)
