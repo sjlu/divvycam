@@ -31,7 +31,6 @@ function upload_to_s3($file, $filename)
    $imagick->setImageCompression(imagick::COMPRESSION_JPEG);
    $imagick->setImageCompressionQuality(65);
    $imagick->cropThumbnailImage(200,200);
-	if ($orientation == 'landscape') $imagick->rotateImage("transparent", 90);
    $thumbnailFile = tempnam('/tmp', 'thumb_');
    $imagick->writeImage($thumbnailFile);
 
