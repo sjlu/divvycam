@@ -51,9 +51,11 @@ Divvy.Buckets.init = function()
 	 */
 
 	this.tableview = Ti.UI.createTableView({editable: true});
+	
 	this.tableview.addEventListener('click', function(e) {
 		Divvy.View.open(e.row.bucketName, e.row.bucketId, e.row.bucketPw);
 	});
+	
 	this.tableview.addEventListener('delete', function(e) {		
 		Network.cache.asyncPost(
 			Divvy.url + 'delete/bucket',
@@ -63,6 +65,8 @@ Divvy.Buckets.init = function()
 			e.rowData.bucketId
 		);
 	});
+	
+	this.bucketsArray = [];
 	
 	this.win.add(this.tableview);
 };
@@ -102,18 +106,18 @@ Divvy.Buckets.open = function()
  */
 Divvy.Buckets.refresh = function()
 {
-	this.tableview.setData([]);
+	delete this.bucketsArray;
+	this.bucketsArray = [];
+	
 	var buckets = Ti.App.Properties.getList('buckets');
 	
 	if (buckets == null)
 		return;
 	
 	for (var i = 0; i < buckets.length; i++)
-	{
-		this.tableview.appendRow(
-			this.generateRow(buckets[i].name, buckets[i].id, buckets[i].pw)
-		);
-	}
+		this.bucketsArray.push(this.generateRow(buckets[i].name, buckets[i].id, buckets[i].pw));
+
+	this.tableview.setData(this.bucketsArray, {animation: Ti.UI.iPhone.RowAnimationStyle.FADE});
 };
 
 /*
@@ -169,6 +173,7 @@ Divvy.Buckets.generateRow = function(name, id, pw)
 		imageView
 	);	
 	
+
 	return row;
 };
 
