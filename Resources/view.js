@@ -82,10 +82,11 @@ Divvy.View.init = function()
 	
 	// The top element that displays the bucket id and bucket url
 	this.infoView = Ti.UI.createView({
-		backgroundGradient: {
-      	type: 'linear',
-         colors: [{ color: '#eeeeee', position: 0.0 }, { color: '#cccccc', position: 1.0}]
-     	},
+		//backgroundGradient: {
+      //	type: 'linear',
+      //   colors: [{ color: '#eeeeee', position: 0.0 }, { color: '#cccccc', position: 1.0}]
+     	//},
+     	backgroundImage: (Ti.Platform.osname == 'ipad') ? 'images/background-ipad.jpg' : 'images/background.jpg',
      	top: -200,
      	height: 250
 	});
