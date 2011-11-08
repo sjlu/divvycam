@@ -20,11 +20,18 @@ function upload_to_s3($file, $filename)
 
    if (!$response->isOK())
       return false;
+	
+	$size = getimagesize($file);
+	if ($size[0] > $size[1])
+		$orientation = 'landscape';
+	else
+		$orientation = 'portrait';
 
    $imagick = new Imagick($file);
    $imagick->setImageCompression(imagick::COMPRESSION_JPEG);
    $imagick->setImageCompressionQuality(65);
    $imagick->cropThumbnailImage(200,200);
+	if ($orientation == 'landscape') $imagick->rotateImage("transparent", 90);
    $thumbnailFile = tempnam('/tmp', 'thumb_');
    $imagick->writeImage($thumbnailFile);
 
