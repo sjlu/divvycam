@@ -267,14 +267,14 @@ Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)
 	if (data.permissions == '1')
 	{
 		Divvy.Preview.optionsDialog.options = ['Save To Gallery', 'Copy To Bucket', 'Delete Photo', 'Cancel'];
-		Divvy.Preview.cancel = '3';
-		Divvy.Preview.destructive = '2';
+		Divvy.Preview.optionsDialog.cancel = '3';
+		Divvy.Preview.optionsDialog.destructive = '2';
 	}
 	else
 	{
 		Divvy.Preview.optionsDialog.options = ['Save To Gallery', 'Copy To Bucket', 'Cancel'];
-		Divvy.Preview.cancel = '2';
-		Divvy.Preview.destructive = '-1';
+		Divvy.Preview.optionsDialog.cancel = '2';
+		Divvy.Preview.optionsDialog.destructive = '-1';
 	}
 };
 
