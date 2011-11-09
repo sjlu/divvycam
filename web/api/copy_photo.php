@@ -51,7 +51,7 @@ function grab_photo_info($photo_id)
 
 if (!isset($_POST['duid']) || !isset($_POST['bucket_id']) || !isset($_POST['photo_id']))
 {
-	echo "{'status':'error', 'error':'invalid_request}";
+	echo "{'status':'error', 'error':'invalid_request'}";
 	die();
 }
 
