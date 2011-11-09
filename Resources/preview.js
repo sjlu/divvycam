@@ -74,6 +74,23 @@ Divvy.Preview.init = function ()
 				cancel: bucketNameArray.length-1
 			});
 			
+			bucketDialog.addEventListener('click', function(e)
+			{
+				if (e.index == Divvy.Buckets.bucketsArray.length)
+					return;
+				
+				Network.cache.asyncPost(
+					Divvy.url + 'delete/photo',
+					{ 
+						duid: Ti.Platform.id, 
+						bucket_id: Divvy.Buckets.bucketsArray[e.index].bucketId, 
+						photo_id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId 
+					},
+					Divvy.Preview.onCopySuccess,
+					Divvy.Preview.onCopyError
+				)
+			});
+			
 			bucketDialog.show();
 			// perform copy functions here.
 		}
@@ -83,7 +100,8 @@ Divvy.Preview.init = function ()
 				Divvy.url + 'delete/photo',
 				{ duid: Ti.Platform.id, id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId },
 				Divvy.Preview.onDeleteSuccess,
-				Divvy.Preview.onDeleteError	
+				Divvy.Preview.onDeleteError,
+				{ current_index: Divvy.Preview.currentView.index, count: Divvy.View.imageArray.length-1 }
 			);
 		}
 	});
@@ -329,17 +347,45 @@ Divvy.Preview.onDeleteSuccess = function(data, date, status, user, xhr)
 	if (data.status == "error")
 	{
 		Divvy.Preview.onDeleteError(data.error, 0);
-		return	
+		return;
 	}
-	
-		
 			
 	Divvy.Preview.currentView.hide(); // since we moved on, this fixes the "flashing" image bug
-	Divvy.Preview.loadViews(e.view.index, Divvy.View.imageArray);
+	
+	if (user.current_index+1 == user.count)
+		user.current_index--;
+	
+	Divvy.Preview.loadViews(user.current_index, Divvy.View.imageArray);
 	// perform delete functions here.
 };
 
 Divvy.Preview.onDeleteError = function(status, httpStatus)
 {
 	alert("Couldn't delete your photo. ("+status+")");
+};
+
+Divvy.Preview.onCopySuccess = function(data, date, status, user, xhr)
+{
+	try
+	{
+		data = JSON.parse(data);
+	}
+	catch (excp)
+	{
+		Divvy.Preview.onCopyError(Network.PARSE_ERROR, 0);
+		return;
+	}
+	
+	if (data.status == "error")
+	{
+		Divvy.Preview.onCopyError(data.error, 0);
+		return;
+	}
+	
+	alert("Copied photo bucket successfully.");
+};
+
+Divvy.Preview.onCopyError = function(status, httpStatus)
+{
+	alert("Couldn't copy the photo. ("+status+")");
 };
