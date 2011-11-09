@@ -188,9 +188,8 @@ Divvy.View.open = function(name, id, pw)
 	this.infoLabel.text = "Bucket ID: " + id + "\nURL: divvy.burst-dev.com/b/"+id;
 	
 	Divvy.View.win.add(Divvy.View.activityIndicator);
-	this.refresh();
 	
-	setTimeout(function(){Divvy.View.scrollView.scrollTo(0, 45)}, 50); //nice and subtle
+	this.refresh();
 	Divvy.open(this.win);
 };
 
@@ -313,6 +312,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
 	Divvy.View.scrollView.add(Divvy.View.imageArray);
+	
+	Divvy.View.scrollView.scrollTo(0, 45); //nice and subtle
 	
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("opened a bucket");
