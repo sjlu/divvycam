@@ -61,11 +61,30 @@ Divvy.Preview.init = function ()
 		}
 		else if (e.index == 1)
 		{
+			var bucketNameArray = [];
+			
+			for (var i = 0; i < Divvy.Buckets.bucketsArray.length; i++)
+				bucketNameArray.push(Divvy.Buckets.bucketsArray[i].bucketName);
+				
+			bucketNameArray.push("Cancel");
+			
+			var bucketDialog = Ti.UI.createOptionDialog({
+				title: 'Copy this photo this which bucket?',
+				options: bucketNameArray,
+				cancel: bucketNameArray.length-1
+			});
+			
+			bucketDialog.show();
 			// perform copy functions here.
 		}
 		else if (e.index == 2 && Divvy.Preview.optionsDialog.cancel != 2)
 		{
-			// perform delete functions here.
+			Network.cache.asyncPost(
+				Divvy.url + 'delete/photo',
+				{ duid: Ti.Platform.id, id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId },
+				Divvy.Preview.onDeleteSuccess,
+				Divvy.Preview.onDeleteError	
+			);
 		}
 	});
 
@@ -293,4 +312,34 @@ Divvy.Preview.onImageSuccess = function(data, date, status, user, xhr)
 Divvy.Preview.onImageError = function(status, httpStatus)
 {
 	//do nothing
+};
+
+Divvy.Preview.onDeleteSuccess = function(data, date, status, user, xhr)
+{
+	try
+	{
+		data = JSON.parse(data);
+	}
+	catch (excp)
+	{
+		Divvy.Preview.onDeleteError(Network.PARSE_ERROR, 0);
+		return;
+	}
+	
+	if (data.status == "error")
+	{
+		Divvy.Preview.onDeleteError(data.error, 0);
+		return	
+	}
+	
+		
+			
+	Divvy.Preview.currentView.hide(); // since we moved on, this fixes the "flashing" image bug
+	Divvy.Preview.loadViews(e.view.index, Divvy.View.imageArray);
+	// perform delete functions here.
+};
+
+Divvy.Preview.onDeleteError = function(status, httpStatus)
+{
+	alert("Couldn't delete your photo. ("+status+")");
 };
