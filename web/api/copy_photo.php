@@ -19,7 +19,7 @@ function copy_photo($filename, $new_filename)
 		)
 	);
 	
-	$response_photo = $s3->copy_object(
+	$response_thumbnail = $s3->copy_object(
 		array(
 			'bucket' => 'divvycam',
 			'filename' => $filename . '-thumbnail.jpg'
