@@ -47,16 +47,6 @@ function upload_to_s3($file, $filename)
       return false;
 }
 
-function add_image_to_db($bucket_id, $filename, $duid)
-{
-	$s3 = new AmazonS3();
-	$response = $s3->get_object_filesize('divvycam', $filename . '.jpg');
-	
-   db_query('INSERT INTO photos (bucket_id, filename, duid, filesize) VALUES ("%s","%s","%s","%s")', $bucket_id, $filename, $duid, $response);
-	update_timestamps($duid, $bucket_id);
-   write_notifications($bucket_id, $duid);
-   return true;
-}
 
 function write_notifications($bucket_id, $duid)
 {
@@ -98,7 +88,7 @@ $file = $_FILES["image"]["tmp_name"];
 $bucket_id = $_POST['bucket_id'];
 $duid = $_POST['duid'];
 
-$filename = $bucket_id . "-" . md5($file);
+$filename = $bucket_id . "-" . md5($file . time() . $duid);
 
 if (!upload_to_s3($file, $filename))
 {
