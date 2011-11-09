@@ -23,7 +23,7 @@ Divvy.Create.init = function()
 	this.navButtonBar = Ti.UI.createButtonBar({
 		labels: ['Create'],
 		style: Ti.UI.iPhone.SystemButtonStyle.DONE,
-		backgroundColor: '5383e4'
+		backgroundColor: '#5383e4'
 	});
 
 	this.navButtonBar.addEventListener('click', function(e) {
