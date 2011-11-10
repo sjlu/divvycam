@@ -90,14 +90,19 @@ Divvy.Preview.init = function ()
 			
 			bucketDialog.addEventListener('click', function(e)
 			{
-				if (e.index == Divvy.Buckets.bucketsArray.length)
+				var index = e.index;
+				
+				if (Divvy.Buckets.bucketsArray[index].bucketId == Divvy.View.win.id)
+					index++;
+				
+				if (index == Divvy.Buckets.bucketsArray.length)
 					return;
 				
 				Network.cache.asyncPost(
 					Divvy.url + 'copy/photo',
 					{ 
 						duid: Ti.Platform.id, 
-						bucket_id: Divvy.Buckets.bucketsArray[e.index].bucketId, 
+						bucket_id: Divvy.Buckets.bucketsArray[index].bucketId, 
 						photo_id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId 
 					},
 					Divvy.Preview.onCopySuccess,
