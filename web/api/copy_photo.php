@@ -64,7 +64,7 @@ if ($info == false)
 
 $new_filename = $_POST['bucket_id'] . "-" . md5($filename . time() . $_POST['duid']);
 
-if (copy_photo($filename, $new_filename))
+if (!copy_photo($filename, $new_filename))
 {
 	echo "{'status':'error', 'error':'could_not_copy'}";
 	die();
