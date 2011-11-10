@@ -130,7 +130,7 @@ Divvy.Settings.init = function()
 		});
 		
 		this.image_pro = Ti.UI.createImageView({
-			image: 'iphone/appicon@2x.png',
+			image: 'images/appicon.png',
 			hires: true,
 			height: 57,
 			width: 57,
