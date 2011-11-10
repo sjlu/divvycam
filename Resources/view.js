@@ -362,7 +362,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
 	Divvy.View.scrollView.add(Divvy.View.imageArray);
-	Divvy.View.scrollView.touchEnabled = false;
+	Divvy.View.scrollView.touchEnabled = true;
 	
 //	Divvy.View.scrollView.scrollTo(0, 45); //nice and subtle
 	
