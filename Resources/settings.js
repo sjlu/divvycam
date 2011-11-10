@@ -128,7 +128,7 @@ Divvy.Settings.init = function()
 	//Create a row in second section	
 	this.row_pro = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE,
-		height: 'auto'
+		height: 80
 	});
 	
 	this.image_pro = Ti.UI.createImageView({
@@ -137,7 +137,6 @@ Divvy.Settings.init = function()
 		height: 57,
 		width: 57,
 		top: 10,
-		bottom: 10,
 		left: 10
 	});
 	
@@ -146,17 +145,17 @@ Divvy.Settings.init = function()
 	//Customize that row	
 	this.label_pro = Ti.UI.createLabel({
 		text: 'DivvyCam Pro',
-		height: 'auto',
+		height: 18,
 		top: 20,
-		left: 75,
-		font: { fontSize: 15, fontWeight: 'bold' }
+		left: 80,
+		font: { fontSize: 16, fontWeight: 'bold' }
 	});
 	
 	this.label_price = Ti.UI.createLabel({
 		text: '$0.00',
-		height:'auto',
+		height: 17,
 		top: 38,
-		left: 75,
+		left: 80,
 		font:{fontSize: 14}
 	});
 	
@@ -175,7 +174,7 @@ Divvy.Settings.init = function()
 	//Create row for second section
 	this.row_info = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE,
-		height: 'auto'
+		height: 80
 	});	
 		
 	//Customize that row	
@@ -188,10 +187,9 @@ Divvy.Settings.init = function()
 	});
 			
 	this.label_description = Ti.UI.createLabel({
-		text: 'Enables unlimited bucket creations Better photo quality with website download feature',
+		text: 'Enables you to have unlimited buckets, better photo quality and no advertisements.',
 		height: 'auto',
 		top: 10,
-		bottom: 10,
 		left: 100,
 		font: { fontSize: 14 }
 	});
