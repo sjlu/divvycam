@@ -67,7 +67,18 @@ Divvy.Preview.init = function ()
 			var bucketNameArray = [];
 			
 			for (var i = 0; i < Divvy.Buckets.bucketsArray.length; i++)
+			{
+				if (Divvy.Buckets.bucketsArray[i].bucketId == Divvy.View.win.id)
+					continue;
+				
 				bucketNameArray.push(Divvy.Buckets.bucketsArray[i].bucketName);
+			}
+			
+			if (bucketNameArray.length == 0)
+			{
+				alert('Please add another bucket in order to copy photos.');
+				return;
+			}
 				
 			bucketNameArray.push("Cancel");
 			
