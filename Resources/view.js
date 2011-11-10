@@ -230,6 +230,9 @@ Divvy.View.close = function()
 	Divvy.View.footerLabel.text = "";
 };
 
+/*
+ * Redraw completely rewrites elements.
+ */
 Divvy.View.redraw = function()
 {
 	Divvy.View.needsRedraw = 0;
@@ -247,8 +250,13 @@ Divvy.View.redraw = function()
 	Divvy.View.refresh();
 };
 
+/*
+ * Refresh is non-obtrusive -- well, should be at least.
+ */
 Divvy.View.refresh = function()
 {
+	Divvy.View.win.add(Divvy.View.activityIndicator);
+	
 	Network.cache.run (
 		Divvy.url + 'thumbnails/'+Ti.Platform.id+'/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
