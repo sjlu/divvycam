@@ -32,6 +32,9 @@ Divvy.Preview.init = function ()
 
 	// when the window "closes", we run our "deconstruction" methods to save memory.
 	this.win.addEventListener('close', function(e) {
+		if (Divvy.View.needsRedraw)
+			Divvy.View.redraw();
+		
 		Divvy.Preview.close();
 	});
 
@@ -69,7 +72,7 @@ Divvy.Preview.init = function ()
 			bucketNameArray.push("Cancel");
 			
 			var bucketDialog = Ti.UI.createOptionDialog({
-				title: 'Copy this photo this which bucket?',
+				title: 'Select a bucket.',
 				options: bucketNameArray,
 				cancel: bucketNameArray.length-1
 			});
@@ -80,7 +83,7 @@ Divvy.Preview.init = function ()
 					return;
 				
 				Network.cache.asyncPost(
-					Divvy.url + 'delete/photo',
+					Divvy.url + 'copy/photo',
 					{ 
 						duid: Ti.Platform.id, 
 						bucket_id: Divvy.Buckets.bucketsArray[e.index].bucketId, 
@@ -88,7 +91,7 @@ Divvy.Preview.init = function ()
 					},
 					Divvy.Preview.onCopySuccess,
 					Divvy.Preview.onCopyError
-				)
+				);
 			});
 			
 			bucketDialog.show();
@@ -101,7 +104,7 @@ Divvy.Preview.init = function ()
 				{ duid: Ti.Platform.id, id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId },
 				Divvy.Preview.onDeleteSuccess,
 				Divvy.Preview.onDeleteError,
-				{ current_index: Divvy.Preview.currentView.index, count: Divvy.View.imageArray.length-1 }
+				{ current_index: Divvy.Preview.currentView.index, count: Divvy.View.imageArray.length }
 			);
 		}
 	});
@@ -352,10 +355,15 @@ Divvy.Preview.onDeleteSuccess = function(data, date, status, user, xhr)
 			
 	Divvy.Preview.currentView.hide(); // since we moved on, this fixes the "flashing" image bug
 	
-	if (user.current_index+1 == user.count)
-		user.current_index--;
+	var removedImageView = Divvy.View.imageArray.splice(user.current_index, 1); // remove image from array
 	
-	Divvy.Preview.loadViews(user.current_index, Divvy.View.imageArray);
+	if (user.current_index == user.count-1) // if the image we deleted was at the end, we want to go back one index position
+		user.current_index--;
+		
+	Divvy.View.needsRedraw = true;
+
+	Divvy.Preview.loadViews(user.current_index, Divvy.View.imageArray); // reload our views.
+
 	// perform delete functions here.
 };
 
@@ -382,7 +390,8 @@ Divvy.Preview.onCopySuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	alert("Copied photo bucket successfully.");
+	Divvy.Buckets.refresh(); // refresh the bucket list to reflect the new image.
+	alert("Copied photo to bucket successfully.");
 };
 
 Divvy.Preview.onCopyError = function(status, httpStatus)

@@ -71,14 +71,30 @@ Divvy.View.init = function()
 		}
 	});
 	
+	this.needsRedraw = 0;
+	
 	/*
 	 * View elements
 	 */
-	this.activityIndicator = Ti.UI.createActivityIndicator({
-		style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
+	this.activityIndicator = Ti.UI.createView({
+		height: 75,
+		width: 75,
+		backgroundColor: '#000',
+		borderRadius: 10,
+		opacity: 0.75
 	});
 	
-	this.activityIndicator.show();
+	var indicator = Ti.UI.createActivityIndicator({
+		style: Ti.UI.iPhone.ActivityIndicatorStyle.BIG,
+//		message: '\nLoading...',
+		color: '#fff',
+		height: 30,
+		width: 30
+	});
+	
+	indicator.show();
+	
+	this.activityIndicator.add(indicator);
 	
 	// The top element that displays the bucket id and bucket url
 	this.infoView = Ti.UI.createView({
@@ -214,6 +230,21 @@ Divvy.View.close = function()
 	Divvy.View.footerLabel.text = "";
 };
 
+Divvy.View.redraw = function()
+{
+	Divvy.View.needsRedraw = 0;
+	
+	this.win.remove(this.scrollView);
+	delete this.scrollView;
+	delete this.imageArray;
+	
+	this.imageArray = [];
+	this.scrollView = this.createScrollView();
+	this.win.add(this.scrollView);
+	
+	Divvy.View.refresh();
+};
+
 Divvy.View.refresh = function()
 {
 	Network.cache.run (
@@ -294,8 +325,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		
 	Divvy.View.win.md5 = data.md5;
 	
-	this.imageArray = [];
-	this.numOfImages = 0;
+	Divvy.View.imageArray = [];
+	Divvy.View.numOfImages = 0;
 		
 	var thumbnails = data.thumbnails;
 	
@@ -318,7 +349,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
 	Divvy.View.scrollView.add(Divvy.View.imageArray);
 	
-	Divvy.View.scrollView.scrollTo(0, 45); //nice and subtle
+//	Divvy.View.scrollView.scrollTo(0, 45); //nice and subtle
 	
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("opened a bucket");
