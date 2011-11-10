@@ -55,7 +55,7 @@ if (!isset($_POST['duid']) || !isset($_POST['bucket_id']) || !isset($_POST['phot
 	die();
 }
 
-$filename = grab_photo_info($photo_id);
+$filename = grab_photo_info($_POST['photo_id']);
 if ($info == false)
 {
 	echo "{'status':'error', 'error':'no_such_photo'}";

@@ -47,12 +47,6 @@ function upload_to_s3($file, $filename)
       return false;
 }
 
-
-function write_notifications($bucket_id, $duid)
-{
-   db_query('INSERT INTO photos_notifications (bucket_id, duid) SELECT bucket_id, duid FROM buckets_devices WHERE bucket_id="%s" AND duid!="%s"', $bucket_id, $duid);
-}
-
 if ($_FILES["image"]["error"] > 0)
 {
    error_log($_FILES["image"]["error"], 0);
