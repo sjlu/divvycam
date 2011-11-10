@@ -23,7 +23,7 @@ Divvy.Settings.init = function()
 		backgroundColor: '5383e4'
 	});
 	
-	this.doneButtonBar.addEventListener('touchend', function(e)
+	this.doneButtonBar.addEventListener('click', function(e)
 	{
 		Divvy.Settings.done();
 	});
