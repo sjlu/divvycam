@@ -207,10 +207,12 @@ Divvy.View.open = function(name, id, pw)
 	this.win.pw = pw;
 	
 	this.infoLabel.text = "Bucket ID: " + id + "\nURL: divvy.burst-dev.com/b/"+id;
-	
+
 	Divvy.View.win.add(Divvy.View.activityIndicator);
 	
+	this.scrollView.touchEnabled = false;
 	this.refresh();
+	
 	Divvy.open(this.win);
 };
 
@@ -244,6 +246,8 @@ Divvy.View.redraw = function()
 	delete this.imageArray;
 	
 	this.imageArray = [];
+	
+	this.scrollView.touchEnabled = false;
 	this.scrollView = this.createScrollView();
 	this.win.add(this.scrollView);
 	
@@ -358,6 +362,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
 	Divvy.View.scrollView.add(Divvy.View.imageArray);
+	Divvy.View.scrollView.touchEnabled = false;
 	
 //	Divvy.View.scrollView.scrollTo(0, 45); //nice and subtle
 	
