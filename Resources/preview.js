@@ -15,6 +15,24 @@ Divvy.Preview.init = function ()
 		navBarHidden: true // hides the bar when it first opens.
 	});
 	
+	/*
+	this.adView = Ti.UI.iOS.createAdView({
+		height: 'auto',
+		width: 'auto',
+		bottom: 0,
+		zIndex: 1,
+		borderColor: '#000',
+		backgroundColor: '#000'
+	});
+	
+	this.adView.addEventListener('action', function(e)
+	{
+		setTimeout(function(){ Divvy.tabs.bottom = -50; alert('got here'); }, 1000);
+	});
+	
+	this.win.add(this.adView);
+	*/
+	
 	Titanium.Gesture.addEventListener('orientationchange', function(e)
 	{		
 	    if (e.orientation == Titanium.UI.PORTRAIT)
