@@ -101,6 +101,11 @@ Divvy.View.init = function()
     	font:{fontSize: 14, fontWeight: 'bold'}
 	});
 	
+	this.infoLabel.addEventListener('singletap', function(e)
+	{
+		Ti.Platform.openURL("https://divvy.burst-dev.com/b/"+Divvy.View.win.id);
+	});
+	
 	this.infoView.add(this.infoLabel);
 	
 	this.emailDialog = Titanium.UI.createEmailDialog({barcolor: Divvy.winBarColor});	
@@ -112,7 +117,7 @@ Divvy.View.init = function()
 	
 	this.messageButton = Ti.UI.createButton({
 		height: 49, width: 50,
-		top: 202, left: 5,
+		top: 201, left: 5,
 		image: "images/mail.png",
 		style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
 		systemButton: Ti.UI.iPhone.SystemButton.ACTION
