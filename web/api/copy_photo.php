@@ -62,7 +62,7 @@ if ($info == false)
 	die();
 }
 
-$new_filename = $_POST['bucket_id'] . "-" . md5($filename . time() . $duid);
+$new_filename = $_POST['bucket_id'] . "-" . md5($filename . time() . $_POST['duid']);
 
 if (copy_photo($filename, $new_filename))
 {
