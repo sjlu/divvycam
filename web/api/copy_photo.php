@@ -51,14 +51,14 @@ function grab_photo_info($photo_id)
 
 if (!isset($_POST['duid']) || !isset($_POST['bucket_id']) || !isset($_POST['photo_id']))
 {
-	echo "{'status':'error', 'error':'invalid_request'}";
+	echo '{"status":"error", "error":"invalid_request"}';
 	die();
 }
 
 $filename = grab_photo_info($_POST['photo_id']);
 if ($info == false)
 {
-	echo "{'status':'error', 'error':'no_such_photo'}";
+	echo '{"status":"error", "error":"no_such_photo"}';
 	die();
 }
 
@@ -66,16 +66,16 @@ $new_filename = $_POST['bucket_id'] . "-" . md5($filename . time() . $_POST['dui
 
 if (!copy_photo($filename, $new_filename))
 {
-	echo "{'status':'error', 'error':'could_not_copy'}";
+	echo '{"status":"error", "error":"could_not_copy"}';
 	die();
 }
 
 if (add_image_to_db($_POST['bucket_id'], $new_filename, $_POST['duid']))
 {
-	echo "{'status':'success'}";
+	echo '{"status":"success"}';
 }
 else
 {
-	echo "{'status':'error', 'error':'db_error'}";		
+	echo '{"status":"error", "error":"db_error"}';		
 }
 ?>
