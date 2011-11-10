@@ -36,30 +36,74 @@ Divvy.Preview.init = function ()
 	});
 
 	// pop-over dialog
-	this.saveToGalleryDialog = Ti.UI.createOptionDialog({
-		options: ['Save To Gallery', 'Cancel'],
-		cancel: 1
+	this.optionsDialog = Ti.UI.createOptionDialog({
+		options: ['Save To Gallery', 'Copy To Bucket', 'Cancel'],
+		cancel: 2
 	});
 
 	// when something is clicked in the dialog
-	this.saveToGalleryDialog.addEventListener('click', function(e)
-	{
-		// if it isn't "Save To Gallery", then we just stop here.
-		if (e.index != 0)
-			return;
-		
-		// method to saving the curretn photo	
-		Ti.Media.saveToPhotoGallery(Divvy.Preview.currentView.photo.toImage(), 
+	this.optionsDialog.addEventListener('click', function(e)
+	{		
+		// method to saving the curretn photo
+		if (e.index == 0)
 		{
-			success: function(e)
+			Ti.Media.saveToPhotoGallery(Divvy.Preview.currentView.photo.toImage(), 
 			{
-				alert("Saved to your photo gallery!");
-			},
-			error: function(e)
+				success: function(e)
+				{
+					alert("Saved to your photo gallery!");
+				},
+				error: function(e)
+				{
+					alert("Couldn't save to your photo gallery.");
+				}
+			});
+		}
+		else if (e.index == 1)
+		{
+			var bucketNameArray = [];
+			
+			for (var i = 0; i < Divvy.Buckets.bucketsArray.length; i++)
+				bucketNameArray.push(Divvy.Buckets.bucketsArray[i].bucketName);
+				
+			bucketNameArray.push("Cancel");
+			
+			var bucketDialog = Ti.UI.createOptionDialog({
+				title: 'Copy this photo this which bucket?',
+				options: bucketNameArray,
+				cancel: bucketNameArray.length-1
+			});
+			
+			bucketDialog.addEventListener('click', function(e)
 			{
-				alert("Couldn't save to your photo gallery.");
-			}
-		});
+				if (e.index == Divvy.Buckets.bucketsArray.length)
+					return;
+				
+				Network.cache.asyncPost(
+					Divvy.url + 'delete/photo',
+					{ 
+						duid: Ti.Platform.id, 
+						bucket_id: Divvy.Buckets.bucketsArray[e.index].bucketId, 
+						photo_id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId 
+					},
+					Divvy.Preview.onCopySuccess,
+					Divvy.Preview.onCopyError
+				)
+			});
+			
+			bucketDialog.show();
+			// perform copy functions here.
+		}
+		else if (e.index == 2 && Divvy.Preview.optionsDialog.cancel != 2)
+		{
+			Network.cache.asyncPost(
+				Divvy.url + 'delete/photo',
+				{ duid: Ti.Platform.id, id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId },
+				Divvy.Preview.onDeleteSuccess,
+				Divvy.Preview.onDeleteError,
+				{ current_index: Divvy.Preview.currentView.index, count: Divvy.View.imageArray.length-1 }
+			);
+		}
 	});
 
 	// the folder looking icon on the top right
@@ -69,7 +113,7 @@ Divvy.Preview.init = function ()
 	
 	// open the dialog view if the folder looking icon button is clicked
 	this.saveButton.addEventListener('click', function(e){
-		Divvy.Preview.saveToGalleryDialog.show();
+		Divvy.Preview.optionsDialog.show();
 	});
 	
 	// this just adds the button window navBar.
@@ -256,6 +300,19 @@ Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)
 		Divvy.Preview.onImageError,
 		user
 	);	
+	
+	if (data.permissions == '1')
+	{
+		Divvy.Preview.optionsDialog.options = ['Save To Gallery', 'Copy To Bucket', 'Delete Photo', 'Cancel'];
+		Divvy.Preview.optionsDialog.cancel = '3';
+		Divvy.Preview.optionsDialog.destructive = '2';
+	}
+	else
+	{
+		Divvy.Preview.optionsDialog.options = ['Save To Gallery', 'Copy To Bucket', 'Cancel'];
+		Divvy.Preview.optionsDialog.cancel = '2';
+		Divvy.Preview.optionsDialog.destructive = '-1';
+	}
 };
 
 Divvy.Preview.onImageUrlError = function(status, httpStatus)
@@ -273,4 +330,62 @@ Divvy.Preview.onImageSuccess = function(data, date, status, user, xhr)
 Divvy.Preview.onImageError = function(status, httpStatus)
 {
 	//do nothing
+};
+
+Divvy.Preview.onDeleteSuccess = function(data, date, status, user, xhr)
+{
+	try
+	{
+		data = JSON.parse(data);
+	}
+	catch (excp)
+	{
+		Divvy.Preview.onDeleteError(Network.PARSE_ERROR, 0);
+		return;
+	}
+	
+	if (data.status == "error")
+	{
+		Divvy.Preview.onDeleteError(data.error, 0);
+		return;
+	}
+			
+	Divvy.Preview.currentView.hide(); // since we moved on, this fixes the "flashing" image bug
+	
+	if (user.current_index+1 == user.count)
+		user.current_index--;
+	
+	Divvy.Preview.loadViews(user.current_index, Divvy.View.imageArray);
+	// perform delete functions here.
+};
+
+Divvy.Preview.onDeleteError = function(status, httpStatus)
+{
+	alert("Couldn't delete your photo. ("+status+")");
+};
+
+Divvy.Preview.onCopySuccess = function(data, date, status, user, xhr)
+{
+	try
+	{
+		data = JSON.parse(data);
+	}
+	catch (excp)
+	{
+		Divvy.Preview.onCopyError(Network.PARSE_ERROR, 0);
+		return;
+	}
+	
+	if (data.status == "error")
+	{
+		Divvy.Preview.onCopyError(data.error, 0);
+		return;
+	}
+	
+	alert("Copied photo bucket successfully.");
+};
+
+Divvy.Preview.onCopyError = function(status, httpStatus)
+{
+	alert("Couldn't copy the photo. ("+status+")");
 };
