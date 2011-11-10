@@ -234,6 +234,8 @@ Divvy.View.redraw = function()
 {
 	Divvy.View.needsRedraw = 0;
 	
+	Divvy.View.win.add(Divvy.View.activityIndicator);
+	
 	this.win.remove(this.scrollView);
 	delete this.scrollView;
 	delete this.imageArray;
