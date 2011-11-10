@@ -14,7 +14,7 @@ Divvy.Settings.init = function()
 			Titanium.UI.PORTRAIT 
 		],
 		backgroundColor: '#d6d8de'
-		});
+	});
 	
 	//Create the Button
 	this.doneButtonBar = Ti.UI.createButtonBar({
@@ -23,7 +23,8 @@ Divvy.Settings.init = function()
 		backgroundColor: '5383e4'
 	});
 	
-	this.doneButtonBar.addEventListener('click', function(e){
+	this.doneButtonBar.addEventListener('touchend', function(e)
+	{
 		Divvy.Settings.done();
 	});
 	
@@ -38,164 +39,165 @@ Divvy.Settings.init = function()
 	this.general = Ti.UI.createTableViewSection();
 	this.general.headerTitle = "General";
 	
-		//Create a row in first section
-		this.row_name = Ti.UI.createTableViewRow({
-			selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
-		});
+	//Create a row in first section
+	this.row_name = Ti.UI.createTableViewRow({
+		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
+	});
 			//Customize the row
-			this.label_name = Ti.UI.createLabel({
-			text: 'Name',
-			left: 10,
-			font: { fontSize: 16, fontWeight: 'bold' }
-			});
-			
-			this.textarea_name = Ti.UI.createTextField({
-			hintText: 'Optional',
-			left: 100,
-			width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
-			editable: true,
-			color: '#385487',
-			keyboardType: Ti.UI.KEYBOARD,
-			clearButtonMode: Titanium.UI.INPUT_BUTTONMODE_ONFOCUS,
-			});
-			
-			//Add the row
-			this.row_name.add(this.textarea_name);
-			this.row_name.add(this.label_name);
+	this.label_name = Ti.UI.createLabel({
+		text: 'Name',
+		left: 10,
+		font: { fontSize: 16, fontWeight: 'bold' }
+	});
+	
+	this.textarea_name = Ti.UI.createTextField({
+		hintText: 'Optional',
+		left: 100,
+		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
+		editable: true,
+		color: '#385487',
+		keyboardType: Ti.UI.KEYBOARD,
+		clearButtonMode: Titanium.UI.INPUT_BUTTONMODE_ONFOCUS,
+	});
+	
+	//Add the row
+	this.row_name.add(this.textarea_name);
+	this.row_name.add(this.label_name);
 
-		//Create row in first section
-		this.row_push = Ti.UI.createTableViewRow({
-			selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
-		});
-			//Customize the row
-			this.label_push = Ti.UI.createLabel({
-			text: 'Push Notifications',
-			left: 10,
-			font: { fontSize: 16, fontWeight: 'bold' }
-			});
+	//Create row in first section
+	this.row_push = Ti.UI.createTableViewRow({
+		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
+	});
 			
-			this.switch_push = Ti.UI.createSwitch({
-				value: false,
-				left: 210
-			});
+	//Customize the row
+	this.label_push = Ti.UI.createLabel({
+		text: 'Push Notifications',
+		left: 10,
+		font: { fontSize: 16, fontWeight: 'bold' }
+	});
 			
-			//Make the object clickable
-			this.switch_push.addEventListener('switch', function(e){
-				Ti.API.info('Basic Switch value = ' + e.value + ' act val ' + basicSwitch.value);
-			});
+	this.switch_push = Ti.UI.createSwitch({
+		value: false,
+		left: 210
+	});
+	
+	//Make the object clickable
+	this.switch_push.addEventListener('switch', function(e){
+		Ti.API.info('Basic Switch value = ' + e.value + ' act val ' + basicSwitch.value);
+	});
+	
+	//Add the row
+	this.row_push.add(this.switch_push);
+	this.row_push.add(this.label_push);
+						
+	//Create row in first section
+	this.row_save = Ti.UI.createTableViewRow({
+		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
+	});
+	
+	//Customize row
+	this.label_save = Ti.UI.createLabel({
+		text: 'Local Device Save',
+		left: 10,
+		font: { fontSize: 16, fontWeight: 'bold' }
+	});
 			
-			//Add the row
-			this.row_push.add(this.switch_push);
-			this.row_push.add(this.label_push);
+	this.switch_save = Ti.UI.createSwitch({
+		value: false,
+		left: 210
+	});
+	
+	//Make object clickable
+	this.switch_save.addEventListener('switch', function(e){
+		Ti.API.info('Basic Switch value = ' + e.value + ' act val ' + basicSwitch.value);
+	});
 			
-			
-		//Create row in first section
-		this.row_save = Ti.UI.createTableViewRow({
-			selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
-		});
-			//Customize row
-			this.label_save = Ti.UI.createLabel({
-			text: 'Local Device Save',
-			left: 10,
-			font: { fontSize: 16, fontWeight: 'bold' }
-			});
-			
-			this.switch_save = Ti.UI.createSwitch({
-				value: false,
-				left: 210
-			});
-			
-			//Make object clickable
-			this.switch_save.addEventListener('switch', function(e){
-				Ti.API.info('Basic Switch value = ' + e.value + ' act val ' + basicSwitch.value);
-			});
-			
-			//Add the row
-			this.row_save.add(this.switch_save);
-			this.row_save.add(this.label_save);
+	//Add the row
+	this.row_save.add(this.switch_save);
+	this.row_save.add(this.label_save);
 
-		//this.general.add(this.row_name);
-		this.general.add(this.row_push);
-		this.general.add(this.row_save);
-		this.tableview.add(this.general);
+	//this.general.add(this.row_name);
+	this.general.add(this.row_push);
+	this.general.add(this.row_save);
+	this.tableview.add(this.general);
 	
 	//Create another section in table view	
 	this.pro = Ti.UI.createTableViewSection();
 	this.pro.headerTitle = "Upgrade";
 	
-		//Create a row in second section	
-		this.row_pro = Ti.UI.createTableViewRow({
-			selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE,
-			height: 'auto'
-		});
+	//Create a row in second section	
+	this.row_pro = Ti.UI.createTableViewRow({
+		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE,
+		height: 'auto'
+	});
+	
+	this.image_pro = Ti.UI.createImageView({
+		image: 'images/appicon.png',
+		hires: true,
+		height: 57,
+		width: 57,
+		top: 10,
+		bottom: 10,
+		left: 10
+	});
+	
+	this.row_pro.add(this.image_pro);
 		
-		this.image_pro = Ti.UI.createImageView({
-			image: 'images/appicon.png',
-			hires: true,
-			height: 57,
-			width: 57,
-			top: 10,
-			bottom: 10,
-			left: 10
-		});
+	//Customize that row	
+	this.label_pro = Ti.UI.createLabel({
+		text: 'DivvyCam Pro',
+		height: 'auto',
+		top: 20,
+		left: 75,
+		font: { fontSize: 15, fontWeight: 'bold' }
+	});
+	
+	this.label_price = Ti.UI.createLabel({
+		text: '$0.00',
+		height:'auto',
+		top: 38,
+		left: 75,
+		font:{fontSize: 14}
+	});
+	
+	this.button_buy = Ti.UI.createButton({
+		title: 'Purchase',
+		top: 25,
+		left: 210,
+		height: 30,
+		width: 75,
+	});
+	
+	this.row_pro.add(this.button_buy);
+	this.row_pro.add(this.label_price);
+	this.row_pro.add(this.label_pro);
+			
+	//Create row for second section
+	this.row_info = Ti.UI.createTableViewRow({
+		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE,
+		height: 'auto'
+	});	
 		
-		this.row_pro.add(this.image_pro);
-		
-			//Customize that row	
-			this.label_pro = Ti.UI.createLabel({
-				text: 'DivvyCam Pro',
-				height: 'auto',
-				top: 20,
-				left: 75,
-				font: { fontSize: 15, fontWeight: 'bold' }
-			});
+	//Customize that row	
+	this.label_info = Ti.UI.createLabel({
+		text: 'Description',
+		height: 'auto',
+		top: 10,
+		left: 10,
+		font: { fontSize: 14, fontWeight: 'bold' }
+	});
 			
-			this.label_price = Ti.UI.createLabel({
-				text: '$0.00',
-				height:'auto',
-				top: 38,
-				left: 75,
-				font:{fontSize: 14}
-			});
+	this.label_description = Ti.UI.createLabel({
+		text: 'Enables unlimited bucket creations Better photo quality with website download feature',
+		height: 'auto',
+		top: 10,
+		bottom: 10,
+		left: 100,
+		font: { fontSize: 14 }
+	});
 			
-			this.button_buy = Ti.UI.createButton({
-				title: 'Purchase',
-				top: 25,
-				left: 210,
-				height: 30,
-				width: 75,
-			});
-			
-			this.row_pro.add(this.button_buy);
-			this.row_pro.add(this.label_price);
-			this.row_pro.add(this.label_pro);
-			
-		//Create row for second section
-		this.row_info = Ti.UI.createTableViewRow({
-			selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE,
-			height: 'auto'
-		});	
-		
-			//Customize that row	
-			this.label_info = Ti.UI.createLabel({
-			text: 'Description',
-			height: 'auto',
-			top: 10,
-			left: 10,
-			font: { fontSize: 14, fontWeight: 'bold' }
-			});
-			
-			this.label_description = Ti.UI.createLabel({
-			text: 'Enables unlimited bucket creations Better photo quality with website download feature',
-			height: 'auto',
-			top: 10,
-			bottom: 10,
-			left: 100,
-			font: { fontSize: 14 }
-			});
-			
-			this.row_info.add(this.label_info);
-			this.row_info.add(this.label_description);
+	this.row_info.add(this.label_info);
+	this.row_info.add(this.label_description);
 			
 	//Add to the second section	
 	this.pro.add(this.row_pro);
