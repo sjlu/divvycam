@@ -4,6 +4,8 @@ Divvy.jpgcompressor = require('com.sideshowcoder.jpgcompressor');
 Divvy.jpgcompressor.setCompressSize(512000);
 Divvy.jpgcompressor.setWorstCompressQuality(0.5);
 
+Titanium.Storekit = Ti.Storekit = require('ti.storekit');
+
 Divvy.developmentMode = true;
 
 if (Divvy.developmentMode)

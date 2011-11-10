@@ -35,5 +35,6 @@
     <modules>
         <module version="0.3">com.0x82.testflight</module>
         <module version="0.5.1">com.sideshowcoder.jpgcompressor</module>
+        <module version="1.2">ti.storekit</module>
     </modules>
 </ti:app>
