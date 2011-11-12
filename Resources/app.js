@@ -78,11 +78,8 @@ Divvy.Preview.init();
 Divvy.Settings.init();
 Divvy.Upgrade.init();
 
-//if (Ti.Platform.osname != 'ipad')
-//{
-	Divvy.Buckets.addAds();
-	Divvy.View.addAds();
-//}
+Divvy.Buckets.addAds();
+Divvy.View.addAds();
 
 //open actually shows our UI elements.
 Divvy.Buckets.open();
