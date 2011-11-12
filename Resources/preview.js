@@ -14,7 +14,8 @@ Divvy.Preview.init = function ()
 		fullscreen: true, // allows us to use height of 480 instead of 460
 		navBarHidden: true // hides the bar when it first opens.
 	});
-	
+
+	// iAd from Apple
 	/*
 	this.adView = Ti.UI.iOS.createAdView({
 		height: 'auto',
@@ -286,7 +287,6 @@ Divvy.Preview.loadViews = function(index, dataset)
 		selectedPage = 1;	
 	}
 	
-
 	Divvy.Preview.scrollView.currentPage = selectedPage; // we set the selected page index
 	Divvy.Preview.scrollView.views = loadedViews; // we put the new viewset into the scrollView
 

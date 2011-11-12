@@ -51,7 +51,11 @@ Divvy.Buckets.init = function()
 	 * Views and more.
 	 */
 
-	this.tableview = Ti.UI.createTableView({editable: true});
+	this.tableview = Ti.UI.createTableView({
+		editable: true, 
+		top: 0, 
+		height: 420
+	});
 	
 	this.tableview.addEventListener('click', function(e) {
 		Divvy.View.open(e.row.bucketName, e.row.bucketId, e.row.bucketPw);
@@ -70,6 +74,27 @@ Divvy.Buckets.init = function()
 	this.bucketsArray = [];
 	
 	this.win.add(this.tableview);
+
+	this.adView = Ti.Admob.createView({
+    	bottom: 0, left: 0,
+    	width: 320, height: 50,
+    	publisherId: 'a14ebeb4bf48fdc', // You can get your own at http: //www.admob.com/
+    	adBackgroundColor: 'black',
+    	testing: false,
+    	keywords: 'photos'
+	});
+};
+
+Divvy.Buckets.addAds = function()
+{
+	this.tableview.height = 370;
+	this.win.add(this.adView);
+};
+
+Divvy.Buckets.removeAds = function()
+{
+	this.tableview.height = 420;
+	this.win.remove(this.adView);
 };
 
 Divvy.Buckets.onDeleteSuccess = function(data, date, status, user, xhr)

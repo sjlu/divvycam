@@ -125,8 +125,6 @@ Divvy.View.init = function()
 	
 	this.infoView.add(this.infoLabel);
 	
-
-	
 	this.emailDialog = Titanium.UI.createEmailDialog({barcolor: Divvy.winBarColor});	
  	this.emailDialog.addEventListener('complete', function(e)
 	{
@@ -159,12 +157,12 @@ Divvy.View.init = function()
 	
 	// the element that shows the number of photos at the bottom
 	this.footerView = Ti.UI.createView({
-		height: 100
+		height: 60
 	});
 	
 	this.footerLabel = Ti.UI.createLabel({
 		color: '#999',
-		top: 0,
+		top: 0, height: 25,
 		width: 320,
 		textAlign: 'center',
 		font: { fontSize: 20, fontWeight: 'bold' }
@@ -175,7 +173,7 @@ Divvy.View.init = function()
 	this.refreshLabel = Ti.UI.createLabel({
 		text: 'Double Tap to Refresh',
 		color: '#999',
-		top: 36,
+		top: 20, height: 24,
 		width: 320,
 		textAlign: 'center',
 		font: { fontSize: 16 }
@@ -187,6 +185,15 @@ Divvy.View.init = function()
 	});
 	
 	this.footerView.add(this.refreshLabel);
+	
+	this.footerAd = Ti.Admob.createView({
+    	bottom: 0, left: 0,
+    	width: 320, height: 50,
+    	publisherId: 'a14ebeb4bf48fdc', // You can get your own at http: //www.admob.com/
+    	adBackgroundColor: 'black',
+    	testing: false,
+    	keywords: 'photos'
+	});
 	
 	this.scrollView = this.createScrollView();
 	this.scrollPosition = {x: 0, y: 0};
@@ -219,6 +226,18 @@ Divvy.View.init = function()
 	this.numberOfPhotosUploaded = 0;
 	this.photosInUploadQueue = 0;
 	this.uploading = 0;
+};
+
+Divvy.View.addAds = function()
+{
+	this.footerView.height = 110;
+	this.footerView.add(this.footerAd);
+};
+
+Divvy.View.removeAds = function()
+{
+	this.footerview.height = 60;
+	this.footerView.remove(this.footerAd);
 };
 
 Divvy.View.open = function(name, id, pw)
@@ -379,7 +398,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		
 		if ((thumbnails.length) > 16)
 		{
-			Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+25;
+			Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+60;
 			Divvy.View.footerLabel.text = thumbnails.length+" Photos";
 		}
 			
