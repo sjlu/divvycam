@@ -69,6 +69,6 @@
    
    function log_error($error, $query)
    {
-      error_log('FILE: ' . __FILE__ . ' LINE: ' . __LINE__ . '\nERROR: ' . $error . '\nQUERY: ' . $query . '\n');
+      trigger_error('FILE: ' . __FILE__ . ' LINE: ' . __LINE__ . '\nERROR: ' . $error . '\nQUERY: ' . $query . '\n', E_ERROR);
    }
 ?>
