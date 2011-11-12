@@ -38,6 +38,6 @@
    
    function db_log_error($error, $query)
    {
-      trigger_error('FILE: ' . __FILE__ . ' LINE: ' . __LINE__ . '\nERROR: ' . $error . '\nQUERY: ' . $query . '\n', E_ERROR);
+      trigger_error('FILE: ' . __FILE__ . ' LINE: ' . __LINE__ . '\nERROR: ' . $error . '\nQUERY: ' . $query . '\n', E_USER_ERROR);
    }
 ?>

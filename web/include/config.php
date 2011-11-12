@@ -4,6 +4,7 @@ function error_handler()
 {
    if ($e = error_get_last())
    {
+
       $file = $e['file'];
       $message = $e['message'];
       $line = $e['line'];
