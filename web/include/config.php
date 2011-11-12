@@ -1,17 +1,22 @@
 <?php
 // Error handling
-function error_handler($number, $message, $file, $line, $vars)
+function error_handler()
 {
-   $email = 'An error occured in ' . $file . ' on line ' . $line . ".\n";
-   $email .= $message;
+   if ($e = error_get_last())
+   {
+      $file = $e['file'];
+      $message = $e['message'];
+      $line = $e['line'];
 
-   error_log($email, 1, 'slu@burst-dev.com');
+      $email = 'An error occured in ' . $file . ' on line ' . $line . ".\n";
+      $email .= $message;
 
-   if (($number !== E_NOTICE) && ($number < 2048))
-      die("An error has occured, please try again later.");
+      error_log($email, 1, 'slu@burst-dev.com');
+   }
 }
 
 //set_error_handler('error_handler');
+register_shutdown_function('error_handler');
 
 // Need amazon classes
 include 'aws/sdk.class.php';
