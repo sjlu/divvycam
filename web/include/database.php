@@ -30,7 +30,7 @@
       $query = call_user_func_array('sprintf', $args);
 
       if (!$result = $mysqli->query($query))
-         log_error($mysqli->error, $query);
+         die(log_error($mysqli->error, $query));
       
       $returnData = array();
 
