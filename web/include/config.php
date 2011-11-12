@@ -11,7 +11,7 @@ function error_handler($number, $message, $file, $line, $vars)
       die("An error has occured, please try again later.");
 }
 
-set_error_handler('error_handler');
+//set_error_handler('error_handler');
 
 // Need amazon classes
 include 'aws/sdk.class.php';
