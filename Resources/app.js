@@ -5,6 +5,7 @@ Divvy.jpgcompressor.setCompressSize(512000);
 Divvy.jpgcompressor.setWorstCompressQuality(0.5);
 
 Titanium.Storekit = Ti.Storekit = require('ti.storekit');
+Titanium.Admob = Ti.Admob = require('ti.admob');
 
 Divvy.developmentMode = true;
 
