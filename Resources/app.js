@@ -53,7 +53,8 @@ Ti.include(
 	'create.js',
 	'join.js',
 	'preview.js',
-	'settings.js'
+	'settings.js',
+	'upgrade.js'
 );
 
 /* 
@@ -75,6 +76,7 @@ Divvy.Create.init();
 Divvy.Join.init();
 Divvy.Preview.init();
 Divvy.Settings.init();
+Divvy.Upgrade.init();
 
 //if (Ti.Platform.osname != 'ipad')
 //{
