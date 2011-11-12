@@ -2,7 +2,7 @@
 // Error handling
 function error_handler($number, $message, $file, $line, $vars)
 {
-   $email = 'An error occured in ' . $file . ' on line ' . $line . '.\n';
+   $email = 'An error occured in ' . $file . ' on line ' . $line . ".\n";
    $email .= $message;
 
    error_log($email, 1, 'slu@burst-dev.com');
