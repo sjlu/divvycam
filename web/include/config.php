@@ -23,7 +23,17 @@ include 'database.php';
 db_connect();
 
 ini_set('display_errors', 'Off');
-session_start();
+//session_start();
+
+function error_handler($number, $message, $file, $line, $vars)
+{
+   error_log($message, 1, 'slu@burst-dev.com');
+
+   if (($number !== E_NOTICE) && ($number < 2048))
+      die("An error has occured, please try again later.");
+}
+
+set_error_handler('error_handler');
 
 include_once('helpers.php');
 
