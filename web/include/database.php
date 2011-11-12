@@ -34,7 +34,7 @@
       
       $returnData = array();
 
-      while($row = $result->fetch_array(MYSQLI_ASSOC))
+      while($row = $result->fetch_assoc(MYSQLI_ASSOC))
          $returnData[] = $row;
       
       $result->close();
