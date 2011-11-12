@@ -1,41 +1,10 @@
 <?php
-   //Use this only for development mode. Set this equal to 0 when moving to production mode.
-   define('DEBUG', 1);
-
-   //show all php errors if debug is 1
-   if(DEBUG)
-   {
-      error_reporting(E_ALL);
-      ini_set('display_errors', '1');
-   }
-
-
-   /** This is a nice version of print_r you can use while debugging webpages. It'll print the array prettier. */
-   function debug_r($arr)
-   {
-      if(DEBUG)
-      {
-         echo '<pre>';
-         print_r($arr);
-         echo '</pre>';
-      }
-   }
-
-   /** This function prints out the html encoded version of text. If you are printing out a variable and you know it doesn't contain html, use encho() instead of echo(). Helps a lot in avoiding XSS bugs. */
-   function encho($text)
-   {
-      echo htmlspecialchars($text);
-   }
-   
    /** This function connects us to the database defined in the macros above. */
    function db_connect()
    {
       $success = mysql_connect(DB_HOST, DB_USER, DB_PASS);     
       if(!$success)
-         if(DEBUG)
-            exit('MySQL connection failed on line '. __LINE__. ' in file '. __FILE__. "\n");
-         else
-            echo 'The database connection failed';
+         db_log_error('MySQL connection error.');
 
       mysql_select_db(DB_NAME);
    }
@@ -59,16 +28,16 @@
       $query = call_user_func_array('sprintf', $args);
 
       $mReturnData = array();
-      $mResult = @mysql_query($query) or die(log_error(mysql_error(), $query)); 
+      $mResult = @mysql_query($query) or die(db_log_error(mysql_error(), $query)); 
 
-      while($row = @mysql_fetch_array($mResult, MYSQL_ASSOC))
+      while($row = @mysql_fetch_assoc($mResult))
          $mReturnData[] = $row;
       
       return $mReturnData;
    }
    
-   function log_error($error, $query)
+   function db_log_error($error, $query)
    {
-      error_log('FILE: ' . __FILE__ . ' LINE: ' . __LINE__ . '\nERROR: ' . $error . '\nQUERY: ' . $query . '\n');
+      trigger_error("FILE: " . __FILE__ . " LINE: " . __LINE__ . "\nERROR: " . $error . "\nQUERY: " . $query . "\n", E_USER_ERROR);
    }
 ?>
