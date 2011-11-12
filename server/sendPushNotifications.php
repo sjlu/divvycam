@@ -10,7 +10,7 @@ $push->setRootCertificationAuthority('entrust_root_certification_authority.pem')
 $push->connect();
 
 // get messages
-$notifications = db_query('SELECT COUNT(*), buckets.name, photos_notifications.bucket_id, devices.push_key FROM photos_notifications LEFT JOIN buckets ON photos_notifications.bucket_id = buckets.id LEFT JOIN devices ON photos_notifications.duid = devices.duid GROUP BY photos_notifications.bucket_id, photos_notifications.duid WHERE devices.push_key != "";');
+$notifications = db_query('SELECT COUNT(*), buckets.name, photos_notifications.bucket_id, devices.push_key FROM photos_notifications LEFT JOIN buckets ON photos_notifications.bucket_id = buckets.id LEFT JOIN devices ON photos_notifications.duid = devices.duid WHERE devices.push_key != "" GROUP BY photos_notifications.bucket_id, photos_notifications.duid;');
 db_query('DELETE FROM photos_notifications');
 
 foreach ($notifications as $notification)
@@ -34,7 +34,7 @@ foreach ($notifications as $notification)
 }
 
 // adding the message and sending it.
-if ($notifications[0]['COUNT(*)'] > 0)
+if (count($notifications) > 0)
    $push->send();
 
 // disconnecting from APS
