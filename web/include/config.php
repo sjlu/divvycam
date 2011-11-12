@@ -1,28 +1,4 @@
 <?php
-// Error handling
-// will detect errors but parse errors
-function error_handler()
-{
-   if ($e = error_get_last())
-   {
-      echo $e['type'];
-      if ($e['type'] === E_ERROR 
-         || $e['type'] === E_USER_ERROR) 
-      {
-         $file = $e['file'];
-         $message = $e['message'];
-         $line = $e['line'];
-
-         $email = 'An error occured in ' . $file . ' on line ' . $line . ".\n";
-         $email .= $message . "\n";
-         error_log($email, 1, 'slu@burst-dev.com');
-      }
-   }
-}
-
-//set_error_handler('error_handler');
-register_shutdown_function('error_handler');
-
 // Need amazon classes
 include 'aws/sdk.class.php';
 
