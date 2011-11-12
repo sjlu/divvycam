@@ -159,29 +159,34 @@ Divvy.View.init = function()
 	
 	// the element that shows the number of photos at the bottom
 	this.footerView = Ti.UI.createView({
-		height: 80
+		height: 100
 	});
 	
 	this.footerLabel = Ti.UI.createLabel({
 		color: '#999',
+		top: 0,
 		width: 320,
 		textAlign: 'center',
-		font: {fontSize: 20}
+		font: { fontSize: 20, fontWeight: 'bold' }
 	});
 	
 	this.footerView.add(this.footerLabel);
 	
-	this.refreshButton = Ti.UI.createButton({
-		title: 'Refresh',
-		height: 30, width: 75
+	this.refreshLabel = Ti.UI.createLabel({
+		text: 'Double Tap to Refresh',
+		color: '#999',
+		top: 36,
+		width: 320,
+		textAlign: 'center',
+		font: { fontSize: 16 }
 	});
 	
-	this.refreshButton.addEventListener('click', function(e)
+	this.footerView.addEventListener('doubletap', function(e)
 	{
 		Divvy.View.redraw();
 	});
 	
-	this.footerView.add(this.refreshButton);
+	this.footerView.add(this.refreshLabel);
 	
 	this.scrollView = this.createScrollView();
 	this.scrollPosition = {x: 0, y: 0};
@@ -358,33 +363,38 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	}
 	
 	if (Divvy.View.win.md5 != undefined && data.md5 != undefined && data.md5 == Divvy.View.win.md5)
-		return;
-		
-	Divvy.View.win.md5 = data.md5;
-	
-	Divvy.View.imageArray = [];
-	Divvy.View.numOfImages = 0;
-		
-	var thumbnails = data.thumbnails;
-	
-	Divvy.View.footerView.top = 5*(Divvy.View.dimension+Divvy.View.padding)+15;
-	
-	if ((thumbnails.length) > 16)
+	{	
+		// do nothing
+	}
+	else
 	{
-		Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+40;
-		Divvy.View.footerLabel.text = thumbnails.length+" Photos";
+		Divvy.View.win.md5 = data.md5;
+		
+		Divvy.View.imageArray = [];
+		Divvy.View.numOfImages = 0;
+			
+		var thumbnails = data.thumbnails;
+		
+		Divvy.View.footerView.top = 5*(Divvy.View.dimension+Divvy.View.padding)-35;
+		
+		if ((thumbnails.length) > 16)
+		{
+			Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+25;
+			Divvy.View.footerLabel.text = thumbnails.length+" Photos";
+		}
+			
+		var i = 0;
+		for (var j in thumbnails)
+		{
+			Divvy.View.imageArray[i] = Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url);
+	//		Divvy.View.scrollView.add(Divvy.View.imageArray[i]);
+			i++;
+		}
+		
+		Divvy.View.scrollView.add(Divvy.View.imageArray);
 	}
 		
-	var i = 0;
-	for (var j in thumbnails)
-	{
-		Divvy.View.imageArray[i] = Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url);
-//		Divvy.View.scrollView.add(Divvy.View.imageArray[i]);
-		i++;
-	}
-	
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
-	Divvy.View.scrollView.add(Divvy.View.imageArray);
 	Divvy.View.scrollView.touchEnabled = true;
 	
 //	Divvy.View.scrollView.scrollTo(0, 45); //nice and subtle
@@ -396,6 +406,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 Divvy.View.onRefreshError = function(status, httpStatus)
 {
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
+	Divvy.View.scrollView.touchEnabled = true;
 	alert("Couldn't get bucket information. ("+status+")");
 };
 
