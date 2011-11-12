@@ -51,7 +51,8 @@ Divvy.View.init = function()
 		cancel: 2
 	});
 	
-	this.cameraDialog.addEventListener('click', function(e){
+	this.cameraDialog.addEventListener('click', function(e)
+	{
 		if (e.index == 0)
 		{
 			Ti.Media.showCamera({
@@ -124,6 +125,8 @@ Divvy.View.init = function()
 	
 	this.infoView.add(this.infoLabel);
 	
+
+	
 	this.emailDialog = Titanium.UI.createEmailDialog({barcolor: Divvy.winBarColor});	
  	this.emailDialog.addEventListener('complete', function(e)
 	{
@@ -168,7 +171,20 @@ Divvy.View.init = function()
 	
 	this.footerView.add(this.footerLabel);
 	
+	this.refreshButton = Ti.UI.createButton({
+		title: 'Refresh',
+		height: 30, width: 75
+	});
+	
+	this.refreshButton.addEventListener('click', function(e)
+	{
+		Divvy.View.redraw();
+	});
+	
+	this.footerView.add(this.refreshButton);
+	
 	this.scrollView = this.createScrollView();
+	this.scrollPosition = {x: 0, y: 0};
 	this.win.add(this.scrollView);
 	
 	this.imageArray = [];
@@ -227,6 +243,7 @@ Divvy.View.close = function()
 	
 	this.imageArray = [];
 	this.scrollView = this.createScrollView();
+	this.scrollPosition = {x: 0, y: 0};
 	this.win.add(this.scrollView);
 	
 	Divvy.View.footerLabel.text = "";
@@ -238,19 +255,19 @@ Divvy.View.close = function()
 Divvy.View.redraw = function()
 {
 	Divvy.View.needsRedraw = 0;
-	
-	Divvy.View.win.add(Divvy.View.activityIndicator);
-	
+
 	this.win.remove(this.scrollView);
 	delete this.scrollView;
 	delete this.imageArray;
 	
 	this.imageArray = [];
 	
-	this.scrollView.touchEnabled = false;
 	this.scrollView = this.createScrollView();
+	this.scrollView.scrollTo(this.scrollPosition.x, this.scrollPosition.y)
+	this.scrollView.touchEnabled = false;
 	this.win.add(this.scrollView);
 	
+	Divvy.View.win.add(Divvy.View.activityIndicator);
 	Divvy.View.refresh();
 };
 
@@ -302,6 +319,12 @@ Divvy.View.createScrollView = function()
 			
 		e.source.opacity = 1.0;
 		Divvy.Preview.open(e.source.imageNumber-1);
+	});
+	
+	scrollView.addEventListener('scroll', function(e)
+	{
+		Divvy.View.scrollPosition.x = e.x;
+		Divvy.View.scrollPosition.y = e.y;
 	});
 
 	return scrollView;
