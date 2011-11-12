@@ -1,10 +1,13 @@
 <?php
 // Error handling
+// will detect errors but parse errors
 function error_handler()
 {
    if ($e = error_get_last())
    {
-      if ($e['type'] === E_ERROR || $e['type'] === E_USER_ERROR)
+      echo $e['type'];
+      if ($e['type'] === E_ERROR 
+         || $e['type'] === E_USER_ERROR) 
       {
          $file = $e['file'];
          $message = $e['message'];
