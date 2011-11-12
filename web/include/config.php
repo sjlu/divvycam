@@ -4,15 +4,16 @@ function error_handler()
 {
    if ($e = error_get_last())
    {
+      if ($e['type'] === E_ERROR || $e['type'] === E_USER_ERROR)
+      {
+         $file = $e['file'];
+         $message = $e['message'];
+         $line = $e['line'];
 
-      $file = $e['file'];
-      $message = $e['message'];
-      $line = $e['line'];
-
-      $email = 'An error occured in ' . $file . ' on line ' . $line . ".\n";
-      $email .= $message;
-
-      error_log($email, 1, 'slu@burst-dev.com');
+         $email = 'An error occured in ' . $file . ' on line ' . $line . ".\n";
+         $email .= $message . "\n";
+         error_log($email, 1, 'slu@burst-dev.com');
+      }
    }
 }
 
