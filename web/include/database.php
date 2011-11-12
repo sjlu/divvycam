@@ -59,9 +59,9 @@
       $query = call_user_func_array('sprintf', $args);
 
       $mReturnData = array();
-      $mResult = @mysql_query($query) or die(log_error(mysql_error(), $query)); 
+      $mResult = mysql_query($query) or die(log_error(mysql_error(), $query)); 
 
-      while($row = @mysql_fetch_array($mResult, MYSQL_ASSOC))
+      while($row = mysql_fetch_array($mResult, MYSQL_ASSOC))
          $mReturnData[] = $row;
       
       return $mReturnData;
