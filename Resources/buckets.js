@@ -52,9 +52,9 @@ Divvy.Buckets.init = function()
 	 */
 
 	this.tableview = Ti.UI.createTableView({
+		height: (Ti.Platform.osname == 'ipad') ? '960' : '420',
 		editable: true, 
-		top: 0, 
-		height: 420
+		top: 0
 	});
 	
 	this.tableview.addEventListener('click', function(e) {
@@ -76,8 +76,9 @@ Divvy.Buckets.init = function()
 	this.win.add(this.tableview);
 
 	this.adView = Ti.Admob.createView({
-    	bottom: 0, left: 0,
-    	width: 320, height: 50,
+    	bottom: 0,
+    	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
+    	height: (Ti.Platform.osname == 'ipad') ? '60' : '50',
     	publisherId: 'a14ebeb4bf48fdc', // You can get your own at http: //www.admob.com/
     	adBackgroundColor: 'black',
     	testing: false,
@@ -87,13 +88,13 @@ Divvy.Buckets.init = function()
 
 Divvy.Buckets.addAds = function()
 {
-	this.tableview.height = 370;
+	this.tableview.height = (Ti.Platform.osname == 'ipad') ? '900' : '370';
 	this.win.add(this.adView);
 };
 
 Divvy.Buckets.removeAds = function()
 {
-	this.tableview.height = 420;
+	this.tableview.height = (Ti.Platform.osname == 'ipad') ? '960' : '420';
 	this.win.remove(this.adView);
 };
 

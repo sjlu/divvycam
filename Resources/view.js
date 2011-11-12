@@ -187,8 +187,9 @@ Divvy.View.init = function()
 	this.footerView.add(this.refreshLabel);
 	
 	this.footerAd = Ti.Admob.createView({
-    	bottom: 0, left: 0,
-    	width: 320, height: 50,
+    	bottom: 0,
+    	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
+    	height: (Ti.Platform.osname == 'ipad') ? '60' : '50',
     	publisherId: 'a14ebeb4bf48fdc', // You can get your own at http: //www.admob.com/
     	adBackgroundColor: 'black',
     	testing: false,
@@ -230,7 +231,7 @@ Divvy.View.init = function()
 
 Divvy.View.addAds = function()
 {
-	this.footerView.height = 110;
+	this.footerView.height = (Ti.Platform.osname == 'ipad') ? 120 : 110;
 	this.footerView.add(this.footerAd);
 };
 

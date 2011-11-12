@@ -76,11 +76,11 @@ Divvy.Join.init();
 Divvy.Preview.init();
 Divvy.Settings.init();
 
-if (Ti.Platform.osname != 'ipad')
-{
+//if (Ti.Platform.osname != 'ipad')
+//{
 	Divvy.Buckets.addAds();
 	Divvy.View.addAds();
-}
+//}
 
 //open actually shows our UI elements.
 Divvy.Buckets.open();
