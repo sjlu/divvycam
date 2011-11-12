@@ -58,17 +58,17 @@
 
       $query = call_user_func_array('sprintf', $args);
 
-      if(@$_REQUEST['sql_explain'] == 1)
-      {
-         debug_r('Query: '.$query."\n");
-      }
-
       $mReturnData = array();
-      $mResult = @mysql_query($query) or die( DEBUG ? 'ERROR: '.mysql_error(). '  File: '.__FILE__. ' Line: '.__LINE__. "\n Query: $query\n": ('A database query failed'));
-      
+      $mResult = @mysql_query($query) or die(log_error(mysql_error(), $query)); 
+
       while($row = @mysql_fetch_array($mResult, MYSQL_ASSOC))
          $mReturnData[] = $row;
       
       return $mReturnData;
+   }
+   
+   function log_error($error, $query)
+   {
+      error_log('FILE: ' . __FILE__ . ' LINE: ' . __LINE__ . '\nERROR: ' . $error . '\nQUERY: ' . $query . '\n');
    }
 ?>
