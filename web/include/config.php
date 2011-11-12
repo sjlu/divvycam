@@ -27,7 +27,10 @@ ini_set('display_errors', 'Off');
 
 function error_handler($number, $message, $file, $line, $vars)
 {
-   error_log($message, 1, 'slu@burst-dev.com');
+   $email = 'An error occured in ' . $file . ' on line ' . $line . '.\n';
+   $email .= $message;
+
+   error_log($email, 1, 'slu@burst-dev.com');
 
    if (($number !== E_NOTICE) && ($number < 2048))
       die("An error has occured, please try again later.");
