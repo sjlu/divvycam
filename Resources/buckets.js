@@ -80,7 +80,7 @@ Divvy.Buckets.init = function()
     	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
     	height: (Ti.Platform.osname == 'ipad') ? '60' : '50',
     	publisherId: 'a14ebeb4bf48fdc', // You can get your own at http: //www.admob.com/
-    	adBackgroundColor: 'black',
+    	adBackgroundColor: 'white',
     	testing: false,
     	keywords: 'photos'
 	});

@@ -202,6 +202,9 @@ Network.cache = (function () {
    priv.onSendStream = function(e)
    {
    	var xhr = e.source;
+   	
+   	if (xhr.stream != undefined)
+   	
    	xhr.stream(e.progress);
    };
    

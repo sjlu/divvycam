@@ -11,6 +11,7 @@ Divvy.View.init = function()
 		orientationModes: [
 			Titanium.UI.PORTRAIT
 		],
+		backgroundColor: 'white'
 	});
 	
 	this.padding = 4;
@@ -197,6 +198,7 @@ Divvy.View.init = function()
 	});
 	
 	this.scrollView = this.createScrollView();
+	this.scrollView.hide();
 	this.scrollPosition = {x: 0, y: 0};
 	this.win.add(this.scrollView);
 	
@@ -249,12 +251,8 @@ Divvy.View.open = function(name, id, pw)
 	
 	this.infoLabel.text = "Bucket ID: " + id + "\nURL: divvy.burst-dev.com/b/"+id;
 
-	Divvy.View.win.add(Divvy.View.activityIndicator);
-	
-	this.scrollView.touchEnabled = false;
-	this.refresh();
-	
 	Divvy.open(this.win);
+	this.refresh();
 };
 
 Divvy.View.close = function()
@@ -262,14 +260,9 @@ Divvy.View.close = function()
 	this.win.id = null;
 	this.win.pw = null;
 	this.win.md5 = null;
-	this.win.remove(this.scrollView);
-//	delete this.scrollView;
-	delete this.imageArray;
 	
-	this.imageArray = [];
-	this.scrollView = this.createScrollView();
 	this.scrollPosition = {x: 0, y: 0};
-	this.win.add(this.scrollView);
+	this.win.remove(this.scrollView);
 	
 	Divvy.View.footerLabel.text = "";
 };
@@ -280,19 +273,6 @@ Divvy.View.close = function()
 Divvy.View.redraw = function()
 {
 	Divvy.View.needsRedraw = 0;
-
-	this.win.md5 = null;
-	this.win.remove(this.scrollView);
-//	delete this.scrollView;
-	delete this.imageArray;
-	
-	this.imageArray = [];
-	
-	this.scrollView = this.createScrollView();
-	this.scrollView.scrollTo(this.scrollPosition.x, this.scrollPosition.y)
-	this.scrollView.touchEnabled = false;
-	this.win.add(this.scrollView);
-
 	Divvy.View.refresh();
 };
 
@@ -302,7 +282,7 @@ Divvy.View.redraw = function()
 Divvy.View.refresh = function()
 {
 	Divvy.View.win.add(Divvy.View.activityIndicator);
-	
+
 	Network.cache.run (
 		Divvy.url + 'thumbnails/'+Ti.Platform.id+'/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
@@ -382,31 +362,70 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	if (Divvy.View.win.md5 == undefined || data.md5 == undefined || data.md5 != Divvy.View.win.md5)
+	Divvy.View.scrollView.touchEnabled = false;
+	
+	var thumbnails = data.thumbnails;
+	
+	var needsRefresh = false;
+	if (Divvy.View.imageArray != null && Divvy.View.imageArray != undefined && Divvy.View.win.md5 != data.md5)
 	{
+		var i = 0;
+		for (var j in thumbnails)
+		{
+			if (Divvy.View.imageArray[i] === undefined || Divvy.View.imageArray[i].imageId != thumbnails[i].id)
+			{
+				needsRefresh = true;
+				break;
+			}
+			i++;
+		}
+	}
+	
+	if (needsRefresh || Divvy.View.win.md5 == null || Divvy.View.imageArray.length > thumbnails.length)
+	{	
+		Divvy.View.scrollView.hide();
+		Divvy.View.footerView.hide();
+	
+		var scrollView = Divvy.View.createScrollView();
+		scrollView.scrollTo(Divvy.View.scrollPosition.x, Divvy.View.scrollPosition.y);
+		scrollView.touchEnabled = false;
+		
 		Divvy.View.win.md5 = data.md5;
 		
-		Divvy.View.imageArray = [];
+		var imageArray = [];
 		Divvy.View.numOfImages = 0;
-			
-		var thumbnails = data.thumbnails;
 		
 		var i = 0;
 		for (var j in thumbnails)
 		{
-			Divvy.View.imageArray[i] = Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url);
+			var newThumbnail = Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url);
+			imageArray.push(newThumbnail);
+			scrollView.add(newThumbnail);
 			i++;
 		}
 		
-		Divvy.View.footerView.top = 5*(Divvy.View.dimension+Divvy.View.padding)-35;
+		delete(Divvy.View.imageArray);
+		Divvy.View.imageArray = imageArray;
+		scrollView.add(imageArray);
 		
 		if ((thumbnails.length) > 16)
 		{
 			Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+60;
 			Divvy.View.footerLabel.text = thumbnails.length+" Photos";
 		}
-			
-		Divvy.View.scrollView.add(Divvy.View.imageArray);
+		else
+		{
+			Divvy.View.footerView.top = 5*(Divvy.View.dimension+Divvy.View.padding)-35;
+		}
+		
+		Divvy.View.footerView.show();
+		
+		Divvy.View.win.remove(Divvy.View.scrollView);
+		delete Divvy.View.scrollView;
+		Divvy.View.scrollView = scrollView;
+		Divvy.View.win.add(scrollView);
+		
+		Divvy.View.startThumbnailQueue();
 	}
 		
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
@@ -437,31 +456,55 @@ Divvy.View.generateImageThumbnail = function(num,id,image)
 		hires: true,
 		borderWidth: 1,
 		borderColor: '#ccc',
+		imageUrl: image,
 		imageNumber: num + 1,
 		imageId: id,
 		backgroundColor: 'black',
 		image: "/images/default_thumb.png",
 	});
 	
-	Network.cache.run(
-		image,
-		168, //1 week
-		Divvy.View.onImageCacheSuccess,
-		Divvy.View.onImageCacheError,
-		thumbnail
-	);
-	
 	return thumbnail;
 };
 
-Divvy.View.onImageCacheSuccess = function(data, date, status, user, xhr)
+Divvy.View.startThumbnailQueue = function()
 {
-	user.image = data;
+	Divvy.View.numberOfThumbnailsRequested = (Divvy.View.imageArray.length > 20) ? 20 : Divvy.View.imageArray.length;
+	
+	var i = 0;
+	for (i = 0; i < Divvy.View.numberOfThumbnailsRequested; i++)
+	{
+		
+		Network.cache.run(
+			Divvy.View.imageArray[i].imageUrl,
+			168, //1 week
+			Divvy.View.onThumbnailQueueSuccess,
+			Divvy.View.onThumbnailQueueError,
+			Divvy.View.imageArray[i]
+		);
+		
+	}
 };
 
-Divvy.View.onImageCacheError = function(status, httpStatus)
+Divvy.View.onThumbnailQueueSuccess = function(data, date, status, user, xhr)
 {
-	//do nothing
+	user.image = data;
+	
+	if (Divvy.View.numberOfThumbnailsRequested >= Divvy.View.imageArray.length)
+		return;
+	
+	Divvy.View.numberOfThumbnailsRequested++;
+	Network.cache.run(
+		Divvy.View.imageArray[Divvy.View.numberOfThumbnailsRequested-1].imageUrl,
+		168, //1 week
+		Divvy.View.onThumbnailQueueSuccess,
+		Divvy.View.onThumbnailQueueError,
+		Divvy.View.imageArray[Divvy.View.numberOfThumbnailsRequested-1]
+	);
+};
+
+Divvy.View.onThumbnailQueueError = function(status, httpStatus)
+{
+	// do nothing
 };
 
 Divvy.View.savePhoto = function(e) 

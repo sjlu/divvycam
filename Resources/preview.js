@@ -36,17 +36,20 @@ Divvy.Preview.init = function ()
 	
 	Titanium.Gesture.addEventListener('orientationchange', function(e)
 	{		
-	    if (e.orientation == Titanium.UI.PORTRAIT)
-	    {
-	    	Divvy.Preview.scrollView.width = Divvy.deviceWidth;
+		if (e.orientation == Titanium.UI.PORTRAIT)
+	   {
+	   	Divvy.Preview.scrollView.width = Divvy.deviceWidth;
 	    	Divvy.Preview.scrollView.height = Divvy.deviceHeight;
 
-	    }
-	    else if (e.orientation == Titanium.UI.LANDSCAPE_LEFT || e.orientation == Titanium.UI.LANDSCAPE_RIGHT)
-	    {
+			Divvy.tabs.height = Divvy.deviceHeight+50;
+	   }
+	   else if (e.orientation == Titanium.UI.LANDSCAPE_LEFT || e.orientation == Titanium.UI.LANDSCAPE_RIGHT)
+	   {
 	    	Divvy.Preview.scrollView.height = Divvy.deviceWidth;
 	    	Divvy.Preview.scrollView.width = Divvy.deviceHeight;
-	    }
+	    	
+	    	Divvy.tabs.height = Divvy.deviceWidth+50;
+	   }
 	});
 
 	// when the window "closes", we run our "deconstruction" methods to save memory.
@@ -159,7 +162,6 @@ Divvy.Preview.init = function ()
 	
 	// this is essentially a coverflow view.
 	this.scrollView = Ti.UI.createScrollableView({
-//		top: -20,
 		views: [],
 		backgroundColor: '#000',
 		height: this.deviceHeight, width: this.deviceWidth,
@@ -176,11 +178,11 @@ Divvy.Preview.init = function ()
 	// if the view is "tapped", hide/show the navigation bar and status bar.
 	this.scrollView.addEventListener('singletap', function(e) {
 		if (Divvy.Preview.scrollView.isFullScreen) {
-			Ti.UI.iPhone.showStatusBar({animated: false});
+//			Ti.UI.iPhone.showStatusBar({animated: false});
 //			Divvy.Preview.scrollView.animate({top: -20});
 			Divvy.Preview.win.showNavBar({animated: false});
 		} else {
-			Ti.UI.iPhone.hideStatusBar({animated: false});
+//			Ti.UI.iPhone.hideStatusBar({animated: false});
 //			Divvy.Preview.scrollView.animate({top: 0});
 			Divvy.Preview.win.hideNavBar({animated: false});
 		}
@@ -222,10 +224,12 @@ Divvy.Preview.open = function (index)
 	setTimeout(function(e) {
 		if (Divvy.Preview.scrollView.isFullScreen)
 		{
-			Ti.UI.iPhone.showStatusBar({animated: false});
+//			Ti.UI.iPhone.showStatusBar({animated: false});
 			Divvy.Preview.win.showNavBar({animated: false});
 		}
 	}, 2000);
+	
+	Divvy.tabs.height = Divvy.deviceHeight+50;
 	
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("viewed a photo");
@@ -238,6 +242,8 @@ Divvy.Preview.close = function()
 	Divvy.Preview.scrollView.views = [];
 	Divvy.Preview.scrollView.height = Divvy.deviceHeight;
 	Divvy.Preview.scrollView.width = Divvy.deviceWidth;
+	
+	Divvy.tabs.height = Divvy.deviceHeight+30;
 };
 
 Divvy.Preview.loadViews = function(index, dataset)
