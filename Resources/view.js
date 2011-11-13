@@ -263,7 +263,7 @@ Divvy.View.close = function()
 	this.win.pw = null;
 	this.win.md5 = null;
 	this.win.remove(this.scrollView);
-	delete this.scrollView;
+//	delete this.scrollView;
 	delete this.imageArray;
 	
 	this.imageArray = [];
@@ -281,8 +281,9 @@ Divvy.View.redraw = function()
 {
 	Divvy.View.needsRedraw = 0;
 
+	this.win.md5 = null;
 	this.win.remove(this.scrollView);
-	delete this.scrollView;
+//	delete this.scrollView;
 	delete this.imageArray;
 	
 	this.imageArray = [];
@@ -291,8 +292,7 @@ Divvy.View.redraw = function()
 	this.scrollView.scrollTo(this.scrollPosition.x, this.scrollPosition.y)
 	this.scrollView.touchEnabled = false;
 	this.win.add(this.scrollView);
-	
-	Divvy.View.win.add(Divvy.View.activityIndicator);
+
 	Divvy.View.refresh();
 };
 
@@ -382,11 +382,7 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		return;
 	}
 	
-	if (Divvy.View.win.md5 != undefined && data.md5 != undefined && data.md5 == Divvy.View.win.md5)
-	{	
-		// do nothing
-	}
-	else
+	if (Divvy.View.win.md5 == undefined || data.md5 == undefined || data.md5 != Divvy.View.win.md5)
 	{
 		Divvy.View.win.md5 = data.md5;
 		
@@ -394,6 +390,13 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		Divvy.View.numOfImages = 0;
 			
 		var thumbnails = data.thumbnails;
+		
+		var i = 0;
+		for (var j in thumbnails)
+		{
+			Divvy.View.imageArray[i] = Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url);
+			i++;
+		}
 		
 		Divvy.View.footerView.top = 5*(Divvy.View.dimension+Divvy.View.padding)-35;
 		
@@ -403,21 +406,11 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 			Divvy.View.footerLabel.text = thumbnails.length+" Photos";
 		}
 			
-		var i = 0;
-		for (var j in thumbnails)
-		{
-			Divvy.View.imageArray[i] = Divvy.View.generateImageThumbnail(i, thumbnails[j].id, thumbnails[j].url);
-	//		Divvy.View.scrollView.add(Divvy.View.imageArray[i]);
-			i++;
-		}
-		
 		Divvy.View.scrollView.add(Divvy.View.imageArray);
 	}
 		
 	Divvy.View.win.remove(Divvy.View.activityIndicator);
 	Divvy.View.scrollView.touchEnabled = true;
-	
-//	Divvy.View.scrollView.scrollTo(0, 45); //nice and subtle
 	
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("opened a bucket");
@@ -445,11 +438,9 @@ Divvy.View.generateImageThumbnail = function(num,id,image)
 		borderWidth: 1,
 		borderColor: '#ccc',
 		imageNumber: num + 1,
-		imageFile: image,
 		imageId: id,
-		backgroundColor: '#000000',
+		backgroundColor: 'black',
 		image: "/images/default_thumb.png",
-		defaultImage: "/images/default_thumb.png",
 	});
 	
 	Network.cache.run(
