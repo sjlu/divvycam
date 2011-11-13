@@ -35,20 +35,24 @@ Divvy.Preview.init = function ()
 	*/
 	
 	Titanium.Gesture.addEventListener('orientationchange', function(e)
-	{		
+	{	
+		var statusBarPadding = 30;
+		if (Divvy.Preview.scrollView.isFullScreen)
+			statusBarPadding = 50;
+		
 		if (e.orientation == Titanium.UI.PORTRAIT)
 	   {
 	   	Divvy.Preview.scrollView.width = Divvy.deviceWidth;
 	    	Divvy.Preview.scrollView.height = Divvy.deviceHeight;
 
-			Divvy.tabs.height = Divvy.deviceHeight+50;
+			Divvy.tabs.height = Divvy.deviceHeight+statusBarPadding;
 	   }
 	   else if (e.orientation == Titanium.UI.LANDSCAPE_LEFT || e.orientation == Titanium.UI.LANDSCAPE_RIGHT)
 	   {
 	    	Divvy.Preview.scrollView.height = Divvy.deviceWidth;
 	    	Divvy.Preview.scrollView.width = Divvy.deviceHeight;
 	    	
-	    	Divvy.tabs.height = Divvy.deviceWidth+50;
+	    	Divvy.tabs.height = Divvy.deviceWidth+statusBarPadding;
 	   }
 	});
 
@@ -239,13 +243,13 @@ Divvy.Preview.open = function (index)
 
 Divvy.Preview.close = function()
 {
+	Divvy.tabs.height = Divvy.deviceHeight+30;
+	
 	Divvy.Preview.win.hideNavBar({animated: false});
 	Divvy.Preview.scrollView.isFullScreen = true;
 	Divvy.Preview.scrollView.views = [];
 	Divvy.Preview.scrollView.height = Divvy.deviceHeight;
 	Divvy.Preview.scrollView.width = Divvy.deviceWidth;
-	
-	Divvy.tabs.height = Divvy.deviceHeight+30;
 };
 
 Divvy.Preview.loadViews = function(index, dataset)
