@@ -178,11 +178,13 @@ Divvy.Preview.init = function ()
 	// if the view is "tapped", hide/show the navigation bar and status bar.
 	this.scrollView.addEventListener('singletap', function(e) {
 		if (Divvy.Preview.scrollView.isFullScreen) {
-//			Ti.UI.iPhone.showStatusBar({animated: false});
+			Ti.UI.iPhone.showStatusBar({animated: false});
+			Divvy.tabs.height = Divvy.tabs.height-20;
 //			Divvy.Preview.scrollView.animate({top: -20});
 			Divvy.Preview.win.showNavBar({animated: false});
 		} else {
-//			Ti.UI.iPhone.hideStatusBar({animated: false});
+			Ti.UI.iPhone.hideStatusBar({animated: false});
+			Divvy.tabs.height = Divvy.tabs.height+20;
 //			Divvy.Preview.scrollView.animate({top: 0});
 			Divvy.Preview.win.hideNavBar({animated: false});
 		}
@@ -225,7 +227,7 @@ Divvy.Preview.open = function (index)
 		if (Divvy.Preview.scrollView.isFullScreen)
 		{
 //			Ti.UI.iPhone.showStatusBar({animated: false});
-			Divvy.Preview.win.showNavBar({animated: false});
+//			Divvy.Preview.win.showNavBar({animated: false});
 		}
 	}, 2000);
 	
