@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html>
+   <head>
+      <title>Divvycam</title>
+      <link href='http://fonts.googleapis.com/css?family=Dancing+Script:700|Open+Sans' rel='stylesheet' type='text/css'>
+      <style type="text/css">
+         body {
+            background: url(img/background.jpg);
+            font-family: 'Open Sans';
+            color: white;
+            min-width: 1200px;
+            text-shadow: 0 1px 1px #666;
+         }
+
+         #iphone {
+         	background-image: url(img/iphone.png);
+	         width: 352px; height: 742px;
+            margin: 60px auto;
+	         padding: 134px 0 0 33px;
+         }
+
+         #container {
+            width: 1200px;
+            margin: 0 auto;
+            margin-top: -700px;
+         }
+
+         #content-left {
+            position: absolute;
+            text-align: right;
+            width: 380px;
+         }
+
+         #content-right {
+            position: absolute;
+            margin: 70px 0 0 820px;
+            width: 380px;
+         }
+
+         #header {
+            font-family: 'Dancing Script';
+            color: white;
+            font-size: 72px;
+            text-align: right;
+            padding-bottom:4px;
+         }
+      </style>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+      <script type="text/javascript" src="js/jquery.aw-showcase.js"></script>
+      <script type="text/javascript">
+         $(document).ready(function()
+         {
+            $("#showcase").awShowcase(
+            {
+               content_width:       320,
+               content_height:      480,
+               fit_to_parent:       false,
+               auto:                true,
+               interval:            3000,
+               continuous:          true,
+               loading:             true,
+               tooltip_width:       200,
+               tooltip_icon_width:  32,
+               tooltip_icon_height: 32,
+               tooltip_offsetx:     18,
+               tooltip_offsety:     0,
+               arrows:              false,
+               buttons:             false,
+               btn_numbers:         true,
+               keybord_keys:        true,
+               mousetrace:          false,
+               pauseonover:         true,
+               stoponclick:         false,
+               transition:          'hslide',
+               transition_delay:    0,
+               transition_speed:    500,
+               show_caption:        'onload',
+               thumbnails:          false,
+               thumbnails_position: 'outside-last',
+               thumbnails_direction:'vertical',
+               thumbnails_slidex:   1,
+               dynamic_height:      false,
+               speed_change:        true,
+               viewline:            false, 
+               custom_function:     null
+            });
+         });
+      </script>
+   </head>
+   <body>
+      <div id="iphone">
+         <div id="showcase">
+            <div class="showcase-slide"><img src="img/screenshots/1.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/2.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/3.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/4.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/5.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/6.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/7.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/8.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/9.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/10.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/11.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/12.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/13.png" /></div>
+            <div class="showcase-slide"><img src="img/screenshots/14.png" /></div>
+         </div>
+      </div>
+      
+      <div id="container">
+         <div id="content-left">
+            <div id="header">Divvycam</div>
+            Photo sharing with friends, without the hassle.
+         </div>
+
+         <div id="content-right">
+            <div style="font-size: 20px;">Coming Soon to an App Store Near You</div>
+         </div>
+      </div>
+   </body>
+</html>
