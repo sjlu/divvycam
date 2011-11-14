@@ -182,7 +182,7 @@ Divvy.View.init = function()
 	
 	this.footerView.addEventListener('doubletap', function(e)
 	{
-		Divvy.View.redraw();
+		Divvy.View.refresh();
 	});
 	
 	this.footerView.add(this.refreshLabel);
@@ -273,6 +273,7 @@ Divvy.View.close = function()
 Divvy.View.redraw = function()
 {
 	Divvy.View.needsRedraw = 0;
+	Divvy.View.win.md5 = null;
 	Divvy.View.refresh();
 };
 
@@ -427,9 +428,11 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		
 		Divvy.View.startThumbnailQueue();
 	}
-		
-	Divvy.View.win.remove(Divvy.View.activityIndicator);
-	Divvy.View.scrollView.touchEnabled = true;
+	else
+	{
+		Divvy.View.win.remove(Divvy.View.activityIndicator);
+		Divvy.View.scrollView.touchEnabled = true;
+	}
 	
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("opened a bucket");
@@ -490,7 +493,11 @@ Divvy.View.onThumbnailQueueSuccess = function(data, date, status, user, xhr)
 	user.image = data;
 	
 	if (Divvy.View.numberOfThumbnailsRequested >= Divvy.View.imageArray.length)
+	{
+		Divvy.View.win.remove(Divvy.View.activityIndicator);
+		Divvy.View.scrollView.touchEnabled = true;
 		return;
+	}
 	
 	Divvy.View.numberOfThumbnailsRequested++;
 	Network.cache.run(
@@ -504,6 +511,11 @@ Divvy.View.onThumbnailQueueSuccess = function(data, date, status, user, xhr)
 
 Divvy.View.onThumbnailQueueError = function(status, httpStatus)
 {
+	if (Divvy.View.numberOfThumbnailsRequested >= Divvy.View.imageArray.length)
+	{
+		Divvy.View.win.remove(Divvy.View.activityIndicator);
+		Divvy.View.scrollView.touchEnabled = true;
+	}
 	// do nothing
 };
 

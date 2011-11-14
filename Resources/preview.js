@@ -12,7 +12,8 @@ Divvy.Preview.init = function ()
 		],
 		translucent: true, // this makes the navBar, opaque and allows us to use the space behind the navBar.
 		fullscreen: true, // allows us to use height of 480 instead of 460
-		navBarHidden: true // hides the bar when it first opens.
+		navBarHidden: true, // hides the bar when it first opens.
+		isOpen: false // makes sure we don't open multiple things
 	});
 
 	// iAd from Apple
@@ -36,6 +37,9 @@ Divvy.Preview.init = function ()
 	
 	Titanium.Gesture.addEventListener('orientationchange', function(e)
 	{	
+		if (!Divvy.Preview.win.isOpen)
+			return;
+			
 		var statusBarPadding = 30;
 		if (Divvy.Preview.scrollView.isFullScreen)
 			statusBarPadding = 50;
@@ -224,6 +228,11 @@ Divvy.Preview.init = function ()
 
 Divvy.Preview.open = function (index)
 {
+	if (!Divvy.Preview.win.isOpen)
+		Divvy.Preview.win.isOpen = true;
+	else
+		return;
+	
 	this.loadViews(index, Divvy.View.imageArray); //borrowed from other pages.
 
 	Divvy.open(this.win);
@@ -243,6 +252,8 @@ Divvy.Preview.open = function (index)
 
 Divvy.Preview.close = function()
 {
+	Divvy.Preview.win.isOpen = false;
+	
 	Divvy.tabs.height = Divvy.deviceHeight+30;
 	
 	Divvy.Preview.win.hideNavBar({animated: false});
