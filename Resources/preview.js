@@ -258,7 +258,9 @@ Divvy.Preview.close = function()
 	
 	Divvy.Preview.win.hideNavBar({animated: false});
 	Divvy.Preview.scrollView.isFullScreen = true;
+	
 	Divvy.Preview.scrollView.views = [];
+	
 	Divvy.Preview.scrollView.height = Divvy.deviceHeight;
 	Divvy.Preview.scrollView.width = Divvy.deviceWidth;
 };

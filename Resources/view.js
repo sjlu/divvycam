@@ -405,7 +405,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 			i++;
 		}
 		
-		delete(Divvy.View.imageArray);
+		Divvy.View.imageArray = null;
+		
 		Divvy.View.imageArray = imageArray;
 		scrollView.add(imageArray);
 		
@@ -422,7 +423,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		Divvy.View.footerView.show();
 		
 		Divvy.View.win.remove(Divvy.View.scrollView);
-		delete Divvy.View.scrollView;
+		Divvy.View.scrollView = null;
+		
 		Divvy.View.scrollView = scrollView;
 		Divvy.View.win.add(scrollView);
 		
