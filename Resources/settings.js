@@ -15,6 +15,10 @@ Divvy.Settings.init = function()
 		],
 		backgroundColor: '#d6d8de'
 	});
+	//Check events done in the window.
+	this.win.addEventListener('close', function(){
+		Divvy.Settings.save();
+	});
 	
 	//Create the Button
 	this.doneButtonBar = Ti.UI.createButtonBar({
@@ -80,12 +84,7 @@ Divvy.Settings.init = function()
 		value: false,
 		left: 210
 	});
-	
-	//Make the object clickable
-	this.switch_push.addEventListener('switch', function(e){
-		Ti.API.info('Basic Switch value = ' + e.value + ' act val ' + basicSwitch.value);
-	});
-	
+
 	//Add the row
 	this.row_push.add(this.switch_push);
 	this.row_push.add(this.label_push);
@@ -107,11 +106,6 @@ Divvy.Settings.init = function()
 		left: 210
 	});
 	
-	//Make object clickable
-	this.switch_save.addEventListener('switch', function(e){
-		Ti.API.info('Basic Switch value = ' + e.value + ' act val ' + basicSwitch.value);
-	});
-			
 	//Add the row
 	this.row_save.add(this.switch_save);
 	this.row_save.add(this.label_save);
@@ -193,13 +187,34 @@ Divvy.Settings.init = function()
 		left: 100,
 		font: { fontSize: 14 }
 	});
-			
+	
+	//Checking for previous purchase row
+	this.row_purchase = Ti.UI.createTableViewRow({
+		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE,
+		hasChild: true
+	});
+	
+	this.label_purchase = Ti.UI.createLabel({
+		text: 'Restore Previous Purchase',
+		height: 'auto',
+		top: 10,
+		left: 10,
+		font: { fontSize: 14, fontWeight: 'bold' }
+	});
+	
+	this.row_purchase.addEventListener('click', function(e)
+	{
+		
+	});
+	
 	this.row_info.add(this.label_info);
 	this.row_info.add(this.label_description);
+	this.row_purchase.add(this.label_purchase);
 			
 	//Add to the second section	
 	this.pro.add(this.row_pro);
 	this.pro.add(this.row_info);
+	this.pro.add(this.row_purchase);
 	this.tableview.add(this.pro);
 	
 	//Add the sections to the tableview
@@ -207,9 +222,12 @@ Divvy.Settings.init = function()
 	this.tableview.setData(tableData);
 	this.win.add(this.tableview);
 		
-}
+};
+
 Divvy.Settings.open = function()
 {
+	this.switch_push.value = Ti.App.Properties.getBool("push_notifications");
+	this.switch_save.value = Ti.App.Properties.getBool("save_device");
 	this.win.open();
 };
 
@@ -217,3 +235,13 @@ Divvy.Settings.done = function()
 {
 	this.win.close();
 };
+Divvy.Settings.save = function()
+{
+	var push_notifications = Divvy.Settings.switch_push.value;
+	Ti.App.Properties.setBool("push_notifications", push_notifications);
+	
+	var save_device = Divvy.Settings.switch_save.value;
+	Ti.App.Properties.setBool("save_device", save_device);
+	
+};
+
