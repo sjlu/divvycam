@@ -29,7 +29,7 @@ Divvy.Settings.init = function()
 	
 	this.doneButtonBar.addEventListener('click', function(e)
 	{
-		Divvy.Settings.done();
+		Divvy.Settings.close();
 	});
 	
 	this.win.rightNavButton = this.doneButtonBar;
@@ -231,13 +231,20 @@ Divvy.Settings.open = function()
 {
 	this.switch_push.value = Ti.App.Properties.getBool("push_notifications");
 	this.switch_save.value = Ti.App.Properties.getBool("save_device");
+	
+	if (Divvy.Upgrade.price === undefined)
+		Divvy.Settings.label_price.text = '$2.99';
+	else
+		Divvy.Settings.label_price.text = '$'+Divvy.Upgrade.price;
+	
 	this.win.open();
 };
 
-Divvy.Settings.done = function()
+Divvy.Settings.close = function()
 {
 	this.win.close();
 };
+
 Divvy.Settings.save = function()
 {
 	var push_notifications = Divvy.Settings.switch_push.value;
@@ -245,8 +252,4 @@ Divvy.Settings.save = function()
 	
 	var save_device = Divvy.Settings.switch_save.value;
 	Ti.App.Properties.setBool("save_device", save_device);
-};
-Divvy.Settings.clear = function()
-{
-	
 };

@@ -5,10 +5,9 @@ Divvy.Upgrade.init = function()
 	Ti.Storekit.requestProducts(['pro'], function(e)
 	{
 		if (!e.success)
-		{
-			alert("Couldn't grab the Pro version info.");
 			return;
-		}
+
+		Divvy.Upgrade.price = e.products[0].price;
 	});
 	
 	Ti.Storekit.addEventListener('restoreCompletedTransactions', function(e)
