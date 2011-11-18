@@ -208,7 +208,7 @@ Divvy.Settings.init = function()
 	
 	this.row_purchase.addEventListener('click', function(e)
 	{
-		
+		Divvy.Upgrade.restore();
 	});
 	
 	this.row_info.add(this.label_info);
@@ -245,10 +245,8 @@ Divvy.Settings.save = function()
 	
 	var save_device = Divvy.Settings.switch_save.value;
 	Ti.App.Properties.setBool("save_device", save_device);
-	
 };
 Divvy.Settings.clear = function()
 {
 	
 };
-
