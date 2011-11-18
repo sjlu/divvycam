@@ -232,11 +232,6 @@ Divvy.Settings.open = function()
 	this.switch_push.value = Ti.App.Properties.getBool("push_notifications");
 	this.switch_save.value = Ti.App.Properties.getBool("save_device");
 	
-	if (Divvy.Upgrade.price === undefined)
-		Divvy.Settings.label_price.text = '$2.99';
-	else
-		Divvy.Settings.label_price.text = '$'+Divvy.Upgrade.price;
-	
 	this.win.open();
 };
 

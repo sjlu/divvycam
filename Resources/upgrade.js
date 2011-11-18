@@ -8,6 +8,11 @@ Divvy.Upgrade.init = function()
 			return;
 
 		Divvy.Upgrade.price = e.products[0].price;
+		
+		if (Divvy.Upgrade.price === undefined)
+			Divvy.Settings.label_price.text = '$2.99';
+		else
+			Divvy.Settings.label_price.text = "$" + Math.ceil(e.products[0].price*100)/100;
 	});
 	
 	Ti.Storekit.addEventListener('restoreCompletedTransactions', function(e)
