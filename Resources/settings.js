@@ -173,6 +173,11 @@ Divvy.Settings.init = function()
 		width: 75,
 	});
 	
+	this.button_buy.addEventListener('click', function(e)
+	{
+		Divvy.Upgrade.purchase();
+	});
+	
 	this.row_pro.add(this.button_buy);
 	this.row_pro.add(this.label_price);
 	this.row_pro.add(this.label_pro);
