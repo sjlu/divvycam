@@ -84,5 +84,8 @@ Divvy.Upgrade.restore = function()
 
 Divvy.Upgrade.complete = function()
 {
+	Ti.App.Properties.setBool('hasPro', true);
 	
+	Divvy.Buckets.removeAds();
+	Divvy.View.removeAds();
 };

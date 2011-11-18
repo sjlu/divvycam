@@ -54,13 +54,16 @@ Divvy.View.init = function()
 	
 	this.cameraDialog.addEventListener('click', function(e)
 	{
+		var saveToGallery = Ti.App.Properties.getBool('save_device');
+		
 		if (e.index == 0)
 		{
 			Ti.Media.showCamera({
 				success: Divvy.View.savePhoto,
 				error: function(e) { if (e.code == Ti.Media.NO_CAMERA) alert("No camera detected!"); },
 				allowEditing: false,
-				mediaTypes: [Ti.Media.MEDIA_TYPE_PHOTO]
+				mediaTypes: [Ti.Media.MEDIA_TYPE_PHOTO],
+				saveToPhotoGallery: (saveToGallery) ? saveToGallery : false
 			});
 		}
 		else if (e.index == 1)
