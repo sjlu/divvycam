@@ -118,7 +118,7 @@ Divvy.Settings.init = function()
 	
 	this.row_cache.addEventListener('click', function(e)
 	{
-		
+		Network.cache.clear();
 	});
 	
 	//this.general.add(this.row_name);
