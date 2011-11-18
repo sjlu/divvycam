@@ -18,7 +18,11 @@ Divvy.Buckets.init = function()
 		systemButton: Ti.UI.iPhone.SystemButton.ADD
 	});
 	
-	this.addButton.addEventListener('click', function(e){
+	this.addButton.addEventListener('click', function(e)
+	{
+		if (Divvy.Buckets.bucketsArray.length >= 3 && !Divvy.Upgrade.check())
+			alert('The free version of this app only supports three buckets at any given time, please consider upgrading or rmeove a bucket from your list.');
+		
 		Divvy.Buckets.addDialog.show();
 	});
 	
