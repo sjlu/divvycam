@@ -68,7 +68,7 @@ Divvy.Settings.init = function()
 	this.row_name.add(this.textarea_name);
 	this.row_name.add(this.label_name);
 
-	//Create row in first section
+	//Create row in first section (1st)
 	this.row_push = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	});
@@ -89,7 +89,7 @@ Divvy.Settings.init = function()
 	this.row_push.add(this.switch_push);
 	this.row_push.add(this.label_push);
 						
-	//Create row in first section
+	//Create row in first section (2nd)
 	this.row_save = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	});
@@ -110,9 +110,29 @@ Divvy.Settings.init = function()
 	this.row_save.add(this.switch_save);
 	this.row_save.add(this.label_save);
 
+	//Create a row in first section (3rd)
+	this.row_cache = Ti.UI.createTableViewRow({
+
+	});
+	
+	this.row_cache.addEventListener('click', function(e)
+	{
+		
+	});
+	
+	this.label_cache = Ti.UI.createLabel({
+		text: 'Clear Cache',
+		clickable: true,
+		left: 100,
+		font: { fontSize: 16, fontWeight: 'bold' }
+	});
+	
+	this.row_cache.add(this.label_cache);
+	
 	//this.general.add(this.row_name);
 	this.general.add(this.row_push);
 	this.general.add(this.row_save);
+	this.general.add(this.row_cache);
 	this.tableview.add(this.general);
 	
 	//Create another section in table view	
@@ -190,16 +210,8 @@ Divvy.Settings.init = function()
 	
 	//Checking for previous purchase row
 	this.row_purchase = Ti.UI.createTableViewRow({
-		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE,
-		hasChild: true
-	});
-	
-	this.label_purchase = Ti.UI.createLabel({
-		text: 'Restore Previous Purchase',
-		height: 'auto',
-		top: 10,
-		left: 10,
-		font: { fontSize: 14, fontWeight: 'bold' }
+		hasChild: true,
+		title: 'Restore Previous Purchase'
 	});
 	
 	this.row_purchase.addEventListener('click', function(e)
@@ -209,7 +221,6 @@ Divvy.Settings.init = function()
 	
 	this.row_info.add(this.label_info);
 	this.row_info.add(this.label_description);
-	this.row_purchase.add(this.label_purchase);
 			
 	//Add to the second section	
 	this.pro.add(this.row_pro);
@@ -242,6 +253,10 @@ Divvy.Settings.save = function()
 	
 	var save_device = Divvy.Settings.switch_save.value;
 	Ti.App.Properties.setBool("save_device", save_device);
+	
+};
+Divvy.Settings.clear = function()
+{
 	
 };
 
