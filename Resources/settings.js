@@ -112,22 +112,14 @@ Divvy.Settings.init = function()
 
 	//Create a row in first section (3rd)
 	this.row_cache = Ti.UI.createTableViewRow({
-
+		title: 'Clear Local Device Data',
+		hasChild: true
 	});
 	
 	this.row_cache.addEventListener('click', function(e)
 	{
 		
 	});
-	
-	this.label_cache = Ti.UI.createLabel({
-		text: 'Clear Cache',
-		clickable: true,
-		left: 100,
-		font: { fontSize: 16, fontWeight: 'bold' }
-	});
-	
-	this.row_cache.add(this.label_cache);
 	
 	//this.general.add(this.row_name);
 	this.general.add(this.row_push);

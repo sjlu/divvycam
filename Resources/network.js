@@ -350,7 +350,7 @@ Network.cache = (function () {
       var parent = Ti.Filesystem.getApplicationDataDirectory();
       var folder = Ti.Filesystem.getFile(parent, 'cache');
       folder.deleteDirectory(true);
-      alert('Cache has been successfully cleared!');
+      alert('Local device data has been successfully cleared!');
    };
    
    /*
