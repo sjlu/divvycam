@@ -9,11 +9,11 @@
     </deployment-targets>
     <id>com.burst.divvycam</id>
     <name>Divvycam</name>
-    <version>0.1a</version>
+    <version>0.1b</version>
     <publisher>Burst Development</publisher>
     <url>https://divvy.burst-dev.com</url>
-    <description>Cloud-like and social camera application.</description>
-    <copyright>2011 by Steven Lu, Jason Caetano</copyright>
+    <description>Divvycam lets people share a photo location with each other, all contributing to one place.</description>
+    <copyright>2011 by Burst Development</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>true</prerendered-icon>

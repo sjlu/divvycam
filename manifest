@@ -1,8 +1,8 @@
-#appname: divvycam
-#publisher: sjlu
-#url: http://burst-dev.com
-#image: appicon.png
-#appid: com.burst.divvycam
-#desc: undefined
-#type: ipad
-#guid: fb788863-8084-4efc-800f-3b7382099ef3
+#appname:divvycam
+#publisher:Burst Development
+#url:https://divvy.burst-dev.com
+#image:appicon.png
+#appid:com.burst.divvycam
+#desc:Divvycam lets people share a photo location with each other, all contributing to one place.
+#type:ipad
+#guid:fb788863-8084-4efc-800f-3b7382099ef3
