@@ -268,7 +268,7 @@ Divvy.View.close = function()
 	this.scrollPosition = {x: 0, y: 0};
 	this.win.remove(this.scrollView);
 	
-	Divvy.View.footerLabel.text = "";
+
 };
 
 /*
@@ -390,6 +390,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 	{	
 		Divvy.View.scrollView.hide();
 		Divvy.View.footerView.hide();
+		
+		Divvy.View.footerLabel.text = ""; // reseting footer view
 	
 		var scrollView = Divvy.View.createScrollView();
 		scrollView.scrollTo(Divvy.View.scrollPosition.x, Divvy.View.scrollPosition.y);
