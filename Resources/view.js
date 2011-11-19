@@ -243,7 +243,7 @@ Divvy.View.addAds = function()
 
 Divvy.View.removeAds = function()
 {
-	this.footerview.height = 60;
+	this.footerView.height = 60;
 	this.footerView.remove(this.footerAd);
 };
 

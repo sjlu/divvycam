@@ -2,18 +2,20 @@ Divvy.Upgrade = {};
 
 Divvy.Upgrade.init = function()
 {
-	Ti.Storekit.requestProducts(['pro'], function(e)
+	Divvy.Upgrade.check();
+	
+	Ti.Storekit.requestProducts(['com.burst.divvycam.pro'], function(e)
 	{
 		if (!e.success)
+		{
+			alert(e.message);
 			return;
+		}
 
 		Divvy.Upgrade.product = e.products[0];
 		Divvy.Upgrade.price = e.products[0].price;
 		
-		if (Divvy.Upgrade.price === undefined)
-			Divvy.Settings.label_price.text = '$2.99';
-		else
-			Divvy.Settings.label_price.text = "$" + Math.ceil(e.products[0].price*100)/100;
+		Divvy.Settings.label_price.text = "$" + Math.ceil(e.products[0].price*100)/100;
 	});
 	
 	Ti.Storekit.addEventListener('restoreCompletedTransactions', function(e)
@@ -82,15 +84,22 @@ Divvy.Upgrade.check = function()
 Divvy.Upgrade.restore = function()
 {
 	Ti.Storekit.restoreCompletedTransactions();
+	
+	if (Divvy.developmentMode)
+		Divvy.testflight.passCheckpoint("restored transaction");
 };
 
 Divvy.Upgrade.complete = function()
 {
 	Ti.App.Properties.setBool('hasPro', true);
+	Divvy.Upgrade.hasPro = true;
 	
 	Divvy.Buckets.removeAds();
 	Divvy.View.removeAds();
 	
-	Divvy.Settings.pro.hide();
+	Divvy.Settings.tableview.setData([Divvy.Settings.general]);
 	Divvy.Settings.updateVersion();
+	
+	if (Divvy.developmentMode)
+		Divvy.testflight.passCheckpoint("upgraded to pro");
 };

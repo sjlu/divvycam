@@ -104,8 +104,6 @@ Divvy.Settings.init = function()
 		font: { fontSize: 16 }
 	});
 	
-	this.updateVersion();
-	
 	this.row_version.add(this.label_version);
 	this.row_version.add(this.data_version);
 
@@ -269,18 +267,14 @@ Divvy.Settings.init = function()
 	this.tableview.add(this.pro);
 	
 	//Add the sections to the tableview
-	tableData = [this.general,this.pro];
-	this.tableview.setData(tableData);
+	this.tableview.setData([this.general]);
 	this.win.add(this.tableview);
-	
-	this.pro.hide();
 };
 
 Divvy.Settings.updateVersion = function()
 {
 	var ver_string = Ti.App.version.toString();
 	ver_string += (Divvy.Upgrade.check()) ? " Pro" : " Free";
-	ver_string += " [" + Ti.version.toString() + "]";
 	
 	this.data_version.text = ver_string;
 }
@@ -291,7 +285,9 @@ Divvy.Settings.open = function()
 	this.switch_save.value = (Ti.App.Properties.hasProperty("save_device")) ? Ti.App.Properties.getBool("save_device") : false;
 	
 	if (!Divvy.Upgrade.check())
-		this.pro.show();
+		this.tableview.setData([this.general, this.pro]);
+		
+	this.updateVersion();
 	
 	if (Ti.Platform.osname == 'ipad')
 		this.win.show({view: Divvy.Buckets.settingsButton});
