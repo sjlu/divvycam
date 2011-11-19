@@ -158,7 +158,7 @@ Divvy.Settings.init = function()
 	});
 	
 	this.label_price = Ti.UI.createLabel({
-		text: '$0.00',
+		text: 'Retrieving...',
 		height: 17,
 		top: 38,
 		left: 80,
@@ -230,13 +230,17 @@ Divvy.Settings.init = function()
 	tableData = [this.general,this.pro];
 	this.tableview.setData(tableData);
 	this.win.add(this.tableview);
-		
+	
+	this.pro.hide();
 };
 
 Divvy.Settings.open = function()
 {	
 	this.switch_push.value = (Ti.App.Properties.hasProperty("push_notifications")) ? Ti.App.Properties.getBool("push_notifications") : false;
 	this.switch_save.value = (Ti.App.Properties.hasProperty("save_device")) ? Ti.App.Properties.getBool("save_device") : false;
+	
+	if (!Divvy.Upgrade.check())
+		this.pro.show();
 	
 	this.win.open();
 };

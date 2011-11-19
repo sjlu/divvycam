@@ -90,4 +90,6 @@ Divvy.Upgrade.complete = function()
 	
 	Divvy.Buckets.removeAds();
 	Divvy.View.removeAds();
+	
+	Divvy.Settings.pro.hide();
 };
