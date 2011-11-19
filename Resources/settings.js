@@ -5,20 +5,38 @@ Divvy.Settings.init = function()
 	/*
 	 * Window elements
 	 */
-	this.win = Ti.UI.createWindow({
-		title: 'Settings',
-		barColor: Divvy.winBarColor,
-		barImage: Divvy.winBarImage,
-		modal:true,
-		orientationModes: [
-			Titanium.UI.PORTRAIT 
-		],
-		backgroundColor: '#d6d8de'
-	});
+	if (Ti.Platform.osname == 'ipad')
+	{
+		this.win = Ti.UI.iPad.createPopover({
+			title: 'Settings',
+			height: 420, width: 320,
+			backgroundColor: '#d6d8de'
+		});
+		
+		this.win.addEventListener('hide', function(){
+			Divvy.Settings.save();
+		});
+	}
+	else
+	{
+		this.win = Ti.UI.createWindow({
+			title: 'Settings',
+			barColor: Divvy.winBarColor,
+			barImage: Divvy.winBarImage,
+			modal:true,
+			orientationModes: [
+				Titanium.UI.PORTRAIT 
+			],
+			backgroundColor: '#d6d8de'
+		});
+		
+		this.win.addEventListener('close', function(){
+			Divvy.Settings.save();
+		});
+	}
+
 	//Check events done in the window.
-	this.win.addEventListener('close', function(){
-		Divvy.Settings.save();
-	});
+
 	
 	//Create the Button
 	this.doneButtonBar = Ti.UI.createButtonBar({
@@ -275,12 +293,18 @@ Divvy.Settings.open = function()
 	if (!Divvy.Upgrade.check())
 		this.pro.show();
 	
-	this.win.open();
+	if (Ti.Platform.osname == 'ipad')
+		this.win.show({view: Divvy.Buckets.settingsButton});
+	else
+		this.win.open();
 };
 
 Divvy.Settings.close = function()
 {
-	this.win.close();
+	if (Ti.Platform.osname == 'ipad')
+		this.win.hide();
+	else
+		this.win.close();
 };
 
 Divvy.Settings.save = function()
