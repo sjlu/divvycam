@@ -92,4 +92,5 @@ Divvy.Upgrade.complete = function()
 	Divvy.View.removeAds();
 	
 	Divvy.Settings.pro.hide();
+	Divvy.Settings.updateVersion();
 };

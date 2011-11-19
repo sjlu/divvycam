@@ -68,6 +68,29 @@ Divvy.Settings.init = function()
 	this.row_name.add(this.textarea_name);
 	this.row_name.add(this.label_name);
 
+	this.row_version = Ti.UI.createTableViewRow({
+		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
+	});
+	
+	this.label_version = Ti.UI.createLabel({
+		text: 'Version',
+		left: 10,
+		font: { fontSize: 16, fontWeight: 'bold' }
+	});
+
+	this.data_version = Ti.UI.createLabel({
+		text: '',
+		left: 70,
+		width: 210,
+		textAlign: 'right',
+		font: { fontSize: 16 }
+	});
+	
+	this.updateVersion();
+	
+	this.row_version.add(this.label_version);
+	this.row_version.add(this.data_version);
+
 	//Create row in first section (1st)
 	this.row_push = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
@@ -123,6 +146,7 @@ Divvy.Settings.init = function()
 	
 	//this.general.add(this.row_name);
 //	this.general.add(this.row_push);
+	this.general.add(this.row_version);
 	this.general.add(this.row_save);
 	this.general.add(this.row_cache);
 	this.tableview.add(this.general);
@@ -233,6 +257,15 @@ Divvy.Settings.init = function()
 	
 	this.pro.hide();
 };
+
+Divvy.Settings.updateVersion = function()
+{
+	var ver_string = Ti.App.version.toString();
+	ver_string += (Divvy.Upgrade.check()) ? " Pro" : " Free";
+	ver_string += " [" + Ti.version.toString() + "]";
+	
+	this.data_version.text = ver_string;
+}
 
 Divvy.Settings.open = function()
 {	
