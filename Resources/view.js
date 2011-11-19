@@ -86,7 +86,8 @@ Divvy.View.init = function()
 		width: 75,
 		backgroundColor: '#000',
 		borderRadius: 10,
-		opacity: 0.75
+		opacity: 0.75,
+		zIndex: 4,
 	});
 	
 	var indicator = Ti.UI.createActivityIndicator({
