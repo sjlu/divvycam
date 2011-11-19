@@ -234,8 +234,9 @@ Divvy.Settings.init = function()
 
 Divvy.Settings.open = function()
 {
-	this.switch_push.value = Ti.App.Properties.getBool("push_notifications");
-	this.switch_save.value = Ti.App.Properties.getBool("save_device");
+	
+	this.switch_push.value = (Ti.App.Properties.hasProperty("push_notifications")) ? Ti.App.Properties.getBool("push_notifications") : false;
+	this.switch_save.value = (Ti.App.Properties.hasProperty("save_device")) ? Ti.App.Properties.getBool("save_device") : false;
 	
 	this.win.open();
 };

@@ -71,10 +71,7 @@ Divvy.Upgrade.check = function()
 {
 	if (Divvy.Upgrade.hasPro === undefined)
 	{
-		Divvy.Upgrade.hasPro = Ti.App.Properties.getBool('hasPro');
-		
-		if (Divvy.Upgrade.hasPro == null)
-			Divvy.Upgrade.hasPro = false;
+		Divvy.Upgrade.hasPro = (Ti.App.Properties.hasProperty('hasPro')) ? Ti.App.Properties.getBool('hasPro') : false;
 	}
 	else
 	{
