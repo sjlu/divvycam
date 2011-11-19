@@ -166,11 +166,12 @@ Divvy.Settings.init = function()
 	});
 	
 	this.button_buy = Ti.UI.createButton({
-		title: 'Purchase',
+		backgroundImage: 'images/buy_now.png',
+		backgroundFocusedImage: 'images/buy_now-select.png',
 		top: 25,
-		left: 210,
-		height: 30,
-		width: 75,
+		left: 205,
+		height: 25,
+		width: 80,
 	});
 	
 	this.button_buy.addEventListener('click', function(e)
