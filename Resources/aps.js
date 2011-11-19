@@ -31,7 +31,7 @@ Divvy.APS.success = function(e)
 {	
 	Network.cache.asyncPost(
 		Divvy.url + 'aps',
-		{ duid: Ti.Platform.id, push_key: e.deviceToken },
+		{ duid: Divvy.UUID, push_key: e.deviceToken },
 		Divvy.APS.onSuccess,
 		Divvy.APS.onError
 	);

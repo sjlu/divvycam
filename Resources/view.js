@@ -289,7 +289,7 @@ Divvy.View.refresh = function()
 	Divvy.View.win.add(Divvy.View.activityIndicator);
 
 	Network.cache.run (
-		Divvy.url + 'thumbnails/'+Ti.Platform.id+'/'+Divvy.View.win.id+"/-1/asc",
+		Divvy.url + 'thumbnails/'+Divvy.UUID+'/'+Divvy.View.win.id+"/-1/asc",
 		Network.CACHE_INVALIDATE,
 		Divvy.View.onRefreshSuccess, 
 		Divvy.View.onRefreshError,
@@ -572,7 +572,7 @@ Divvy.View.savePhoto = function(e)
 	/*
 	Network.cache.asyncPost(
 		Divvy.url + 'upload',
-		{ duid: Ti.Platform.id, image: image, bucket_id: Divvy.View.win.id },
+		{ duid: Divvy.UUID, image: image, bucket_id: Divvy.View.win.id },
 		Divvy.View.onSendSuccess,
 		Divvy.View.onSendError,
 		null,
@@ -611,7 +611,7 @@ Divvy.View.uploadNextPhotoInQueue = function()
 	this.uploading = 1;
 	Network.cache.asyncPost(
 		Divvy.url + 'upload',
-		{ duid: Ti.Platform.id, image: image, bucket_id: Divvy.View.win.id },
+		{ duid: Divvy.UUID, image: image, bucket_id: Divvy.View.win.id },
 		Divvy.View.onSendSuccess,
 		Divvy.View.onSendError,
 		null,

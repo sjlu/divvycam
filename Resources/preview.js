@@ -131,7 +131,7 @@ Divvy.Preview.init = function ()
 				Network.cache.asyncPost(
 					Divvy.url + 'copy/photo',
 					{ 
-						duid: Ti.Platform.id, 
+						duid: Divvy.UUID, 
 						bucket_id: Divvy.Buckets.bucketsArray[index].bucketId, 
 						photo_id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId 
 					},
@@ -147,7 +147,7 @@ Divvy.Preview.init = function ()
 		{
 			Network.cache.asyncPost(
 				Divvy.url + 'delete/photo',
-				{ duid: Ti.Platform.id, id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId },
+				{ duid: Divvy.UUID, id: Divvy.View.imageArray[Divvy.Preview.currentView.index].imageId },
 				Divvy.Preview.onDeleteSuccess,
 				Divvy.Preview.onDeleteError,
 				{ current_index: Divvy.Preview.currentView.index, count: Divvy.View.imageArray.length }
@@ -325,7 +325,7 @@ Divvy.Preview.addImageToView = function(view, imageId)
 	});
 	
 	Network.cache.run(
-		Divvy.url + 'image/'+Ti.Platform.id+'/'+imageId,
+		Divvy.url + 'image/'+Divvy.UUID+'/'+imageId,
 		Network.CACHE_INVALIDATE,
 		Divvy.Preview.onImageUrlSuccess,
 		Divvy.Preview.onImageUrlError,

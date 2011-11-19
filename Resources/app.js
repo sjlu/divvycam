@@ -1,5 +1,15 @@
 Divvy = {}; // We want to intialize our program into a single function first
 
+if (Ti.App.Properties.hasProperty('uuid'))
+{
+	Divvy.UUID = Ti.App.Properties.getString('uuid');
+}
+else
+{
+	Divvy.UUID = Ti.Platform.createUUID();
+	Ti.App.Properties.setString('uuid', Divvy.UUID);
+}
+
 Divvy.jpgcompressor = require('com.sideshowcoder.jpgcompressor');
 Divvy.jpgcompressor.setCompressSize(512000);
 Divvy.jpgcompressor.setWorstCompressQuality(0.5);
@@ -91,7 +101,7 @@ if (Divvy.developmentMode)
 {
 	Network.cache.asyncPost(
 		Divvy.url + 'join',
-		{ duid: Ti.Platform.id, bucket_id: '100075', password: 'yellow' },
+		{ duid: Divvy.UUID, bucket_id: '100075', password: 'yellow' },
 		Divvy.Join.onSuccess,
 		Divvy.Join.onError,
 		'yellow'
