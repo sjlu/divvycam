@@ -122,7 +122,7 @@ Divvy.Settings.init = function()
 	});
 	
 	//this.general.add(this.row_name);
-	this.general.add(this.row_push);
+//	this.general.add(this.row_push);
 	this.general.add(this.row_save);
 	this.general.add(this.row_cache);
 	this.tableview.add(this.general);
@@ -233,8 +233,7 @@ Divvy.Settings.init = function()
 };
 
 Divvy.Settings.open = function()
-{
-	
+{	
 	this.switch_push.value = (Ti.App.Properties.hasProperty("push_notifications")) ? Ti.App.Properties.getBool("push_notifications") : false;
 	this.switch_save.value = (Ti.App.Properties.hasProperty("save_device")) ? Ti.App.Properties.getBool("save_device") : false;
 	
