@@ -7,6 +7,7 @@ Divvy.Upgrade.init = function()
 		if (!e.success)
 			return;
 
+		Divvy.Upgrade.product = e.products[0];
 		Divvy.Upgrade.price = e.products[0].price;
 		
 		if (Divvy.Upgrade.price === undefined)
@@ -30,7 +31,7 @@ Divvy.Upgrade.init = function()
 
 Divvy.Upgrade.purchase = function()
 {
-	var product = 'pro';
+	var product = Divvy.Upgrade.product;
 	Ti.Storekit.purchase(product, function(r)
 	{
 		if (r.state == Ti.Storekit.FAILED)
