@@ -21,7 +21,10 @@ Divvy.Buckets.init = function()
 	this.addButton.addEventListener('click', function(e)
 	{
 		if (Divvy.Buckets.bucketsArray.length >= 3 && !Divvy.Upgrade.check())
+		{
 			alert('The free version of this app only supports three buckets at any given time, please consider upgrading or rmeove a bucket from your list.');
+			return;
+		}
 		
 		Divvy.Buckets.addDialog.show();
 	});
