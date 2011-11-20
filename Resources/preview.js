@@ -422,6 +422,9 @@ Divvy.Preview.onDeleteSuccess = function(data, date, status, user, xhr)
 	
 	var removedImageView = Divvy.View.imageArray.splice(user.current_index, 1); // remove image from array
 	
+	if (Divvy.View.imageArray.length == 0)
+		Divvy.Preview.win.close();
+	
 	if (user.current_index == user.count-1) // if the image we deleted was at the end, we want to go back one index position
 		user.current_index--;
 		
