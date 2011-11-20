@@ -494,6 +494,9 @@ Divvy.View.startThumbnailQueue = function()
 		);
 		
 	}
+	
+	Divvy.View.win.remove(Divvy.View.activityIndicator);
+	Divvy.View.scrollView.touchEnabled = true;
 };
 
 Divvy.View.onThumbnailQueueSuccess = function(data, date, status, user, xhr)
@@ -502,8 +505,6 @@ Divvy.View.onThumbnailQueueSuccess = function(data, date, status, user, xhr)
 	
 	if (Divvy.View.numberOfThumbnailsRequested >= Divvy.View.imageArray.length)
 	{
-		Divvy.View.win.remove(Divvy.View.activityIndicator);
-		Divvy.View.scrollView.touchEnabled = true;
 		return;
 	}
 	
