@@ -315,7 +315,7 @@ Divvy.Buckets.removeBucket = function(id)
 		{
 			buckets.splice(i, 1); // remove the element by ID
 			Ti.App.Properties.setList('buckets', buckets);
-			return;
+			break;
 		}
 	}
 	
