@@ -137,8 +137,8 @@ Divvy.Buckets.open = function()
  */
 Divvy.Buckets.refresh = function()
 {
-	delete this.bucketsArray;
-	this.bucketsArray = [];
+	//delete this.bucketsArray;
+	var bucketsArray = [];
 	
 	var buckets = Ti.App.Properties.getList('buckets');
 	
@@ -146,7 +146,9 @@ Divvy.Buckets.refresh = function()
 		return;
 	
 	for (var i = 0; i < buckets.length; i++)
-		this.bucketsArray.push(this.generateRow(buckets[i].name, buckets[i].id, buckets[i].pw));
+		bucketsArray.push(this.generateRow(buckets[i].name, buckets[i].id, buckets[i].pw));
+
+	this.bucketsArray = bucketsArray;
 
 	this.tableview.setData(this.bucketsArray, {animation: Ti.UI.iPhone.RowAnimationStyle.FADE});
 };
