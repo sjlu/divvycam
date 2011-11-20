@@ -122,7 +122,13 @@ Divvy.Preview.init = function ()
 			{
 				var index = e.index;
 				
-				if (Divvy.Buckets.bucketsArray[index].bucketId == Divvy.View.win.id)
+				for (var i = 0; i < Divvy.Buckets.bucketsArray.length; i++)
+				{
+					if (Divvy.Buckets.bucketsArray[i].bucketId == Divvy.View.win.id)
+						break;
+				}
+				
+				if (i <= index)
 					index++;
 				
 				if (index == Divvy.Buckets.bucketsArray.length)
