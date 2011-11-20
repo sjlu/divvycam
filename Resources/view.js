@@ -109,14 +109,14 @@ Divvy.View.init = function()
       //   colors: [{ color: '#eeeeee', position: 0.0 }, { color: '#cccccc', position: 1.0}]
      	//},
      	backgroundImage: (Ti.Platform.osname == 'ipad') ? 'images/background-ipad.jpg' : 'images/background.jpg',
-     	top: -200,
-     	height: 250
+     	top: -270,
+     	height: 320
 	});
 	
 	this.infoLabel = Ti.UI.createLabel({
 		text: 'Bucket ID:',
 		shadowColor:'#fff',
-		top: 200,
+		top: 270,
 		left: 60,
 		width: 300,
     	shadowOffset:{x:0,y:1},
@@ -139,7 +139,7 @@ Divvy.View.init = function()
 	
 	this.messageButton = Ti.UI.createButton({
 		height: 49, width: 50,
-		top: 201, left: 5,
+		top: 271, left: 5,
 		image: "images/mail.png",
 		style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
 		systemButton: Ti.UI.iPhone.SystemButton.ACTION
