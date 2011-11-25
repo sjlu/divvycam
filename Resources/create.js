@@ -12,7 +12,8 @@ Divvy.Create.init = function()
 		orientationModes: [
 			Titanium.UI.PORTRAIT
 		],
-		backgroundColor: '#d6d8de'
+		backgroundColor: '#d6d8de',
+		modal: true
 	});
 	
 	this.win.addEventListener('close', function(e)
@@ -31,6 +32,17 @@ Divvy.Create.init = function()
 	});
 
 	this.win.rightNavButton = this.navButtonBar;
+	
+	this.closeButton = Ti.UI.createButton({
+		title: 'Cancel'
+	});
+	
+	this.closeButton.addEventListener('click', function(e)
+	{
+		Divvy.Create.win.close();
+	});
+	
+	this.win.leftNavButton = this.closeButton;
 	
 	/*
 	 * View elements
@@ -129,7 +141,7 @@ Divvy.Create.init = function()
 
 Divvy.Create.open = function()
 {
-	Divvy.open(this.win);
+	this.win.open();
 };
 
 Divvy.Create.reset = function()
