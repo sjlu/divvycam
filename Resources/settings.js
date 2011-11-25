@@ -65,11 +65,11 @@ Divvy.Settings.init = function()
 	this.row_name = Ti.UI.createTableViewRow({
 		selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	});
-			//Customize the row
+	//Customize the row
 	this.label_name = Ti.UI.createLabel({
 		text: 'Name',
 		left: 10,
-		font: { fontSize: 16, fontWeight: 'bold' }
+		font: { fontSize: 17, fontWeight: 'bold' }
 	});
 	
 	this.textarea_name = Ti.UI.createTextField({
@@ -93,7 +93,7 @@ Divvy.Settings.init = function()
 	this.label_version = Ti.UI.createLabel({
 		text: 'Version',
 		left: 10,
-		font: { fontSize: 16, fontWeight: 'bold' }
+		font: { fontSize: 17, fontWeight: 'bold' }
 	});
 
 	this.data_version = Ti.UI.createLabel({
@@ -116,7 +116,7 @@ Divvy.Settings.init = function()
 	this.label_push = Ti.UI.createLabel({
 		text: 'Push Notifications',
 		left: 10,
-		font: { fontSize: 16, fontWeight: 'bold' }
+		font: { fontSize: 17, fontWeight: 'bold' }
 	});
 			
 	this.switch_push = Ti.UI.createSwitch({
@@ -137,7 +137,7 @@ Divvy.Settings.init = function()
 	this.label_save = Ti.UI.createLabel({
 		text: 'Local Device Save',
 		left: 10,
-		font: { fontSize: 16, fontWeight: 'bold' }
+		font: { fontSize: 17, fontWeight: 'bold' }
 	});
 			
 	this.switch_save = Ti.UI.createSwitch({
