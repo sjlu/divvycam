@@ -549,6 +549,12 @@ Divvy.View.savePhoto = function(e)
 	var targetHeight = 960;
 	var targetWidth = 720;
 	
+	if (Divvy.Upgrade.check())
+	{
+		targetHeight = 1632;
+		targetWidth = 1224;
+	}
+	
 	if (image.height > targetHeight || image.width > targetWidth)
 	{
 		if (image.height > image.width)
