@@ -544,8 +544,10 @@ Divvy.View.savePhoto = function(e)
 	 * fullres: 1936x2592 (h x w)
 	 * halfres: 968x612 (h x w)
 	 */
-	var targetHeight = 1632;
-	var targetWidth = 1224;
+	// 1632x1224 about 300KB avg.
+	
+	var targetHeight = 960;
+	var targetWidth = 720;
 	
 	if (image.height > targetHeight || image.width > targetWidth)
 	{
