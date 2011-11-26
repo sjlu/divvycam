@@ -11,8 +11,8 @@ else
 }
 
 Divvy.jpgcompressor = require('com.sideshowcoder.jpgcompressor');
-Divvy.jpgcompressor.setCompressSize(512000);
-Divvy.jpgcompressor.setWorstCompressQuality(0.6);
+Divvy.jpgcompressor.setCompressSize(102400);
+Divvy.jpgcompressor.setWorstCompressQuality(0.5);
 
 Titanium.Storekit = Ti.Storekit = require('ti.storekit');
 Titanium.Admob = Ti.Admob = require('ti.admob');
