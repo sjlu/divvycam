@@ -80,7 +80,7 @@ Divvy.Preview.init = function ()
 		// method to saving the curretn photo
 		if (e.index == 0)
 		{
-			Ti.Media.saveToPhotoGallery(Divvy.Preview.currentView.photo.toImage(), 
+			Ti.Media.saveToPhotoGallery(Divvy.Preview.currentView.photo.toBlob(),
 			{
 				success: function(e)
 				{
@@ -368,6 +368,8 @@ Divvy.Preview.onImageUrlSuccess = function(data, date, status, user, xhr)
 		Divvy.Preview.onImageError,
 		user
 	);	
+	
+	user.viewContainer.url = data.url;
 	
 	if (data.permissions == '1')
 	{
