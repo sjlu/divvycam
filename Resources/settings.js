@@ -58,8 +58,9 @@ Divvy.Settings.init = function()
 	});
 	
 	//Table view will have sections
-	this.general = Ti.UI.createTableViewSection();
-	this.general.headerTitle = "General";
+	this.general = Ti.UI.createTableViewSection({
+		headerTitle: "General"
+	});
 	
 	//Create a row in first section
 	this.row_name = Ti.UI.createTableViewRow({
