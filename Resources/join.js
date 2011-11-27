@@ -148,6 +148,8 @@ Divvy.Join.open = function()
 
 Divvy.Join.openWithValues = function(id, pw)
 {
+	alert(id);
+	
 	this.textarea_bucketid.value = id;
 	this.textarea_bucketpw.value = pw;
 	
@@ -262,11 +264,9 @@ function parseQS(qstring) {
        return {};
    }
  
-   // NOTE: the location of your ? goes here
-   querystring = querystring.substring(9);
- 
    // split by ampersand '&' ---
-   var pairs = querystring.split("&");
+   var querystring = querystring.split("?"); // there should only be 1 question mark by default
+   var pairs = querystring[1].split("&");
  
    // Load the key/values of the return collection
    for (var i = 0; i < pairs.length; i++) {
@@ -320,10 +320,10 @@ Ti.App.addEventListener('resumed', function(e)
 	Divvy.cmd = Ti.App.getArguments();
 	if (Divvy.cmd.hasOwnProperty('url'))
 	{
-		alert(Divvy.cmd);
 		if (Divvy.cmd.url != Ti.App.pauseURL)
 		{
 			var cmdObj = parseQS(Divvy.cmd.url)
+			alert(cmdObj);
 			Divvy.Join.openWithValues(cmdObj.bucketId, cmdObj.bucketPw);
 		}
    }
