@@ -176,7 +176,7 @@ Divvy.Join.showLoading = function()
 Divvy.Join.hideLoading = function()
 {
 	this.win.titleControl = null;
-	this.win.leftNavButton = null;
+	this.win.leftNavButton = this.closeButton;
 	this.win.rightNavButton = this.navButtonBar;
 	this.textarea_bucketid.enabled = true;
 	this.textarea_bucketpw.enabled = true;
