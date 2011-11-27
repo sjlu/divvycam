@@ -193,6 +193,16 @@ Divvy.View.init = function()
 	
 	this.footerView.add(this.refreshLabel);
 	
+	this.headerAd = Ti.Admob.createView({
+    	top: 50,
+    	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
+    	height: (Ti.Platform.osname == 'ipad') ? '60' : '50',
+    	publisherId: 'a14ebeb4bf48fdc', // You can get your own at http: //www.admob.com/
+    	adBackgroundColor: 'black',
+    	testing: false,
+    	keywords: 'photos'
+	});
+	
 	this.footerAd = Ti.Admob.createView({
     	bottom: 0,
     	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
@@ -235,18 +245,22 @@ Divvy.View.init = function()
 	this.numberOfPhotosUploaded = 0;
 	this.photosInUploadQueue = 0;
 	this.uploading = 0;
+	
+	this.ads_top_offset = 0;
 };
 
 Divvy.View.addAds = function()
 {
 	this.footerView.height = (Ti.Platform.osname == 'ipad') ? 120 : 110;
 	this.footerView.add(this.footerAd);
+	this.ads_top_offset = 50;
 };
 
 Divvy.View.removeAds = function()
 {
 	this.footerView.height = 60;
 	this.footerView.remove(this.footerAd);
+	this.ads_top_offset = 0;
 };
 
 Divvy.View.open = function(name, id, pw)
@@ -312,6 +326,7 @@ Divvy.View.createScrollView = function()
 		backgroundColor: 'white'
 	});
 	
+	scrollView.add(Divvy.View.headerAd);
 	scrollView.add(Divvy.View.infoView);
 	scrollView.add(Divvy.View.footerView);
 	
@@ -418,12 +433,12 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		
 		if ((thumbnails.length) > 16)
 		{
-			Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+60;
+			Divvy.View.footerView.top = (Math.ceil(thumbnails.length/4)*(Divvy.View.dimension+Divvy.View.padding))+60+Divvy.View.ads_top_offset;
 			Divvy.View.footerLabel.text = thumbnails.length+" Photos";
 		}
 		else
 		{
-			Divvy.View.footerView.top = 5*(Divvy.View.dimension+Divvy.View.padding)-35;
+			Divvy.View.footerView.top = 5*(Divvy.View.dimension+Divvy.View.padding)-35+Divvy.View.ads_top_offset;
 		}
 		
 		Divvy.View.footerView.show();
@@ -459,7 +474,7 @@ Divvy.View.generateImageThumbnail = function(num,id,image)
 	var x = num % 4;
 	var y = Math.floor(num / 4);
 	
-	var top_offset = 50;
+	var top_offset = 50+Divvy.View.ads_top_offset;
 
 	var thumbnail = Ti.UI.createImageView({
 		width: this.dimension, height: this.dimension,

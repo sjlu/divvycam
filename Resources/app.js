@@ -89,13 +89,13 @@ Divvy.Settings.init();
 Divvy.Upgrade.init();
 
 //TODO: Fix ads, they are really buggy.
-/*
+
 if (!Divvy.Upgrade.check())
 {
 	Divvy.Buckets.addAds();
 	Divvy.View.addAds();
 }
-*/
+
 
 //open actually shows our UI elements.
 Divvy.Buckets.open();
