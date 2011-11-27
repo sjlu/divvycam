@@ -5,21 +5,40 @@ Divvy.Join.init = function()
 	/*
 	 * Window elements
 	 */
-	this.win = Ti.UI.createWindow({
-		title: 'Join A Bucket',
-		barColor: Divvy.winBarColor,
-		barImage: Divvy.winBarImage,
-		orientationModes: [
-			Titanium.UI.PORTRAIT
-		],
-		backgroundColor: '#d6d8de',
-		modal: true
-	});
 	
-	this.win.addEventListener('close', function(e)
+	if (Ti.Platform.osname == 'ipad')
 	{
-		Divvy.Join.reset();
-	});
+		this.win = Ti.UI.iPad.createPopover({
+			title: 'Join A Bucket',
+			height: 420, width: 320,
+			backgroundColor: '#d6d8de'
+		});
+		
+		this.win.addEventListener('hide', function(e)
+		{
+			Divvy.Join.reset();
+		});
+	}
+	else
+	{
+		this.win = Ti.UI.createWindow({
+			title: 'Join A Bucket',
+			barColor: Divvy.winBarColor,
+			barImage: Divvy.winBarImage,
+			orientationModes: [
+				Titanium.UI.PORTRAIT
+			],
+			backgroundColor: '#d6d8de',
+			modal: true
+		});
+		
+		this.win.addEventListener('close', function(e)
+		{
+			Divvy.Join.reset();
+		});
+	}
+	
+
 	
 	this.navButtonBar = Ti.UI.createButtonBar({
 		labels: ['Join'],
@@ -84,7 +103,7 @@ Divvy.Join.init = function()
 	this.textarea_bucketid = Ti.UI.createTextField({
 		hintText: '6 Digit ID',
 		left: 100,
-		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
+		width: '190', height: 24,
 		editable: true,
 		color: '#385487',
 		keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
@@ -107,7 +126,7 @@ Divvy.Join.init = function()
 	this.textarea_bucketpw = Ti.UI.createTextField({
 		hintText: 'Required',
 		left: 100,
-		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
+		width: '190', height: 24,
 		editable: true,
 		passwordMask: true,
 		color: '#385487',
@@ -143,13 +162,22 @@ Divvy.Join.init = function()
 
 Divvy.Join.open = function()
 {
-	this.win.open();
+	if (Ti.Platform.osname == 'ipad')
+		this.win.show({view: Divvy.Buckets.addButton});
+	else
+		this.win.open();
 };
+
+Divvy.Join.close = function()
+{
+	if (Ti.Platform.osname == 'ipad')
+		this.win.hide();
+	else
+		this.win.close();
+}
 
 Divvy.Join.openWithValues = function(id, pw)
 {
-	alert(id);
-	
 	this.textarea_bucketid.value = id;
 	this.textarea_bucketpw.value = pw;
 	
@@ -168,7 +196,7 @@ Divvy.Join.showLoading = function()
 	
 	this.win.titleControl = this.titleControlView;
 	this.win.leftNavButton = fakeButton;
-	this.win.rightNavButton = null;
+	this.win.rightNavButton = fakeButton;
 	this.textarea_bucketid.enabled = false;
 	this.textarea_bucketpw.enabled = false;
 };
@@ -236,7 +264,7 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 	
 	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id, user);
 	Divvy.Join.hideLoading();
-	Divvy.Join.win.close();
+	Divvy.Join.close();
 	Divvy.Join.reset();
 	
 	if (Divvy.developmentMode)

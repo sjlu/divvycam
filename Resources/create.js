@@ -5,21 +5,37 @@ Divvy.Create.init = function()
 	/*
 	 * Window objects
 	 */
-	this.win = Ti.UI.createWindow({
-		title: 'New Bucket',
-		barColor: Divvy.winBarColor,
-		barImage: Divvy.winBarImage,
-		orientationModes: [
-			Titanium.UI.PORTRAIT
-		],
-		backgroundColor: '#d6d8de',
-		modal: true
-	});
-	
-	this.win.addEventListener('close', function(e)
+	if (Ti.Platform.osname == 'ipad')
 	{
-		Divvy.Create.reset();
-	});
+		this.win = Ti.UI.iPad.createPopover({
+			title: 'New Bucket',
+			height: 420, width: 320,
+			backgroundColor: '#d6d8de'
+		});
+		
+		this.win.addEventListener('hide', function(e)
+		{
+			Divvy.Create.reset();
+		});
+	}
+	else
+	{
+		this.win = Ti.UI.createWindow({
+			title: 'New Bucket',
+			barColor: Divvy.winBarColor,
+			barImage: Divvy.winBarImage,
+			orientationModes: [
+				Titanium.UI.PORTRAIT
+			],
+			backgroundColor: '#d6d8de',
+			modal: true
+		});
+	
+		this.win.addEventListener('close', function(e)
+		{
+			Divvy.Create.reset();
+		});
+	}
 	
 	this.navButtonBar = Ti.UI.createButtonBar({
 		labels: ['Create'],
@@ -51,8 +67,6 @@ Divvy.Create.init = function()
 		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 	});
 	
-
-	
 	this.footerView = Ti.UI.createView({height: 180});
 	this.footerView.addEventListener('touchstart', function(e)
 	{
@@ -82,7 +96,7 @@ Divvy.Create.init = function()
 	this.textarea_bucketname = Ti.UI.createTextField({
 		hintText: 'My New Bucket',
 		left: 100,
-		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
+		width: '190', height: 24,
 		editable: true,
 		color: '#385487',
 		clearButtonMode: Titanium.UI.INPUT_BUTTONMODE_ONFOCUS,
@@ -102,9 +116,9 @@ Divvy.Create.init = function()
 	});
 	
 	this.textarea_bucketpw = Ti.UI.createTextField({
-		hintText: 'Required (>6 characters)',
+		hintText: 'Required (6+ characters)',
 		left: 100,
-		width: (Ti.Platform.osname == "ipad") ? '570' : '190', height: 24,
+		width: '190', height: 24,
 		editable: true,
 		passwordMask: true,
 		color: '#385487',
@@ -141,7 +155,18 @@ Divvy.Create.init = function()
 
 Divvy.Create.open = function()
 {
-	this.win.open();
+	if (Ti.Platform.osname == 'ipad')
+		this.win.show({view: Divvy.Buckets.addButton});
+	else
+		this.win.open();
+};
+
+Divvy.Create.close = function()
+{
+	if (Ti.Platform.osname == 'ipad')
+		this.win.hide();
+	else
+		this.win.close();
 };
 
 Divvy.Create.reset = function()
@@ -156,7 +181,7 @@ Divvy.Create.showLoading = function()
 	
 	this.win.titleControl = this.titleControlView;
 	this.win.leftNavButton = fakeButton;
-	this.win.rightNavButton = null;
+	this.win.rightNavButton = fakeButton;
 	this.textarea_bucketname.enabled = false;
 	this.textarea_bucketpw.enabled = false;
 };
@@ -229,7 +254,7 @@ Divvy.Create.onSuccess = function(data, date, status, user, xhr)
 	
 	Divvy.Buckets.addBucket(data.bucket_name, data.bucket_id, user);
 	Divvy.Create.hideLoading();
-	Divvy.Create.win.close();
+	Divvy.Create.close();
 	Divvy.Create.reset();
 	
 	if (Divvy.developmentMode)
