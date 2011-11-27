@@ -153,8 +153,10 @@ Divvy.View.init = function()
 			return;
 		}
 		
-		Divvy.View.emailDialog.subject = "You've been invited to share photos!";
-		Divvy.View.emailDialog.messageBody = "https://divvy.burst-dev.com/b/"+Divvy.View.win.id+"\n\n"+Divvy.View.win.title+"\nBucket ID: "+Divvy.View.win.id+"\nPassword: "+Divvy.View.win.pw+"\n\nDivvycam is an app where you can take photos with your friends and store it all in one place. It's like sharing the same memory card, but without the hassles.\n\nFor more information visit:\nhttps://divvy.burst-dev.com/";
+		Divvy.View.emailDialog.subject = "Divvycam Bucket Invitation - "+Divvy.View.win.title;
+		Divvy.View.emailDialog.messageBody = '<div style="display: block; padding: 10px; width: 280px !important;"><a href="divvycam://join?bucketId='+Divvy.View.win.id+'&bucketPw='+Ti.Network.encodeURIComponent(Divvy.View.win.pw)+'" style="display: block;color: #FFFFFF;font: bold 16px/20px Helvetica, arial, sans-serif;width: 280px;height: 25px;text-align: center;padding: 15px 0px 10px 0px;text-decoration: none;border-radius: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px;-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);background: #006600;">Join Bucket</a><h5 style="font: normal 10px/10px Helvetica, Arial, sans-serif; color: #333333; margin: 5px; text-align: center;">(View this email on your iOS device.)</h5></div>';
+		Divvy.View.emailDialog.messageBody += "<br />Click the above button or type in the info manually.<br /><br />https://divvy.burst-dev.com/b/"+Divvy.View.win.id+"<br /><br />"+Divvy.View.win.title+"<br />Bucket ID: "+Divvy.View.win.id+"<br />Password: "+Divvy.View.win.pw+"<br /><br />Divvycam is an app where you can take photos with your friends and store it all in one place. It's like sharing the same memory card, but without the hassles.<br /><br />For more information visit:<br />https://divvy.burst-dev.com/";
+		Divvy.View.emailDialog.setHtml(true);
 		Divvy.View.emailDialog.open();
 	});
 	
@@ -267,8 +269,6 @@ Divvy.View.close = function()
 	
 	this.scrollPosition = {x: 0, y: 0};
 	this.win.remove(this.scrollView);
-	
-
 };
 
 /*

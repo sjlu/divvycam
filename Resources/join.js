@@ -146,6 +146,14 @@ Divvy.Join.open = function()
 	this.win.open();
 };
 
+Divvy.Join.openWithValues = function(id, pw)
+{
+	this.textarea_bucketid.value = id;
+	this.textarea_bucketpw.value = pw;
+	
+	this.win.open();
+}
+
 Divvy.Join.reset = function()
 {
 	this.textarea_bucketid.value = "";
@@ -241,3 +249,82 @@ Divvy.Join.onError = function(status, httpStatus)
 	if (Divvy.developmentMode)
 		Divvy.testflight.passCheckpoint("exiting bucket join error ("+status+")");
 };
+
+function parseQS(qstring) {
+ 
+   // The return is a collection of key/value pairs
+	var queryStringDictionary = {};
+ 
+   // Gets the query string, starts with '?'
+   var querystring = qstring;
+ 
+   if (!querystring) {
+       return {};
+   }
+ 
+   // NOTE: the location of your ? goes here
+   querystring = querystring.substring(9);
+ 
+   // split by ampersand '&' ---
+   var pairs = querystring.split("&");
+ 
+   // Load the key/values of the return collection
+   for (var i = 0; i < pairs.length; i++) {
+		var keyValuePair = pairs[i].split("=");
+      queryStringDictionary[keyValuePair[0]]
+			= keyValuePair[1];
+   }
+ 
+    // toString() returns the key/value pairs concatenated
+ 
+	queryStringDictionary.toString = function() {
+ 
+		if (queryStringDictionary.length == 0) {
+			return "";
+		}
+		var toString = "?";
+ 
+		for (var key in queryStringDictionary) {
+			toString += key + "=" +
+				queryStringDictionary[key];
+		}
+		
+		return toString;
+	};
+ 
+	// Return the key/value dictionary
+ 
+	return queryStringDictionary;
+}
+
+// Save initial launch command line arguments
+Ti.App.launchURL = '';
+Ti.App.pauseURL = '';
+
+Divvy.cmd = Ti.App.getArguments();
+if (Divvy.cmd.hasOwnProperty('url'))
+	Ti.App.launchURL = Divvy.cmd.url;
+ 
+// Save launch URL at the time last paused
+Ti.App.addEventListener('pause', function(e)
+{
+	Ti.App.pauseURL = Ti.App.launchURL;
+});
+ 
+// After app is fully resumed, recheck if launch arguments
+// have changed and ignore duplicate schemes.
+Ti.App.addEventListener('resumed', function(e)
+{
+	Ti.App.launchURL = '';
+	
+	Divvy.cmd = Ti.App.getArguments();
+	if (Divvy.cmd.hasOwnProperty('url'))
+	{
+		alert(Divvy.cmd);
+		if (Divvy.cmd.url != Ti.App.pauseURL)
+		{
+			var cmdObj = parseQS(Divvy.cmd.url)
+			Divvy.Join.openWithValues(cmdObj.bucketId, cmdObj.bucketPw);
+		}
+   }
+});
