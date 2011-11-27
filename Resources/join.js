@@ -323,7 +323,6 @@ Ti.App.addEventListener('resumed', function(e)
 		if (Divvy.cmd.url != Ti.App.pauseURL)
 		{
 			var cmdObj = parseQS(Divvy.cmd.url)
-			alert(cmdObj);
 			Divvy.Join.openWithValues(cmdObj.bucketId, cmdObj.bucketPw);
 		}
    }
