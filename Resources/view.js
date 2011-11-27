@@ -113,9 +113,20 @@ Divvy.View.init = function()
      	height: 320
 	});
 	
+	this.headerAd = Ti.Admob.createView({
+    	top: 320,
+    	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
+    	height: (Ti.Platform.osname == 'ipad') ? '60' : '50',
+    	publisherId: 'a14ebeb4bf48fdc', // You can get your own at http: //www.admob.com/
+    	adBackgroundColor: 'black',
+    	testing: false,
+    	keywords: 'photos'
+	});
+	
 	this.infoLabel = Ti.UI.createLabel({
 		text: 'Bucket ID:',
 		shadowColor:'#fff',
+		height: 50,
 		top: 270,
 		left: 60,
 		width: 300,
@@ -193,15 +204,7 @@ Divvy.View.init = function()
 	
 	this.footerView.add(this.refreshLabel);
 	
-	this.headerAd = Ti.Admob.createView({
-    	top: 50,
-    	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
-    	height: (Ti.Platform.osname == 'ipad') ? '60' : '50',
-    	publisherId: 'a14ebeb4bf48fdc', // You can get your own at http: //www.admob.com/
-    	adBackgroundColor: 'black',
-    	testing: false,
-    	keywords: 'photos'
-	});
+
 	
 	this.footerAd = Ti.Admob.createView({
     	bottom: 0,
@@ -254,6 +257,9 @@ Divvy.View.addAds = function()
 	this.footerView.height = (Ti.Platform.osname == 'ipad') ? 120 : 110;
 	this.footerView.add(this.footerAd);
 	this.ads_top_offset = 50;
+	
+	this.infoView.add(Divvy.View.headerAd);
+	this.infoView.height += Divvy.View.headerAd.height;	
 };
 
 Divvy.View.removeAds = function()
@@ -261,6 +267,9 @@ Divvy.View.removeAds = function()
 	this.footerView.height = 60;
 	this.footerView.remove(this.footerAd);
 	this.ads_top_offset = 0;
+	
+	this.infoView.remove(Divvy.View.headerAd);
+	this.infoView.height = 320;
 };
 
 Divvy.View.open = function(name, id, pw)
@@ -326,7 +335,6 @@ Divvy.View.createScrollView = function()
 		backgroundColor: 'white'
 	});
 	
-	scrollView.add(Divvy.View.headerAd);
 	scrollView.add(Divvy.View.infoView);
 	scrollView.add(Divvy.View.footerView);
 	
