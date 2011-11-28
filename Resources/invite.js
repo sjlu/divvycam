@@ -43,7 +43,7 @@ function parseQS(qstring) {
 	return queryStringDictionary;
 }
 
-function autoFillJoinWindow(bucketId, bucketPw)
+function autoFillJoinWindow(cmdObj)
 {
 	if (cmdObj.hasOwnProperty('bucketId') && cmdObj.hasOwnProperty("bucketPw"))
 		Divvy.Join.openWithValues(cmdObj.bucketId, cmdObj.bucketPw);

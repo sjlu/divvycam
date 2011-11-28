@@ -64,7 +64,8 @@ Ti.include(
 	'join.js',
 	'preview.js',
 	'settings.js',
-	'upgrade.js'
+	'upgrade.js',
+	'invite.js'
 );
 
 /* 

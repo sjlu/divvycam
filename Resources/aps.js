@@ -73,6 +73,7 @@ Divvy.APS.receive = function(e)
 	
 	Ti.UI.iPhone.appBadge = 0;
 	
+	alert(e);
 	if (Divvy.state != 'open')
 	{
 		Divvy.Preview.win.close();
