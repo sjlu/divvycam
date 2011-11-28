@@ -350,6 +350,7 @@ Ti.App.addEventListener('resumed', function(e)
 	{
 		if (Divvy.cmd.url != Ti.App.pauseURL)
 		{
+			Ti.App.launchURL = Divvy.cmd.url;
 			var cmdObj = parseQS(Divvy.cmd.url)
 			Divvy.Join.openWithValues(cmdObj.bucketId, cmdObj.bucketPw);
 		}
