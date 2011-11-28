@@ -152,6 +152,8 @@ Ti.App.addEventListener('resumed', function(e)
    Divvy.state = 'open';
 });
 
+Divvy.state = 'open';
+
 /*
  * Adding event listeners if app is brought in and out of background
  * and refresh services, to refresh the bucket views.
