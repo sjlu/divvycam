@@ -149,7 +149,12 @@ Ti.App.addEventListener('resumed', function(e)
 		}
    }
    
-   Divvy.state = 'open';
+   Divvy.state = 'resuming';
+   
+   setTimeout(function(e)
+   {
+   	Divvy.state = 'open';	
+   }, 100);
 });
 
 Divvy.state = 'open';
