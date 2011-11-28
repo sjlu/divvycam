@@ -2,7 +2,7 @@
 // setup
 include_once '../web/include/config.php';
 require_once 'ApnsPHP/Autoload.php';
-$push = new ApnsPHP_Push(ApnsPHP_Abstract::ENVIRONMENT_SANDBOX, 'ios_push_development.pem');
+$push = new ApnsPHP_Push(ApnsPHP_Abstract::ENVIRONMENT_PRODUCTION, 'ios_push_production.pem');
 $push->setRootCertificationAuthority('entrust_root_certification_authority.pem');
 
 
