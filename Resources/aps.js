@@ -73,25 +73,36 @@ Divvy.APS.receive = function(e)
 	
 	Ti.UI.iPhone.appBadge = 0;
 	
+	if (true)
+	{
+		Divvy.Preview.win.close();
+		Divvy.View.win.close();
+		
+		var found_bucket = false;
+		for(var i = 0; i < Divvy.Buckets.bucketsArray.length; i++)
+		{
+			if (Divvy.Buckets.bucketsArray[i].bucketsId == e['data']['aps']['bucket_id'])
+			{
+				found_bucket = true;
+				break;
+			}
+		}
+		
+		if (found_bucket == true)
+		{
+			var bucket = Divvy.Buckets.bucketsArray[i];
+			Divvy.View.open(bucket.bucketName, bucket.bucketId, bucket.bucketPw);
+		}
+	}
+	
 	if (Divvy.View.win.id != null)
 	{
 		Divvy.View.refresh();
 	}
 		
 	Divvy.Buckets.refresh();
+	
 	// For now, Titanium has no way of differentiating between outside-aps event handlers
 	// and inside-aps event handlers. So at this current moment, nothing can be done.
 	// please watch CB ticket #55 for more information
-	
-	//alert(e);
-	
-	/*
-	Divvy.Messages.Chat.win.title = e['data']['aps']['name'];
-   Divvy.Messages.currentChat = e['data']['aps']['fbid'];
-	Divvy.Messages.Chat.win.close();
-   Divvy.Messages.Chat.drawInit();
-	Divvy.Tabs.tabGroup.setActiveTab(1);
-   Divvy.Tabs.messagesTab.open(Divvy.Messages.Chat.win, {animated: true});
-	Divvy.Messages.Chat.tableview.scrollToIndex(Divvy.Messages.Chat.table_data.length-1, {animated: false});
-	*/
 };
