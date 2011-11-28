@@ -117,6 +117,41 @@ Divvy.tabs.open();
 
 Divvy.APS.open();
 
+// Save initial launch command line arguments
+Ti.App.launchURL = '';
+Ti.App.pauseURL = '';
+
+Divvy.cmd = Ti.App.getArguments();
+if (Divvy.cmd.hasOwnProperty('url'))
+	Ti.App.launchURL = Divvy.cmd.url;
+ 
+// Save launch URL at the time last paused
+Ti.App.addEventListener('pause', function(e)
+{
+	Divvy.state = 'paused';
+	Ti.App.pauseURL = Ti.App.launchURL;
+});
+ 
+// After app is fully resumed, recheck if launch arguments
+// have changed and ignore duplicate schemes.
+Ti.App.addEventListener('resumed', function(e)
+{
+	Ti.App.launchURL = '';
+	
+	Divvy.cmd = Ti.App.getArguments();
+	if (Divvy.cmd.hasOwnProperty('url'))
+	{
+		if (Divvy.cmd.url != Ti.App.pauseURL)
+		{
+			Ti.App.launchURL = Divvy.cmd.url;
+			var cmdObj = parseQS(Divvy.cmd.url)
+			Divvy.Join.openWithValues(cmdObj.bucketId, cmdObj.bucketPw);
+		}
+   }
+   
+   Divvy.state = 'open';
+});
+
 /*
  * Adding event listeners if app is brought in and out of background
  * and refresh services, to refresh the bucket views.
