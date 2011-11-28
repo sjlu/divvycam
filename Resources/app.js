@@ -139,6 +139,7 @@ Ti.App.addEventListener('resumed', function(e)
 	Ti.App.launchURL = '';
 	
 	Divvy.cmd = Ti.App.getArguments();
+	alert(Divvy.cmd);
 	if (Divvy.cmd.hasOwnProperty('url'))
 	{
 		if (Divvy.cmd.url != Ti.App.pauseURL)

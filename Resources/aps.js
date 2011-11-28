@@ -83,14 +83,14 @@ Divvy.APS.receive = function(e)
 		{
 			if (Divvy.Buckets.bucketsArray[i].bucketsId == e['data']['aps']['bucket_id'])
 			{
-				found_bucket = true;
+				found_bucket = i;
 				break;
 			}
 		}
 		
-		if (found_bucket == true)
+		if (found_bucket != false)
 		{
-			var bucket = Divvy.Buckets.bucketsArray[i];
+			var bucket = Divvy.Buckets.bucketsArray[found_bucket];
 			Divvy.View.open(bucket.bucketName, bucket.bucketId, bucket.bucketPw);
 		}
 	}
