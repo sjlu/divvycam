@@ -45,7 +45,7 @@ Divvy.Upgrade.purchase = function()
 			var receipt = r.receipt;
 			Ti.Storekit.verifyReceipt({
 				receipt: receipt,
-				sandbox: true,
+				sandbox: Divvy.developmentMode,
 				callback: function(e)
 				{
 					if (e.success)
