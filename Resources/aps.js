@@ -73,7 +73,6 @@ Divvy.APS.receive = function(e)
 	
 	Ti.UI.iPhone.appBadge = 0;
 	
-	alert(e);
 	if (Divvy.state != 'open')
 	{
 		Divvy.Preview.win.close();
@@ -107,3 +106,22 @@ Divvy.APS.receive = function(e)
 	// and inside-aps event handlers. So at this current moment, nothing can be done.
 	// please watch CB ticket #55 for more information
 };
+
+Divvy.state = 'open';
+
+Ti.App.addEventListener('pause', function(e)
+{
+	Divvy.state = 'paused';
+});
+ 
+// After app is fully resumed, recheck if launch arguments
+// have changed and ignore duplicate schemes.
+Ti.App.addEventListener('resumed', function(e)
+{
+	Divvy.state = 'restoring';
+	
+	setTimeout(function()
+	{
+		Divvy.state = 'open';
+	}, 1000); // 1 second
+});
