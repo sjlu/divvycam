@@ -22,7 +22,7 @@ Divvy.Buckets.init = function()
 	{
 		if (Divvy.Buckets.bucketsArray.length >= 3 && !Divvy.Upgrade.check())
 		{
-			alert('The free version of this app only supports three buckets at any given time, please consider upgrading or rmeove a bucket from your list.');
+			alert('The free version of this app only supports three buckets at any given time, please consider upgrading or remove a bucket from your list.');
 			return;
 		}
 		
@@ -34,7 +34,8 @@ Divvy.Buckets.init = function()
 		cancel: 2
 	});
 	
-	this.addDialog.addEventListener('click', function(e){
+	this.addDialog.addEventListener('click', function(e)
+	{
 		if (e.index == 0)
 			Divvy.Join.open();
 		else if (e.index == 1)
@@ -44,9 +45,9 @@ Divvy.Buckets.init = function()
 	this.win.rightNavButton = this.addButton;
 
 	this.settingsButton = Ti.UI.createButton({
-			systemButton: Ti.UI.iPhone.SystemButton.SETTING,
-			title: 'Settings'
-		});
+		systemButton: Ti.UI.iPhone.SystemButton.SETTING,
+		title: 'Settings'
+	});
 		
 	this.settingsButton.addEventListener('click', function(e){
 		Divvy.Settings.open();
