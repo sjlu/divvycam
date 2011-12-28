@@ -50,7 +50,7 @@ if (Ti.Platform.osname == 'ipad')
 	Divvy.device = 'ipad';
 }
 
-Divvy.url = 'https://divvy.burst-dev.com/api/';
+Divvy.url = 'http://divvy.burst-dev.com/api/';
 
 /*
  * Take in all the other code we need.
