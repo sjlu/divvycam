@@ -174,6 +174,8 @@ Divvy.Join.close = function()
 		this.win.hide();
 	else
 		this.win.close();
+		
+	Ti.App.argsURL = '';
 }
 
 Divvy.Join.openWithValues = function(id, pw)
