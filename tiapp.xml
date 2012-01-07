@@ -10,7 +10,7 @@
     </deployment-targets>
     <id>com.burst.divvycam</id>
     <name>Divvycam</name>
-    <version>0.1</version>
+    <version>0.1.1</version>
     <publisher>Burst Development</publisher>
     <url>https://divvy.burst-dev.com</url>
     <description>Divvycam lets people share a photo location with each other, all contributing to one place.</description>
