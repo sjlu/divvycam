@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.2
+version: 1.4
 description: Apple StoreKit module for in application purchases 
 author: Jeff Haynie 
 license: Appcelerator Commercial License 

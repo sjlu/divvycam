@@ -1,9 +1,15 @@
 <h1>Ti.Storekit Module</h1>
 <h2>Description</h2>
 <p>The Storekit module allows you access to Apple's in-app purchasing mechanisms.</p>
+<h2>How Do I Get Started?</h2>
+<p>Read our Wiki page to get started quickly:</p>
+<p>http://wiki.appcelerator.org/display/guides/StoreKit+Module+In-App+Purchase+Testing</p>
+<h2>Getting Started</h2>
+<p>View the <a href="https://wiki.appcelerator.org/display/tis/Using+Titanium+Modules">Using Titanium Modules</a> document for instructions on getting
+started with using this module in your application.</p>
 <h2>Accessing the Storekit Module</h2>
 <p>To access this module from JavaScript, you would do the following:</p>
-<pre><code>Titanium.Storekit = Ti.Storekit = require("ti.storekit");
+<pre><code>var Storekit = require('ti.storekit');
 </code></pre>
 <h2>Functions</h2>
 <h3>requestProducts(ids[array], callback(e){})</h3>
@@ -14,7 +20,7 @@ information:</p>
 <li>success[boolean]: Whether or not the request succeeded</li>
 <li>message[string]: If the request failed, the reason why</li>
 <li>products[array]: An array of <em><a href="product.html">Ti.Storekit.Product</a></em> objects which represent the valid products retrieved</li>
-<li>invalid[array]: An array of identifiers passed to the request that did not correspond to a product ID.</li>
+<li>invalid[array]: An array of identifiers passed to the request that did not correspond to a product ID. Only present when at least one requested product is invalid.</li>
 </ul>
 <p>Returns a <em><a href="productRequest.html">Ti.Storekit.ProductRequest</a></em> object.</p>
 <h3>purchase(object, callback(e){})</h3>
@@ -37,8 +43,10 @@ the purchase request's state changes, with the following event information:</p>
 </ul>
 <p>Returns a <em><a href="payment.html">Ti.Storekit.Payment</a></em> object.</p>
 <h3>verifyReceipt(args[object])</h3>
-<p>Verifies that a receipt (a blob object) passed from a Storekit purchase is valid. Takes one argument, a dictionary with
-the following values:</p>
+<p>Verifies that a receipt (a blob object) passed from a Storekit purchase is valid. Note that you rarely need to do this
+step in-app. It is much more likely that you would want to do this step on your own server to confirm from Apple that a
+purchase is legitimate.</p>
+<p>Takes one argument, a dictionary with the following values:</p>
 <ul>
 <li>receipt[blob]: A receipt retrieved from a call to Ti.Storekit.purchase's callback evt.receipt.</li>
 <li>callback[function]: A function to be called when the verification request completes.</li>
@@ -88,11 +96,10 @@ will be provided:</p>
 </ul>
 <h2>Usage</h2>
 <p>See example.</p>
-<h2>Customizing the UI</h2>
-<p>You can customize the Storekit View that is presented to the user. Open up the "ui.js" file in the "assets" folder of this module to get started.</p>
-<p>Note that this file is itself a JavaScript module. It must export one particular method: createStoreKitView, and this method must take in an array of <em><a href="product.html">Ti.Storekit.Product</a></em> and return a view.</p>
 <h2>Author</h2>
 <p>Jeff Haynie</p>
+<h2>Module History</h2>
+<p>View the <a href="changelog.html">change log</a> for this module.</p>
 <h2>Feedback and Support</h2>
 <p>Please direct all questions, feedback, and concerns to <a href="mailto:info@appcelerator.com?subject=iOS%20Storekit%20Module">info@appcelerator.com</a>.</p>
 <h2>License</h2>
