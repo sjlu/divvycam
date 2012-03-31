@@ -93,8 +93,8 @@ Divvy.Upgrade.init();
 
 if (!Divvy.Upgrade.check())
 {
-	Divvy.Buckets.addAds();
-	Divvy.View.addAds();
+	//Divvy.Buckets.addAds();
+	//Divvy.View.addAds();
 }
 
 
