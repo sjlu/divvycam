@@ -240,7 +240,7 @@ Divvy.Settings.init = function()
 	});
 			
 	this.label_description = Ti.UI.createLabel({
-		text: 'Enables you to have unlimited buckets, better photo quality and no advertisements.',
+		text: 'Enables you to have unlimited buckets and better photo quality.',
 		height: 'auto',
 		top: 10,
 		left: 100,

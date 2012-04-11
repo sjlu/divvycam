@@ -269,8 +269,8 @@ Divvy.Join.onSuccess = function(data, date, status, user, xhr)
 	Divvy.Join.close();
 	Divvy.Join.reset();
 	
-	if (Divvy.developmentMode)
-		Divvy.testflight.passCheckpoint("joined existing bucket");
+//	if (Divvy.developmentMode)
+//		Divvy.testflight.passCheckpoint("joined existing bucket");
 };
 
 Divvy.Join.onError = function(status, httpStatus)
@@ -278,6 +278,6 @@ Divvy.Join.onError = function(status, httpStatus)
 	alert("We couldn't join the bucket, please try again. ("+status+")");
 	Divvy.Join.hideLoading();
 	
-	if (Divvy.developmentMode)
-		Divvy.testflight.passCheckpoint("exiting bucket join error ("+status+")");
+//	if (Divvy.developmentMode)
+//		Divvy.testflight.passCheckpoint("exiting bucket join error ("+status+")");
 };

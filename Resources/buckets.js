@@ -83,6 +83,7 @@ Divvy.Buckets.init = function()
 	
 	this.win.add(this.tableview);
 
+/*
 	this.adView = Ti.Admob.createView({
     	bottom: 0,
     	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
@@ -92,8 +93,10 @@ Divvy.Buckets.init = function()
     	testing: false,
     	keywords: 'photos'
 	});
+*/
 };
 
+/*
 Divvy.Buckets.addAds = function()
 {
 	this.tableview.height = (Ti.Platform.osname == 'ipad') ? '900' : '370';
@@ -105,6 +108,7 @@ Divvy.Buckets.removeAds = function()
 	this.tableview.height = (Ti.Platform.osname == 'ipad') ? '960' : '420';
 	this.win.remove(this.adView);
 };
+*/
 
 Divvy.Buckets.onDeleteSuccess = function(data, date, status, user, xhr)
 {

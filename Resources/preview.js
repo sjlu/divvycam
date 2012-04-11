@@ -252,8 +252,8 @@ Divvy.Preview.open = function (index)
 	
 	Divvy.tabs.height = Divvy.deviceHeight+50;
 	
-	if (Divvy.developmentMode)
-		Divvy.testflight.passCheckpoint("viewed a photo");
+//	if (Divvy.developmentMode)
+//		Divvy.testflight.passCheckpoint("viewed a photo");
 };
 
 Divvy.Preview.close = function()

@@ -15,15 +15,17 @@ Divvy.jpgcompressor.setCompressSize(102400);
 Divvy.jpgcompressor.setWorstCompressQuality(0.5);
 
 Titanium.Storekit = Ti.Storekit = require('ti.storekit');
-Titanium.Admob = Ti.Admob = require('ti.admob');
+//Titanium.Admob = Ti.Admob = require('ti.admob');
 
 Divvy.developmentMode = false;
 
+/*
 if (Divvy.developmentMode)
 {
 	Divvy.testflight = require('com.0x82.testflight');
 	Divvy.testflight.takeOff('488eb7c844eded229570cdf2384e8137_MzgyNDcyMDExLTExLTAxIDIyOjIxOjQwLjA3NjIzNg');
 }
+*/
 
 /*
  * Any configurations to Titanium itself, and variables that need to be set
@@ -91,16 +93,17 @@ Divvy.Upgrade.init();
 
 //TODO: Fix ads, they are really buggy.
 
-if (!Divvy.Upgrade.check())
-{
+//if (!Divvy.Upgrade.check())
+//{
 	//Divvy.Buckets.addAds();
 	//Divvy.View.addAds();
-}
+//}
 
 
 //open actually shows our UI elements.
 Divvy.Buckets.open();
 
+/*
 if (Divvy.developmentMode)
 {
 	Network.cache.asyncPost(
@@ -111,6 +114,7 @@ if (Divvy.developmentMode)
 		'yellow'
 	);
 }
+*/
 
 Divvy.tab.window = Divvy.Buckets.win; // this is our intial window, we need to pass it to the overlord
 Divvy.tabs.addTab(Divvy.tab);
@@ -131,5 +135,5 @@ Ti.App.addEventListener('resume', function(e)
 });
 */
 
-if (Divvy.developmentMode)
-	Divvy.testflight.passCheckpoint("app opened");
+//if (Divvy.developmentMode)
+//	Divvy.testflight.passCheckpoint("app opened");

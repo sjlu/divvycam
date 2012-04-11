@@ -1,5 +1,6 @@
 Divvy.APS = {};
 
+/*
 if (Divvy.developmentMode)
 {
 	Divvy.APS.KEY = '7GWmo_cbQai_9rDsYVdvdQ';
@@ -7,9 +8,10 @@ if (Divvy.developmentMode)
 }
 else
 {
+*/
 	Divvy.APS.KEY = 'KpBAW5_2SWSfFlQXZvDudQ';
 	Divvy.APS.SECRET = '7cxONCxcRC-rrnuCqr39Cg';
-}
+//}
 
 
 Divvy.APS.open = function()

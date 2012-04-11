@@ -112,7 +112,8 @@ Divvy.View.init = function()
      	top: -270,
      	height: 320
 	});
-	
+
+/*
 	this.headerAd = Ti.Admob.createView({
     	top: 320,
     	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
@@ -122,6 +123,7 @@ Divvy.View.init = function()
     	testing: false,
     	keywords: 'photos'
 	});
+*/
 	
 	this.infoLabel = Ti.UI.createLabel({
 		text: 'Bucket ID:',
@@ -204,8 +206,7 @@ Divvy.View.init = function()
 	
 	this.footerView.add(this.refreshLabel);
 	
-
-	
+/*	
 	this.footerAd = Ti.Admob.createView({
     	bottom: 0,
     	width: (Ti.Platform.osname == 'ipad') ? '468' : '320',
@@ -215,6 +216,7 @@ Divvy.View.init = function()
     	testing: false,
     	keywords: 'photos'
 	});
+*/
 	
 	this.scrollView = this.createScrollView();
 	this.scrollView.hide();
@@ -252,6 +254,7 @@ Divvy.View.init = function()
 	this.ads_top_offset = 0;
 };
 
+/*
 Divvy.View.addAds = function()
 {
 	this.footerView.height = (Ti.Platform.osname == 'ipad') ? 120 : 110;
@@ -271,6 +274,7 @@ Divvy.View.removeAds = function()
 	this.infoView.remove(Divvy.View.headerAd);
 	this.infoView.height = 320;
 };
+*/
 
 Divvy.View.open = function(name, id, pw)
 {
@@ -465,8 +469,8 @@ Divvy.View.onRefreshSuccess = function(data, date, status, user, xhr)
 		Divvy.View.scrollView.touchEnabled = true;
 	}
 	
-	if (Divvy.developmentMode)
-		Divvy.testflight.passCheckpoint("opened a bucket");
+//	if (Divvy.developmentMode)
+//		Divvy.testflight.passCheckpoint("opened a bucket");
 };
 
 Divvy.View.onRefreshError = function(status, httpStatus)
@@ -686,8 +690,8 @@ Divvy.View.onSendSuccess = function(data, date, status, user, xhr)
 	
 	//Divvy.View.cameraButton.enabled = true;
 	
-	if (Divvy.developmentMode)
-		Divvy.testflight.passCheckpoint("uploaded a photo");
+//	if (Divvy.developmentMode)
+//		Divvy.testflight.passCheckpoint("uploaded a photo");
 };
 
 Divvy.View.onSendError = function (status, httpStatus)
@@ -699,8 +703,8 @@ Divvy.View.onSendError = function (status, httpStatus)
 	Divvy.View.uploadQueue = [];
 	Divvy.View.uploading = 0;
 	
-	if (Divvy.developmentMode)
-		Divvy.testflight.passCheckpoint("upload photo error ("+status+")");
+//	if (Divvy.developmentMode)
+//		Divvy.testflight.passCheckpoint("upload photo error ("+status+")");
 };
 
 Divvy.View.onSendStream = function(progress)

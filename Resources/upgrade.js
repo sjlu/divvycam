@@ -85,8 +85,8 @@ Divvy.Upgrade.restore = function()
 {
 	Ti.Storekit.restoreCompletedTransactions();
 	
-	if (Divvy.developmentMode)
-		Divvy.testflight.passCheckpoint("restored transaction");
+//	if (Divvy.developmentMode)
+//		Divvy.testflight.passCheckpoint("restored transaction");
 };
 
 Divvy.Upgrade.complete = function()
@@ -100,6 +100,6 @@ Divvy.Upgrade.complete = function()
 	Divvy.Settings.tableview.setData([Divvy.Settings.general]);
 	Divvy.Settings.updateVersion();
 	
-	if (Divvy.developmentMode)
-		Divvy.testflight.passCheckpoint("upgraded to pro");
+//	if (Divvy.developmentMode)
+//		Divvy.testflight.passCheckpoint("upgraded to pro");
 };
